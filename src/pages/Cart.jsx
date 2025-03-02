@@ -1,0 +1,123 @@
+import React from "react";
+import Navbar from "../components/Navbar";
+import { createContext, useState, useEffect } from 'react'
+
+//you need a different cart jsx file accourding to the guide??? one for all these functions, the other for the cart page itself 
+/*Source:
+https://dev.to/anne46/cart-functionality-in-react-with-context-api-2k2f*/
+export default function Cart(){
+
+  const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
+
+  const addToCart = (item) => {
+    const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
+
+    if (isItemInCart) {
+      setCartItems(
+        cartItems.map((cartItem) =>
+          cartItem.id === item.id
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+            : cartItem
+        )
+      );
+    } else {
+      setCartItems([...cartItems, { ...item, quantity: 1 }]);
+    }
+  };
+
+  const removeFromCart = (item) => {
+    const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
+
+    if (isItemInCart.quantity === 1) {
+      setCartItems(cartItems.filter((cartItem) => cartItem.id !== item.id));
+    } else {
+      setCartItems(
+        cartItems.map((cartItem) =>
+          cartItem.id === item.id
+            ? { ...cartItem, quantity: cartItem.quantity - 1 }
+            : cartItem
+        )
+      );
+    }
+  };
+
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
+  const getCartTotal = () => {
+    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  useEffect(() => {
+    const cartItems = localStorage.getItem("cartItems");
+    if (cartItems) {
+      setCartItems(JSON.parse(cartItems));
+    }
+  }, []);
+    //Navbar needs a prop to get the cartCount
+    return(
+        <>
+         <Navbar/>
+
+
+
+
+         <div >
+  <h1 >Cart</h1>
+  <div >
+    {cartItems.map((item) => (
+      <div  key={item.id}>
+        <div>
+          <img src={item.thumbnail} alt={item.title}  />
+          <div >
+            <h1> {item.title}</h1>
+            <p >{item.price}</p>
+          </div>
+        </div>
+        <div>
+          <button
+            onClick={() => {
+              addToCart(item)
+            }}
+          >
+            +
+          </button>
+          <p>{item.quantity}</p>
+          <button
+            onClick={() => {
+              removeFromCart(item)
+            }}
+          >
+            -
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+  {
+    cartItems.length > 0 ? (
+      <div >
+    <h1 >Total: ${getCartTotal()}</h1>
+    <button
+      onClick={() => {
+        clearCart()
+      }}
+    >
+      Clear cart
+    </button>
+  </div>
+    ) : (
+      <h1 className="text-lg font-bold">Your cart now is empty</h1>
+    )
+  }
+</div>
+
+
+        </>
+    )
+}
