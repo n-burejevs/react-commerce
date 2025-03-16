@@ -71,7 +71,7 @@ const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems
   return (
     <>
     {/* pass the updated item count to a component, which is displaying it */}
-    <Navbar cartCount={cartCount} />
+    <Navbar cartCount={cartCount} width={width} />
     <div className='main-content-container'>
 
     <div className='sidemenu-filterpane-mobile'> 
