@@ -1,6 +1,8 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import { createContext, useState, useEffect } from 'react'
+import { createContext, useState, useEffect } from 'react';
+import '../styles/Cartstyles.css'
+import Sidemenu from "../components/Sidemenu";
 
 //you need a different cart jsx file accourding to the guide??? one for all these functions, the other for the cart page itself 
 /*Source:
@@ -63,39 +65,42 @@ export default function Cart(){
     return(
         <>
          <Navbar/>
+        
 
 
 
-
-         <div >
+         <div className="cart-list-container">
   <h1 >Cart</h1>
   <div >
     {cartItems.map((item) => (
       <div  key={item.id}>
-        <div>
-          <img src={item.thumbnail} alt={item.title}  />
-          <div >
-            <h1> {item.title}</h1>
-            <p >{item.price}</p>
+        <div className="item-container">
+          <img className="cart-item-img" src={item.thumbnail} alt={item.title}  />
+          <div className="cart-item-data" >
+            <p> {item.title}</p>
+            <p >Price: {item.price}</p>
           </div>
-        </div>
-        <div>
-          <button
+          <div className="add-remove-container">
+          <button className="cart-plsu-minus-btn"
             onClick={() => {
               addToCart(item)
             }}
           >
             +
           </button>
-          <p>{item.quantity}</p>
-          <button
+          <p className="cart-item-quantity">{item.quantity}</p>
+          <button className="cart-plsu-minus-btn"
             onClick={() => {
               removeFromCart(item)
             }}
           >
             -
           </button>
+          
         </div>
+        <div className="cart-item-total">Total:{item.quantity * item.price}</div>
+        </div>
+       
       </div>
     ))}
   </div>

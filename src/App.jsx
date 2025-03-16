@@ -51,12 +51,12 @@ Do i need to actively check for width in Navbar component, using useEffect? The 
 
 const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
 
- const [cartCount, setcartCount ]= React.useState(CountItems() ? CountItems() : 0)
+ const [cartCount, setcartCount ]= React.useState(CountItems())
 
-      React.useEffect(() => {
+     /* React.useEffect(() => {
        
-        console.log(cartCount)
-      }, [cartCount])
+        console.log("cart updated",cartCount)
+      }, [cartCount])*/
 
       function CountItems(){
         let items = 0
@@ -68,10 +68,10 @@ const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems
       return items;
       } 
 
-
   return (
     <>
-    <Navbar cartCount={()=>setcartCount(CountItems())} /*setcartCount={setcartCount} cartItems={cartItems} setCartItems={setCartItems}*/ />
+    {/* pass the updated item count to a component, which is displaying it */}
+    <Navbar cartCount={cartCount} />
     <div className='main-content-container'>
 
     <div className='sidemenu-filterpane-mobile'> 
@@ -81,7 +81,8 @@ const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems
 
      <div className="main-content">
                 <Sort />
-                <Product/>
+                {/*Pass the state to update item count, when the added to cart*/}
+                <Product setcartCount={setcartCount} CountItems={CountItems} cartItems={cartItems} setCartItems={setCartItems} />
       </div>
     {width > 768 ? <Filters/> : ""}
     </div>
