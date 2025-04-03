@@ -1,8 +1,10 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import { createContext, useState, useEffect } from 'react';
+import {/* createContext*/ useState, useEffect } from 'react';
 import '../styles/Cartstyles.css'
 import Sidemenu from "../components/Sidemenu";
+import { nanoid } from "nanoid";
+import '../App.css';
 
 //you need a different cart jsx file accourding to the guide??? one for all these functions, the other for the cart page itself 
 /*Source:
@@ -46,10 +48,17 @@ export default function Cart(){
   const clearCart = () => {
     setCartItems([]);
   };
+  const itemsCount = () => {
+    return cartItems.reduce((total, item) => total + item.quantity, 0);
+  }; 
 
   const getCartTotal = () => {
-    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-  };
+    var num = cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
+    return Math.round((num + Number.EPSILON) * 100) / 100
+    //return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  }; 
+
+
 
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -61,11 +70,18 @@ export default function Cart(){
       setCartItems(JSON.parse(cartItems));
     }
   }, []);
+
+  
+
+
     //Navbar needs a prop to get the cartCount
     return(
         <>
          <Navbar/>
-        
+      <div className="cart-page-container">
+
+        <span className="the-band-aid-fix"></span>
+        <Sidemenu/>
 
 
 
@@ -73,11 +89,11 @@ export default function Cart(){
   <h1 >Cart</h1>
   <div >
     {cartItems.map((item) => (
-      <div  key={item.id}>
+      <div  key={nanoid()}>
         <div className="item-container">
           <img className="cart-item-img" src={item.thumbnail} alt={item.title}  />
           <div className="cart-item-data" >
-            <p> {item.title}</p>
+            <p className="cart-item-title"> {item.title}</p>
             <p >Price: {item.price}</p>
           </div>
           <div className="add-remove-container">
@@ -98,7 +114,7 @@ export default function Cart(){
           </button>
           
         </div>
-        <div className="cart-item-total">Total:{item.quantity * item.price}</div>
+        <div className="cart-item-total">Total:{Math.round((item.quantity * item.price + Number.EPSILON) * 100) / 100}</div>
         </div>
        
       </div>
@@ -121,8 +137,7 @@ export default function Cart(){
     )
   }
 </div>
-
-
+</div>
         </>
     )
 }

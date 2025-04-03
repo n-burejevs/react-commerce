@@ -1,0 +1,17 @@
+* {box-sizing:border-box}
+
+.gallery-container{
+  background-color: white;
+  width: 100%;
+}
+
+.prod-img{
+  width: 100%;
+  max-width: 450px;
+}
+.movable-block{
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}

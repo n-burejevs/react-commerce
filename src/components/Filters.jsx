@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Filters(props)
+export default function Filters()
 {
         //https://www.w3schools.com/howto/howto_js_dropdown.asp
     /* When the user clicks on the button, 
@@ -25,10 +25,13 @@ toggle between hiding and showing the dropdown content */
   }*/
 /* watch and find out how to get event from clicked item using react, from the course */
 
+function toggleShowHide() {
+  document.getElementById("filter-dropdown").classList.toggle("show");
+}
    
         return(
             <div className="dropdown">
-                <button onClick={props.show} className="filter-dropdown-btn">Filters</button>
+                <button onClick={toggleShowHide} className="filter-dropdown-btn">Filters</button>
                 <div id="filter-dropdown" className="filter-pane">
 
 

@@ -1,42 +1,29 @@
 .cart-list-container{
     background-color: white;
     color: black;
-    margin-top: 48px;
-    margin-left: 100px;
+    margin-top: 25px;
     border: none;
     border-radius: 10px;
-
+    padding-left: 10px;
 }
 
 .item-container{
     display: grid;
     grid-template-columns: 200px 1fr 1fr 1fr;
-    margin-left: 20px;
-    /**align-items:center;
-    justify-content:space-between;*/
 }
-.add-remove-container, .cart-item-total{
-    display: flex;
-    flex-direction: row;
-    margin-right: 20px;
-    align-items:center
-}
+
 .cart-item-img{
     width: 180px;
 }
 
 .cart-item-data{
     font-weight: 600;
-    padding-top: 40px;
 }
 .cart-plsu-minus-btn{
     background-color: #3576BC;
-    padding: 12px 30px;
     border: none;
     color: white;
     text-align: center;
-    margin-left: 20px;
-    margin-right: 20px;
     font-size: large;
     font-weight: 600;
 }
@@ -47,4 +34,83 @@
     padding: 12px;
     padding-left: 16px;
     padding-right: 16px;
+}
+.cart-page-container{
+    display: flex;
+    margin-left: 0px;
+}
+
+@media (width >= 48em) {
+    .cart-list-container{
+        margin-left: 10px;
+    }
+    .add-remove-container, .cart-item-total{
+        display: flex;
+        flex-direction: row;
+        margin-right: 20px;
+        align-items:center
+    }
+    .item-container{
+        margin-left: 20px;
+    }
+    .cart-item-data{
+        padding-top: 40px;
+    }
+    .cart-plsu-minus-btn{
+        margin-left: 20px;
+        margin-right: 20px;
+        padding: 12px 30px;
+    }
+}
+
+@media (width < 48em) {
+    .the-band-aid-fix{
+        margin-top: 27px;
+    }
+    .item-container{
+        display: grid;
+        grid-template-columns: 200px 1fr 1fr;
+    }
+      .menu{
+        max-width: 30px;
+        margin-left: 7px;
+      }
+      .cart-page-container{
+        display: flex;
+        flex-direction: column;
+    }
+   /* .dropbtn{
+        margin-top: 34px;
+    }*/
+    .add-remove-container{
+        display: flex;
+        flex-direction: column;
+        justify-content:center;
+        align-items:center
+    }
+    .cart-item-data{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .cart-item-total{
+        display: none;
+    }
+    .cart-item-data{
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    }
+    .add-remove-container{
+        margin-left: auto;
+        margin-right: 10px;
+    }
+    .cart-plsu-minus-btn{
+        width: 54px;
+        height: 38px;
+    }
+    .cart-item-title{
+       margin-bottom: 40px;
+    }
+
 }
