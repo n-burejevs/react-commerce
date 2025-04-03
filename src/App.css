@@ -16,20 +16,20 @@
   .menu{
     max-width: 30px;
     margin-left: 7px;
-  
   }
    
-  .main-content, .contact-page{
+  .main-content, .contact-page, .single-product-view{
     padding-top: 45px;
     padding-bottom: 8px;
     justify-content: space-evenly;
     margin-top: 24px;
+    
   }
   .product-img{
     width: 100%;
   }
   .product-card{
-    /*width: 125px;*/
+    width: 150px;
     padding: 5px;
     margin-bottom: 5px;
   }
@@ -54,7 +54,7 @@
   /*sidemenu mobile styles*/
 
   .main-content-container{
-    margin-top: 40px;
+    margin-top: 35px;
     display: flex;
     flex-direction: column;
   }
@@ -94,6 +94,8 @@
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  max-height: 350px;
+  overflow-y: scroll;
 }
 /* Links inside the dropdown */
 .sidemenu a{
@@ -118,6 +120,14 @@
 }
 
 #myLinksWideScr{ display: none;}
+
+.single-product-view{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
 }
 
 
@@ -152,18 +162,17 @@
     color: white;
   }
  
-.filter-pane{
-  margin-top: 40px;
+.filter-pane .sidemenu{
+  margin-top: 45px;
 }
 .sidemenu{
-  margin-top: 40px;
   padding-left: 10px;
-  display: block;
+ /* display: block;*/
 }
 
 .sidemenu a{
-  padding-top: 10px;
-  padding-bottom: 10px;
+  margin-top: 14px;
+  margin-bottom: 14px;
   cursor: pointer;
   display: block;
 }
@@ -176,13 +185,13 @@
   display: none;
 }
 
-.main-content, .contact-page{
+.main-content, .contact-page, .single-product-view{
   margin-left: 20px;
   margin-top: 40px;
   padding-top: 30px;
 }
 .product-card{
-  width: 110px;
+  width: 155px;
 }
 .product-card{
  /* padding: 20px;*/
@@ -240,6 +249,7 @@
   /*justify-content:space-around;*/
   flex-wrap: wrap;
   position: relative;
+  color: black;
 }
 
 .product-card{
@@ -247,7 +257,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
- 
+  
   border-style: solid;
   border-color: #e6e4e4;
   border-width: 0.01rem;
@@ -264,10 +274,17 @@
 .product-name{
   padding-top: 10px;
   padding-bottom: 10px;
+  text-wrap: wrap;
+  text-align: center;
+}
+.product-link{
+  text-decoration: none;
+  color: black;
 }
 
 .product-price{
   padding-bottom: 10px;
+  margin-top: auto;
 }
 .filter-pane{
   padding-left: 20px;
@@ -317,20 +334,27 @@
     position: relative;
     margin-left: auto;
     display: flex;
-    align-items: center;
-   
+   /* align-items: center;*/
+  
   }
 .search-icon{
-  width: 100%;
+ width: 100%;
+ padding-top: 2px;
+ vertical-align: middle ;
 }
 .search-button{ 
  border-radius: 4px;
  border-top-left-radius: 0px;
  border-bottom-left-radius: 0px;
  border-style: none;
+ padding-block-end: 0px;
+ padding-block-start: 0px;
+ padding-bottom: 2px;
+ /*
+ padding-top: 1px;*/
 }
 .search-button-container{
-  width: 30px;
+  width: 36px;
 }
 
 .dropdown-content {
@@ -406,7 +430,7 @@
   touch-action: manipulation;
   position: relative;
   margin-bottom: 8px;
-  margin-top: auto;
+  /*margin-top: auto;*/
 }
 
 .product-button:disabled {
@@ -472,6 +496,8 @@
   /*3px will align with the searchfield*/
   padding-right: 3px;
   position: absolute;
+  top: 100%;
+  ;
   z-index: 4;
   
   background-color: rgb(213, 220, 247);
@@ -483,4 +509,46 @@
 
 .serached-prod-img{
   width: 50px;
+}
+
+.single-prod-img{
+  max-width: 500px;
+  width: 100%;
+}
+
+.single-prod-view{
+  background-color: white;
+  /*width: 100%;*/
+  height: max-content;
+  border: none;
+  border-radius: 10px;
+ /* display: flex;*/
+  /*??????????????????????????*/
+ /* justify-content: space-evenly;*/
+  /*justify-content:space-around;*/
+  /*flex-wrap: wrap;*/
+  position: absolute;
+  color: black;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 50px;
+  padding-top: 30px;
+  border: #4a46be;
+  border-style: solid;
+  z-index: 2;
+
+}
+
+.single-product-view{
+  background-color: white;
+  width: 100%;
+  height: max-content;
+  border: none;
+  border-radius: 10px;
+  /*display: flex;**/
+  /*??????????????????????????*/
+  /*justify-content: space-evenly;*/
+  /*justify-content:space-around;*/
+
+  color: black;
 }

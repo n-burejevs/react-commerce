@@ -1,0 +1,88 @@
+import  React from "react";
+import { nanoid } from "nanoid";
+import '../styles/Sldieshow.css'
+import MobileSwiper from "../components/mobile-swiper"
+
+/* use singleProduct insted of newImmageArray(is just for testing)
+
+*/
+export default function Slideshow(props){
+
+    const [singleProduct, SetSingleProduct] = React.useState([]);
+    const [imageSeqNum, setImageSeqNum] = React.useState(0);
+    /*
+ React.useEffect(() => {
+    // search a single product
+        fetch(`https://dummyjson.com/products/15`)
+        .then(res => res.json())
+        .then(data => SetSingleProduct(data)); 
+    },[]);*/
+
+   /* const newImageArray = [ 
+        <img key={nanoid()} className="single-prod-img" src={singleProduct.images[0]} ></img>, 
+        <img key={nanoid()} className="single-prod-img" src={singleProduct.images[1]} ></img>,
+        <img key={nanoid()} className="single-prod-img" src={singleProduct.images[2]} ></img>
+         ]*/
+/*
+        const newImageArray = [
+            <img key={nanoid()} className="prod-img"
+            src="https://cdn.dummyjson.com/products/images/furniture/Wooden%20Bathroom%20Sink%20With%20Mirror/1.png" ></img>,
+            <img key={nanoid()} className="prod-img"
+            src="https://cdn.dummyjson.com/products/images/furniture/Wooden%20Bathroom%20Sink%20With%20Mirror/2.png" ></img>,
+            <img key={nanoid()} className="prod-img"
+            src="https://cdn.dummyjson.com/products/images/furniture/Wooden%20Bathroom%20Sink%20With%20Mirror/3.png" ></img> 
+        ]*/
+       const newImageArray = props.images.map(img=><img key={nanoid()} className="single-prod-img" src={img}></img>)
+        
+        function showNext()
+        {
+           
+            if(imageSeqNum >= newImageArray.length-1) setImageSeqNum(0);
+            else {
+                setImageSeqNum(prevState => prevState + 1)
+            }
+        }
+        function showPrev()
+        {
+            if(imageSeqNum <= 0) setImageSeqNum(newImageArray.length-1)
+            else {
+                setImageSeqNum(prevState => prevState - 1)
+            }
+        }
+        const handleSwipe = React.useCallback(({ deltaX, deltaY }) => {
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                if (deltaX > 0) {
+                    showNext()
+                } else {
+                    showPrev()
+                }//vertical swipes
+            } /*else {
+                if (deltaY > 0) {
+                    moveTiles("move_down")
+                } else {
+                    moveTiles("move_up")
+                }
+            }*/
+        }, [imageSeqNum])
+ 
+
+    return(
+        <div>
+             { <button className="next-btn" onClick={showNext}>Next</button>}
+             { <button className="next-btn" onClick={showNext}>Previous</button>}
+  <div className="gallery-container">
+      
+      {/*singleProduct.images.map(img=><img key={nanoid()} className="single-prod-img" src={img} ></img>)*/}
+      {/*console.log(singleProduct.images)*/}
+      {/*console.log(imageSeqNum)*/}
+      <div className="movable-block" /*style={position[imageSeqNum]}*/ >
+      <MobileSwiper onSwipe={handleSwipe}>
+            {newImageArray[imageSeqNum]}
+            </MobileSwiper>
+      </div>
+                 
+        </div>
+        </div>
+      
+    )
+}

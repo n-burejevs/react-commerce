@@ -1,23 +1,35 @@
 import React from "react";
+import { nanoid } from "nanoid";
 
-export default function Sidemenu(props)
+export default function Sidemenu()
 {
+    const [categoryList, seCategoryList] = React.useState([]);
+    
+          React.useEffect(() =>{
+            fetch('https://dummyjson.com/products/categories')
+            .then(res => res.json())
+            .then(data => seCategoryList(data.map( (d) => d.name)))
+            },[])
 
-    //https://www.w3schools.com/howto/howto_js_dropdown.asp
-    /* When the user clicks on the button, 
-toggle between hiding and showing the dropdown content */
-/*function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-  }*/
+    function toggleShowHide()
+    {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }        
+
+
+    function printSidemenuLinks()
+    {
+        return categoryList.map( item => <a key={nanoid()}>{item} </a>)
+    }          
+
     return(
         <div className="dropdown">
-            <button onClick={props.show} className="dropbtn">Site Nav</button>
+            <button onClick={toggleShowHide} className="dropbtn">Site Nav</button>
             <div id="myDropdown" className="sidemenu">
-                <a>Category1</a>
-                <a>Category2</a>
-                <a>Category3</a>
-                <a>Category4</a>
-                <a>Category5</a>
+                {
+                    printSidemenuLinks()
+                }
+
             </div>
         </div>
     )

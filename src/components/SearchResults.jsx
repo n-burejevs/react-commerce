@@ -3,8 +3,12 @@ import React from "react";
 
 export default function SearchResults(props)
 {
-
-   function printObject()
+/** search a single product
+fetch('https://dummyjson.com/products/search?q=phone')
+.then(res => res.json())
+.then(console.log);
+ */
+   function printSearchedItems()
    {
    
     var searchedProd =[];
@@ -24,7 +28,7 @@ export default function SearchResults(props)
     return(
         <div className="search-result-popout">
         
-            {printObject() }
+            {printSearchedItems() }
             
         </div>
     )

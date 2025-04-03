@@ -12,6 +12,8 @@ import About from "./pages/About.jsx";
 import SignUp from "./pages/Signup";
 import Contact from "./pages/Contacts";
 import Cart from "./pages/Cart"
+import SingleProduct from './pages/SingleProduct.jsx';
+//import Slideshow from './components/Slideshow.jsx';  <Route path="test" element={<Slideshow/>} />
 
 //import Home from "./pages/Home"
 
@@ -24,6 +26,7 @@ createRoot(document.getElementById('root')).render(
 */
 
 createRoot(document.getElementById('root')).render(
+
   <BrowserRouter>
    <Routes>
 
@@ -33,6 +36,9 @@ createRoot(document.getElementById('root')).render(
      <Route path="contact" element={<Contact/>} />
      <Route path="cart" element={<Cart/>} />
      <Route path="my-account" element={<SignUp/>} />
+     <Route path="viewproduct/:id" element={<SingleProduct/>} />
+    
    </Routes>
-  </BrowserRouter>,
+  </BrowserRouter>
+  
 )

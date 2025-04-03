@@ -2,14 +2,10 @@ import React from 'react'
 import './App.css'
 import Navbar from './components/Navbar'
 import Sidemenu from './components/Sidemenu'
-import Main from './components/Main'
 import Filters from './components/Filters'
 import Product from "./components/Product";
 import Sort from "./components/Sort";
-//import Product from "./components/";
-//import Sort from "./components/Sort";
-import Cart from './pages/Cart'
-
+//import CartContext from './components/CartContext'
 /*
 TO DO:
 https://www.w3schools.com/howto/howto_css_pagination.asp
@@ -34,11 +30,12 @@ function App() {
     };
   }, []);
 
-
+  //this func. moved to sidemenu and filter, so each component is more re-usable
+/*
   function toggleShowHide(elementName) {
     document.getElementById(elementName).classList.toggle("show");
   }
-
+*/
 
 
 
@@ -67,7 +64,7 @@ const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems
        
       return items;
       } 
-
+      
   return (
     <>
     {/* pass the updated item count to a component, which is displaying it */}
@@ -75,14 +72,15 @@ const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems
     <div className='main-content-container'>
 
     <div className='sidemenu-filterpane-mobile'> 
-    <Sidemenu show={()=>toggleShowHide("myDropdown")}/>  
-      {width < 768 ? <Filters show={()=>toggleShowHide("filter-dropdown")}/> : ""}
+    <Sidemenu /*show={()=>toggleShowHide("myDropdown")}*//>  
+      {width < 768 ? <Filters/* show={()=>toggleShowHide("filter-dropdown")}*//> : ""}
     </div>
 
      <div className="main-content">
                 <Sort />
                 {/*Pass the state to update item count, when the added to cart*/}
-                <Product setcartCount={setcartCount} CountItems={CountItems} cartItems={cartItems} setCartItems={setCartItems} />
+                <Product setcartCount={setcartCount} CountItems={CountItems} 
+                cartItems={cartItems} setCartItems={setCartItems} cartCount={cartCount} width={width}/>
       </div>
     {width > 768 ? <Filters/> : ""}
     </div>
