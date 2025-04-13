@@ -1,0 +1,21 @@
+#firstname, #lastname, #email, #password{
+    margin-bottom: 15px;
+}
+/*#lastname{
+    
+}
+#email{
+   
+}
+#password{
+    
+}*/
+.error-message{
+    color: red;
+}
+
+.form-container{
+    display: flex;
+    flex-direction: column;
+    
+}
