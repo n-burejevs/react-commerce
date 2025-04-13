@@ -14,8 +14,23 @@ https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
 
 */
 
-function App() {
+//TO DO:
+//add user auth context
+//Add categories
+//add discount & deals page (just add some -% off some random items)
+//Add Heart icon for liked items (to navbar)
+//Add a page for the list of liked items 
+//add Coupon page in use accounts
 
+//TO DO:
+// display recomended products, from similar caterogry (in product.jsx)
+//add reviews (in product.jsx)
+//create an ability to post reviews (after you "bought")
+
+//Add an ability to 
+
+function App() {
+  const [productSource, setProductSource] = React.useState("https://dummyjson.com/products?skip=10")
   const [width, setWidth] = React.useState(window.innerWidth);
   React.useEffect(() => {
     const handleResize = () => {
@@ -30,30 +45,16 @@ function App() {
     };
   }, []);
 
-  //this func. moved to sidemenu and filter, so each component is more re-usable
-/*
-  function toggleShowHide(elementName) {
-    document.getElementById(elementName).classList.toggle("show");
-  }
-*/
 
 
 
-/*Rewrite Sidemenu and Filter pane for mobil(using state, cond. render and useEffect)
-
-/* At 767 width, the menu renders in the open condition.
-Do i need to actively check for width in Navbar component, using useEffect? The same way its beeing checked in App.jsx */
+/* At 767 width, the menu renders in the open condition. */
 /*looks bad at 767 width!*/
 
 
 const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
 
  const [cartCount, setcartCount ]= React.useState(CountItems())
-
-     /* React.useEffect(() => {
-       
-        console.log("cart updated",cartCount)
-      }, [cartCount])*/
 
       function CountItems(){
         let items = 0
@@ -72,17 +73,17 @@ const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems
     <div className='main-content-container'>
 
     <div className='sidemenu-filterpane-mobile'> 
-    <Sidemenu /*show={()=>toggleShowHide("myDropdown")}*//>  
-      {width < 768 ? <Filters/* show={()=>toggleShowHide("filter-dropdown")}*//> : ""}
+    <Sidemenu/>  
+      {width < 768 && <Filters/>}
     </div>
 
      <div className="main-content">
-                <Sort />
+                <Sort source={productSource} setSource={setProductSource}/>
                 {/*Pass the state to update item count, when the added to cart*/}
                 <Product setcartCount={setcartCount} CountItems={CountItems} 
-                cartItems={cartItems} setCartItems={setCartItems} cartCount={cartCount} width={width}/>
+                cartItems={cartItems} setCartItems={setCartItems} cartCount={cartCount} width={width} source={productSource}/>
       </div>
-    {width > 768 ? <Filters/> : ""}
+    {width >= 768 && <Filters/>}
     </div>
       {}
      </>

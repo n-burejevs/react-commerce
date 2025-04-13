@@ -1,10 +1,8 @@
 import React from "react";
 import { nanoid } from "nanoid";
 import { Link  } from 'react-router-dom';
-//import { /*useSelector,*/ useDispatch } from 'react-redux'
-//import { addToCart } from '../features/cart/cartSlice'
 
-//import SingleProduct from "../pages/SingleProduct";
+//Loading times are insanely slow!!! check in network tab in dev tools!
 
 export default function Product(props)
 { 
@@ -16,10 +14,10 @@ export default function Product(props)
     //const [itemId, setItemId] = React.useState();
 
       React.useEffect(() =>{
-        fetch('https://dummyjson.com/products?skip=10')
+        fetch(/*'https://dummyjson.com/products?skip=10'*/props.source)
         .then(res => res.json())
         .then(data => setProducts(data.products))
-        },[])
+        },[props.source])
 
       React.useEffect(() => {
         localStorage.setItem("cartItems", JSON.stringify(props.cartItems));
@@ -57,14 +55,15 @@ export default function Product(props)
       {/*showItem && <SingleProduct itemId={itemId} showItem={showItem} SetShowItem={SetShowItem}  />*/}
       {  products.map(product => ( 
         <div key={nanoid()} className="product-card">      
+           <Link to={`/viewproduct/${product.id}`} className="product-link" > 
+                    <img className="product-img" loading="lazy" src={product.thumbnail} alt={product.title}></img>
+            </Link>
            
-           <img className="product-img" src={product.thumbnail} alt={product.title}></img>
 
            <Link to={`/viewproduct/${product.id}`} className="product-link" 
-state={{count: props.cartCount, /*cartItems: JSON.stringify(props.cartItems)*/ width: props.width, /*setCartItems: props.setCartItems*/}}  > 
+/*state={{count: props.cartCount,width: props.width}}*/  > 
       {product.title }
    </Link>
-           {/*<div className="product-name" id={product.id} onClick={()=>displaySingleItem(event)} >{product.title}  </div>*/}
            
             <p>{/*product.description.slice(0, 40)*/}</p>
             <div className="product-price">${product.price}</div>         

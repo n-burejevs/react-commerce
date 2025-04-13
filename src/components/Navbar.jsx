@@ -5,9 +5,7 @@ import { Link  } from 'react-router-dom';
 import SearchResults from "./SearchResults";
 import { nanoid } from "nanoid";
 import search_icon from '../assets/search.png';
-
-/*<a> changed to <Link>*/
-// Link renders a <a> tag?!?!
+import MiniCart from '../components/MiniCart'
 
 export default function Navbar(props){
 
@@ -16,14 +14,20 @@ export default function Navbar(props){
    /*used to determine a container, which, 
    if clicked outside of, will "close" by useEffect */
 let container = React.createRef();
+let miniCartView = React.createRef();
 //get the value from app.jsx as a prop?
 let windowWidth = props.width;//window.innerWidth;
 
 const [isNavMenuOpen, setIsNavMenuOpen] = React.useState(false);
+const [isCartMenuOpen, SetIsCartMenuOpen] = React.useState(false);
 
    function handleButtonClick(){
         setIsNavMenuOpen(prevState => !prevState)
   }; 
+  
+  function ToggleCart(){
+    SetIsCartMenuOpen(prevState => !prevState)
+}; 
 //user searches stuff in the searchbar
 const [searchFor, setSearchFor] = React.useState("");
 //put it in  a separate useeffect?, so when searchbar is empty result div dissappears
@@ -58,18 +62,21 @@ const [searchResults, setsearchResults] = React.useState([]);
         if(productTitle.toLowerCase().indexOf(searchFor.toLowerCase()) !== -1) 
         {
         
-
           results.title = products[i].title;
           results.price = products[i].price;
           results.img = products[i].thumbnail;
-            //console.log(results)
-            //problem: array fills up with the same items(product duplicates)
-          setsearchResults(prevState => [...prevState, results])
+          results.id = products[i].id;
+    
+            //problem: array fills up with the same items(product duplicates)  
+            //check if it contains the same item, item.id
+         /*   for(var i=0; i<searchResults.length; i++){
+              console.log(searchResults[i].id)
+            }     */    
+            setsearchResults(prevState => [...prevState, results]);
           //console.log(searchResults);
-        
-         
+
         }
-        
+             
       }
     }
     else if(searchFor.length === 0) { 
@@ -79,7 +86,6 @@ const [searchResults, setsearchResults] = React.useState([]);
     },[searchFor])
 
 //a bug: clicking anywhere removes navbar items while in widescreen mode
-//
 function handleClickOutside(event){
   //the bug fix
     if(windowWidth < 768){
@@ -92,6 +98,14 @@ function handleClickOutside(event){
     };
 
     }
+    function handleClickOutsideCart(event){    
+          if (
+            miniCartView.current &&
+            !miniCartView.current.contains(event.target)
+          ) {
+              SetIsCartMenuOpen(false);
+          }
+        }
 
   /*Hide dropdown when clicked outside of it*/
   React.useEffect(() => {
@@ -101,6 +115,15 @@ function handleClickOutside(event){
           document.removeEventListener("mousedown", handleClickOutside);
       };
     }, [isNavMenuOpen]);
+
+      /*Hide mini cart menu when clicked outside of it*/
+  React.useEffect(() => {
+
+    document.addEventListener("mousedown", handleClickOutsideCart);
+    return () => {
+        document.removeEventListener("mousedown", handleClickOutsideCart);
+    };
+  }, [isCartMenuOpen]);
 
     return(
   
@@ -112,6 +135,8 @@ function handleClickOutside(event){
             <Link to='/contact' className="anchor" >Contacts</Link>
             <Link to='/about' className="anchor" >About</Link>
             <Link to='/my-account' className="anchor">My Account</Link>
+            <Link to='/deals' className="anchor">Deals & Discounts</Link>
+            <Link to='/categories' className="anchor">Categories</Link>
            </div>)}
 
            <div id="myLinksWideScr">
@@ -119,6 +144,8 @@ function handleClickOutside(event){
             <Link to='/contact' className="anchor" >Contacts</Link>
             <Link to='/about' className="anchor" >About</Link>
             <Link to='/my-account' className="anchor">My Account</Link>
+            <Link to='/deals' className="anchor">Deals & Discounts</Link>
+            <Link to='/categories' className="anchor">Categories</Link>
            </div>
 
            <div className="searchbox-container">
@@ -133,14 +160,17 @@ function handleClickOutside(event){
           searchResultsVisible ? < SearchResults results={searchResults}/> : ""}
           </div>
            
-           <div className="cart">
+           <div className="cart" onClick={ToggleCart} >
             {props.cartCount ? <span className="cart-item-count">{props.cartCount}</span> : ""}
-            <Link to="/cart" className="cart-img"><img className="cart-icon" src={cart}></img></Link>
-            <div>
-              {/*Send state to Cart component, its shared with Navbar so its accesable everywhere??????*/}
-            
-            </div>
+            {/*<Link to="/cart" className="cart-img">*/<img className="cart-icon" src={cart}></img>/*</Link>*/}
+         
            </div>
+           <div className="mini-cart-container-absolute">
+           {isCartMenuOpen && <div className="mini-cart-menu" ref={miniCartView}>
+              <MiniCart fullview={true}/>
+              </div>}
+            </div>
+         
            
         </div>
     )

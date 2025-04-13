@@ -1,14 +1,14 @@
 import  React from "react";
 import { nanoid } from "nanoid";
-import '../styles/Sldieshow.css'
-import MobileSwiper from "../components/mobile-swiper"
+import '../styles/Sldieshow.css';
+import MobileSwiper from "../components/mobile-swiper";
+import arrow from '../assets/arrow.-btn.png';
+import arrowReverse from '../assets/arrow.-btn-left.png';
+import Dots from '../components/Dots'
 
-/* use singleProduct insted of newImmageArray(is just for testing)
-
-*/
 export default function Slideshow(props){
 
-    const [singleProduct, SetSingleProduct] = React.useState([]);
+   // const [singleProduct, SetSingleProduct] = React.useState([]);
     const [imageSeqNum, setImageSeqNum] = React.useState(0);
     /*
  React.useEffect(() => {
@@ -68,8 +68,8 @@ export default function Slideshow(props){
 
     return(
         <div>
-             { <button className="next-btn" onClick={showNext}>Next</button>}
-             { <button className="next-btn" onClick={showNext}>Previous</button>}
+             {/* <button className="next-btn" onClick={showNext}>Next</button>}
+             { <button className="prev-btn" onClick={showNext}>Previous</button>*/}
   <div className="gallery-container">
       
       {/*singleProduct.images.map(img=><img key={nanoid()} className="single-prod-img" src={img} ></img>)*/}
@@ -77,11 +77,17 @@ export default function Slideshow(props){
       {/*console.log(imageSeqNum)*/}
       <div className="movable-block" /*style={position[imageSeqNum]}*/ >
       <MobileSwiper onSwipe={handleSwipe}>
+      { <button className="next-btn" onClick={showNext}><img className="arrow-btn" src={arrow} alt="Next"></img></button>}
+      { <button className="prev-btn" onClick={showPrev}><img className="arrow-btn" src={arrowReverse} alt="Previous"></img></button>}
             {newImageArray[imageSeqNum]}
             </MobileSwiper>
+            
+                
+             
       </div>
-                 
+     
         </div>
+        <Dots amount={newImageArray.length} position={imageSeqNum}/>
         </div>
       
     )

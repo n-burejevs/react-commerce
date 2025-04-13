@@ -37,7 +37,7 @@ createRoot(document.getElementById('root')).render(
      <Route path="cart" element={<Cart/>} />
      <Route path="my-account" element={<SignUp/>} />
      <Route path="viewproduct/:id" element={<SingleProduct/>} />
-    
+     <Route path="*" element={<App to="/" replace />} />
    </Routes>
   </BrowserRouter>
   

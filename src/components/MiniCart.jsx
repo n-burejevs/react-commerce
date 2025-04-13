@@ -2,10 +2,10 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import {/* createContext*/ useState, useEffect } from 'react';
 import '../styles/Cartstyles.css'
-import Sidemenu from "../components/Sidemenu";
 import { nanoid } from "nanoid";
+import { Link  } from 'react-router-dom';
 import '../App.css';
-
+/** i need to style it for mobile, just grab the mobile styles */
 //you need a different cart jsx file accourding to the guide??? one for all these functions, the other for the cart page itself 
 /*Source:
 https://dev.to/anne46/cart-functionality-in-react-with-context-api-2k2f*/
@@ -71,42 +71,38 @@ export default function Cart(props){
     }
   }, []);
 
-  
 
-  
-    //Navbar needs a prop to get the cartCount?
     return(
         <>
-        <Navbar/>
-      <div className="cart-page-container">
-
        
-       <Sidemenu/>
+     
 
-
-
-         <div className="cart-list-container">
-         <h1 >Cart</h1>
-  <div>
+         <div className="mini-container">
+         {props.fullview && <h1 >Cart</h1>}
+  
     {cartItems.map((item) => (
       <div  key={nanoid()}>
-         <p className="cart-item-title"> {item.title}</p>
-        <div className="item-container">
-          <img className="cart-item-img" src={item.thumbnail} alt={item.title}  />
-          <div className="cart-item-data" >
+         <p className="mini-cart-item-title"> <Link to={`/viewproduct/${item.id}`} className="product-link" > {item.title } </Link></p>
+        <div className="mini-cart-item-container">
+          
+        
+     
+        <Link to={`/viewproduct/${item.id}`}  > <img className="mini-cart-item-img" src={item.thumbnail} alt={item.title}  /> </Link>
+          
             
-            <p >Price: {item.price}</p>
-          </div>
-          <div className="add-remove-container">
-          <button className="cart-plsu-minus-btn"
+            <p className="mini-cart-item-data">Price:
+              <br/> {item.price}</p>
+          
+          <div className="mini-cart-add-remove-container">
+          <button className="mini-cart-plsu-minus-btn"
             onClick={() => {
               addToCart(item)
             }}
           >
             +
           </button>
-          <p className="cart-item-quantity">{item.quantity}</p>
-          <button className="cart-plsu-minus-btn"
+          <p className="mini-cart-item-quantity">{item.quantity}</p>
+          <button className="mini-cart-plsu-minus-btn"
             onClick={() => {
               removeFromCart(item)
             }}
@@ -115,30 +111,34 @@ export default function Cart(props){
           </button>
           
         </div>
-        <div className="cart-item-total">Total:{Math.round((item.quantity * item.price + Number.EPSILON) * 100) / 100}</div>
+        
         </div>
        
       </div>
     ))}
-  </div>
+  
   {
     cartItems.length > 0 ? (
       <div >
     <h1 >Total: ${getCartTotal()}</h1>
-    <button
+  
+{ /*   <button
       onClick={() => {
         clearCart()
       }}
     >
       Clear cart
     </button>
+    */}
+    
+    <button><Link to="/cart" className="cart-img">Open Cart</Link></button>
   </div>
     ) : (
       <h1 className="text-lg font-bold">Your cart now is empty</h1>
     )
   }
 </div>
-</div>
+
         </>
     )
 }

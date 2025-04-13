@@ -2,51 +2,72 @@ import React from "react";
 
 export default function Filters()
 {
-        //https://www.w3schools.com/howto/howto_js_dropdown.asp
-    /* When the user clicks on the button, 
-toggle between hiding and showing the dropdown content */
-/*function myFunction() {
-    document.getElementById("filter-dropdown").classList.toggle("show");
-  }*/
-  
-  // Close the dropdown if the user clicks outside of it
-  /*window.onclick = function(event) {
-    if (!event.target.matches('.filter-dropdown-btn')) {
-      var dropdowns = document.getElementsByClassName("filter-pane");
-  
-      var i;
-      for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('show')) {
-          openDropdown.classList.remove('show');
-        }
-      }
-    }
-  }*/
-/* watch and find out how to get event from clicked item using react, from the course */
+     /*Source: https://www.codedaily.io/tutorials/Create-a-Dropdown-in-React-that-Closes-When-the-Body-is-Clicked */
+       
+    let container = React.createRef();
+        const [open, setOpen] = React.useState(false);
+    const [width, SetWidth] = React.useState(window.innerWidth);
 
-function toggleShowHide() {
-  document.getElementById("filter-dropdown").classList.toggle("show");
-}
+    React.useEffect(() => {
+      SetWidth(window.innerWidth);
+    },[window.innerWidth]);
+    
+    function handleButtonClick()
+    {
+        setOpen(prevState=> !prevState)
+    }; 
+
+    function handleClickOutside(event){
+       if(
+           container.current &&
+           !container.current.contains(event.target)
+         ) {
+             setOpen(false);
+           }
+    }
+   
+    /*Hide dropdown when clicked outside of it*/
+     React.useEffect(() => {
+      document.addEventListener("mousedown", handleClickOutside);
+       return () => { 
+        document.removeEventListener("mousedown", handleClickOutside);
+      };}, [open]);
    
         return(
-            <div className="dropdown">
-                <button onClick={toggleShowHide} className="filter-dropdown-btn">Filters</button>
-                <div id="filter-dropdown" className="filter-pane">
-
+          <>
+        {width < 768 && 
+           <div className="dropdown"  ref={container}>
+            <button onClick={handleButtonClick} className="filter-dropdown-btn">Filters</button>
+              {open &&   <div id="filter-dropdown" className="filter-pane">
 
             <p>Filters</p>
             <div>
                 Filter name
             </div>
-            <form>
-            <input type="checkbox"></input>
-            </form>
+              <form>
+                <input type="checkbox"></input>
+              </form>
            
-      
-
-                </div>
-            </div>
+                </div>}
+          </div> 
+        }
+        { width >= 768 && 
+          <div className="dropdown">
+            <div id="filter-dropdown" className="filter-pane">
+        
+                    <p>Filters</p>
+                    <div>
+                        Filter name
+                    </div>
+                      <form>
+                        <input type="checkbox"></input>
+                      </form>
+                   
+                        </div>
+                  </div> 
+        }
+          </>
+         
         )
 }
         

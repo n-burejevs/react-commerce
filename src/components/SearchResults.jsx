@@ -12,7 +12,7 @@ fetch('https://dummyjson.com/products/search?q=phone')
    {
    
     var searchedProd =[];
-    
+   // console.log(props.results);
        // for (var key in  props.results) {
        for(let i=0; i<props.results.length; i++)
         //if ( props.results.hasOwnProperty(key))

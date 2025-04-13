@@ -44,7 +44,7 @@
   #myLinks{
    padding-top: 10px;
    display: flex;
-    margin-top: 162px;
+    margin-top: 215px;
     flex-direction: column;
     background-color: rgba(128, 128, 128, 0.889);
     width: 100%;
@@ -88,7 +88,6 @@
 }
 /* Dropdown Content (Hidden by Default) */
 .sidemenu, .filter-pane {
-  display: none;
   position: absolute;
   background-color: #f1f1f1;
   min-width: 160px;
@@ -292,7 +291,7 @@
 }
 
 .cart{
-  padding: 9.5px 10px;
+  padding: 6px 10px;
   padding-left: 5px;
   padding-right: 10px;
   margin-left: 10px;
@@ -302,7 +301,7 @@
  }
 
 .cart-icon{
-  width: 20px;
+  width: 25px;
   padding-top: 2px;
 }
 
@@ -400,7 +399,7 @@
   #sort-items{
     margin-top: 33px;
   }
-  .show {display:block;}
+  /*.show {display:block;}*/
 
 
 /* CSS for button from https://getcssscan.com/css-buttons-examples */
@@ -480,7 +479,7 @@
   border-radius: 10px;
   margin-right: 50px;
 }
-/*the div that shows up when*/
+/*the div that shows up when user is searching*/
 .search-result-popout{
   display: grid;
   grid-template-columns: auto auto auto;
@@ -551,4 +550,7 @@
   /*justify-content:space-around;*/
 
   color: black;
+}
+.single-product-view h3{
+  margin-bottom: 0;
 }

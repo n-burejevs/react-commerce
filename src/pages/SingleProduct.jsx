@@ -6,16 +6,21 @@ import '../App.css'
 import '../styles/Sldieshow.css'
 import Sidemenu from '../components/Sidemenu';
 import Slideshow from "../components/slideshow";
-
+/* This page needs styling*/
 export default function SingleProduct(){
        
     const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
-   
-    const { count } = useLocation().state;
-    const [cartCount, setcartCount ]= React.useState(count)
+    
+    //const { count } = useLocation().state;
+
+    const itemsCount = () => {
+      return cartItems.reduce((total, item) => total + item.quantity, 0);
+    }; 
+
+    const [cartCount, setcartCount ]= React.useState(itemsCount)
 
     const [ singleProduct, SetSingleProduct] = React.useState([]);
-
+   
     let { id } = useParams(); 
 
     React.useEffect(() => {
@@ -23,11 +28,12 @@ export default function SingleProduct(){
         fetch(`https://dummyjson.com/products/${id}`)
         .then(res => res.json())
         .then(data => SetSingleProduct(data)); 
+        
     },[]);
 
      //console.log(singleProduct)
      //window.history.replaceState({}, '')
-
+     
     /*const location = useLocation()
     const { count } = location.state;*/
 
@@ -48,9 +54,6 @@ export default function SingleProduct(){
         }
       };
 
-      const itemsCount = () => {
-        return cartItems.reduce((total, item) => total + item.quantity, 0);
-      }; 
 
        React.useEffect(() => {
               localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -68,7 +71,7 @@ export default function SingleProduct(){
         <h3 key={nanoid()}>{singleProduct.title}</h3>
      
         <div key={nanoid()}>
-          
+          {}
         {singleProduct.images ? /*singleProduct.images.map(img=><img key={nanoid()} className="single-prod-img" src={img}></img>) :
          "Error loading images"*/
          <Slideshow images ={singleProduct.images}/> : "Error loading images"
