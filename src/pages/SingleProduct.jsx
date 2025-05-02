@@ -29,7 +29,7 @@ export default function SingleProduct(){
         .then(res => res.json())
         .then(data => SetSingleProduct(data)); 
         
-    },[]);
+    },[id]);
 
      //console.log(singleProduct)
      //window.history.replaceState({}, '')

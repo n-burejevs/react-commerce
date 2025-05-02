@@ -31,6 +31,13 @@ React.useEffect(() => {
     };
   }, [open]);
 
+  //test
+  const [test, setTest] = React.useState();
+  React.useEffect(() =>{
+          fetch(props.source)
+          .then(res => res.json())
+          .then(data => setTest(data.products))
+          },[])
 
 function sortAscending()
 {
@@ -50,6 +57,8 @@ function sortNew()
 function sortPopular()
 {
   props.setSource("https://dummyjson.com/products")
+  ///console.log(props.source.filter((item) => item.brand === "Annibale Colombo"))
+
   setOpen(false);
 }
 

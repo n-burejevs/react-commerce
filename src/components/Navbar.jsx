@@ -3,9 +3,13 @@ import hamb from '../assets/hamburger-menu2.png';
 import cart from '../assets/cart.png';
 import { Link  } from 'react-router-dom';
 import SearchResults from "./SearchResults";
-import { nanoid } from "nanoid";
 import search_icon from '../assets/search.png';
+import wishlist_icon from '../assets/wishlist.png';
+import user_account_icon from '../assets/user-account.png';
 import MiniCart from '../components/MiniCart'
+
+//Found a good way to do search
+//https://medium.com/@ignatovich.dm/enhancing-form-handling-in-react-19-a-look-at-action-useformstate-and-useformstatus-a5ee68d6bf93
 
 export default function Navbar(props){
 
@@ -15,18 +19,20 @@ export default function Navbar(props){
    if clicked outside of, will "close" by useEffect */
 let container = React.createRef();
 let miniCartView = React.createRef();
-//get the value from app.jsx as a prop?
-let windowWidth = props.width;//window.innerWidth;
 
 const [isNavMenuOpen, setIsNavMenuOpen] = React.useState(false);
 const [isCartMenuOpen, SetIsCartMenuOpen] = React.useState(false);
 
    function handleButtonClick(){
-        setIsNavMenuOpen(prevState => !prevState)
+   // console.log("before"+isNavMenuOpen);
+        setIsNavMenuOpen(prevState => !prevState);
+     //  console.log("after"+isNavMenuOpen);
+    
   }; 
   
   function ToggleCart(){
-    SetIsCartMenuOpen(prevState => !prevState)
+    SetIsCartMenuOpen(prevState => !prevState);
+    //console.log("toggle cart triggered");
 }; 
 //user searches stuff in the searchbar
 const [searchFor, setSearchFor] = React.useState("");
@@ -47,6 +53,7 @@ const [searchResults, setsearchResults] = React.useState([]);
   .then(res => res.json())
   .then(data => setProducts(data.products))
   },[])
+
   //too many searches
   React.useEffect(() =>{
     if(searchFor.length > 2){
@@ -56,27 +63,21 @@ const [searchResults, setsearchResults] = React.useState([]);
       const results = {};
       for(var i=0; i<products.length; i++)
       {
+      
       let productTitle = products[i].title;       
          //if searched phrase matches the product
         //cant get more than one result?!?!!?
-        if(productTitle.toLowerCase().indexOf(searchFor.toLowerCase()) !== -1) 
+        if(productTitle.toLowerCase().includes(searchFor.toLowerCase())/* !== -1*/) 
         {
-        
           results.title = products[i].title;
           results.price = products[i].price;
           results.img = products[i].thumbnail;
           results.id = products[i].id;
-    
-            //problem: array fills up with the same items(product duplicates)  
-            //check if it contains the same item, item.id
-         /*   for(var i=0; i<searchResults.length; i++){
-              console.log(searchResults[i].id)
-            }     */    
-            setsearchResults(prevState => [...prevState, results]);
-          //console.log(searchResults);
 
+          setsearchResults(prevState => [...prevState, results]);
+          
         }
-             
+        //console.log(searchResults);
       }
     }
     else if(searchFor.length === 0) { 
@@ -85,17 +86,13 @@ const [searchResults, setsearchResults] = React.useState([]);
        }
     },[searchFor])
 
-//a bug: clicking anywhere removes navbar items while in widescreen mode
 function handleClickOutside(event){
-  //the bug fix
-    if(windowWidth < 768){
       if (
         container.current &&
         !container.current.contains(event.target)
       ) {
           setIsNavMenuOpen(false);
       }
-    };
 
     }
     function handleClickOutsideCart(event){    
@@ -104,12 +101,12 @@ function handleClickOutside(event){
             !miniCartView.current.contains(event.target)
           ) {
               SetIsCartMenuOpen(false);
+              //console.log("clicked outside of mini-cart")
           }
         }
 
   /*Hide dropdown when clicked outside of it*/
   React.useEffect(() => {
-
       document.addEventListener("mousedown", handleClickOutside);
       return () => {
           document.removeEventListener("mousedown", handleClickOutside);
@@ -127,25 +124,25 @@ function handleClickOutside(event){
 
     return(
   
-        <div className="navbar" ref={container}>
-          <img src={hamb} className="menu" alt="menu icon" onClick={handleButtonClick}></img>
-           
-            {isNavMenuOpen && ( <div id="myLinks">
+        <div className="navbar" >
+          <div ref={container}>
+          <img src={hamb} className="menu" alt="menu icon" /**/ onClick={handleButtonClick}></img>
+            {isNavMenuOpen && ( <div id="myLinks" > 
             <Link to='/' className="anchor">Home</Link>
             <Link to='/contact' className="anchor" >Contacts</Link>
-            <Link to='/about' className="anchor" >About</Link>
-            <Link to='/my-account' className="anchor">My Account</Link>
+            <Link to='/about' className="anchor" >About</Link>  
             <Link to='/deals' className="anchor">Deals & Discounts</Link>
-            <Link to='/categories' className="anchor">Categories</Link>
+            {/*<Link to='/categories' className="anchor">Categories</Link>*/}
            </div>)}
+          </div>
+       
 
            <div id="myLinksWideScr">
             <Link to='/' className="anchor">Home</Link>
             <Link to='/contact' className="anchor" >Contacts</Link>
             <Link to='/about' className="anchor" >About</Link>
-            <Link to='/my-account' className="anchor">My Account</Link>
             <Link to='/deals' className="anchor">Deals & Discounts</Link>
-            <Link to='/categories' className="anchor">Categories</Link>
+            {/*<Link to='/categories' className="anchor">Categories</Link>*/}
            </div>
 
            <div className="searchbox-container">
@@ -155,22 +152,33 @@ function handleClickOutside(event){
            <button className="search-button"><img className="search-icon" src={search_icon}></img> </button>
            </div>
           
-          
-          {/** have a search results here somewhere, like if true(state variable(create a new one)) then render the box with products that match the search */
-          searchResultsVisible ? < SearchResults results={searchResults}/> : ""}
+          {searchResultsVisible ? < SearchResults results={searchResults}/> : ""}
           </div>
-           
-           <div className="cart" onClick={ToggleCart} >
+
+          <div className="user-account-container">
+          <Link to='/my-account' className="anchor">
+            <img className="user-account-icon" src={user_account_icon} alt="user-account-icon"></img>
+            </Link>
+          </div>
+
+          <div className="wishlist-container">
+            <img className="wishlist-icon" src={wishlist_icon} alt="wishlist-icon"></img>
+          </div>
+
+          {/** this div is just for the ref  */}
+           <div  ref={miniCartView}> 
+           <div className="cart" onClick={ToggleCart}>
             {props.cartCount ? <span className="cart-item-count">{props.cartCount}</span> : ""}
-            {/*<Link to="/cart" className="cart-img">*/<img className="cart-icon" src={cart}></img>/*</Link>*/}
+            <img className="cart-icon" src={cart}></img>
          
            </div>
-           <div className="mini-cart-container-absolute">
-           {isCartMenuOpen && <div className="mini-cart-menu" ref={miniCartView}>
-              <MiniCart fullview={true}/>
+           <div className="mini-cart-container-absolute" >
+            {/*console.log("state: "+isCartMenuOpen)*/}
+           { isCartMenuOpen && <div className="mini-cart-menu"   >
+              <MiniCart cartCount={props.cartCount} setcartCount={props.setcartCount} SetIsCartMenuOpen={SetIsCartMenuOpen}/>
               </div>}
             </div>
-         
+            </div>
            
         </div>
     )

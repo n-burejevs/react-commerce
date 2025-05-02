@@ -1,0 +1,39 @@
+.pagination-container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.pagination {
+   position: relative;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  
+  }
+  
+  .pagination a {
+    color: black;
+    float: left;
+    padding: 8px 15px;
+    text-decoration: none;
+  }
+  /*
+  .pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+  }*/
+  
+  /*.pagination a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius: 5px;
+  }*/
+  #on-this-page{
+    background-color: #4a46be;
+    color: white;
+    border-radius: 5px;
+  }
+  
+  #not-on-this-page:hover{
+    background-color: #7a76df;
+    border-radius: 5px;
+  }

@@ -1,6 +1,7 @@
 import React from "react";
 import { nanoid } from "nanoid";
-
+import { Link } from "react-router-dom";
+import '../styles/SidemenuStyles.css'
 export default function Sidemenu()
 {/*Source: https://www.codedaily.io/tutorials/Create-a-Dropdown-in-React-that-Closes-When-the-Body-is-Clicked */
        
@@ -36,6 +37,9 @@ export default function Sidemenu()
 
     const [categoryList, seCategoryList] = React.useState([]);
     
+    //fetch('https://dummyjson.com/products/search?q=phone')
+    //.then(res => res.json())
+    //.then(console.log);
     React.useEffect(() =>{
         fetch('https://dummyjson.com/products/categories')
         .then(res => res.json())
@@ -46,7 +50,25 @@ export default function Sidemenu()
     {
         return categoryList.map( item => <a key={nanoid()}>{item} </a>)
     }          
+/*
+    function handleCategorySelect(data)
+    {
+      console.log("requested", data);
+      var request = new XMLHttpRequest();
+      request.open('GET', '/my/url', true);
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          request.send(data);
 
+ 
+    }*/
+
+    /*how to do it for mobile?
+      function toggleShowHide(elementName) {
+    document.getElementById(elementName).classList.toggle("show");
+    !!usage: <Sidemenu show={()=>toggleShowHide("myDropdown")}/> 
+
+  }
+    */
     return(
         <>
         { width < 768 && 
@@ -61,17 +83,165 @@ export default function Sidemenu()
         </div>
         }
         { width >= 768 && 
-         <div className="dropdown">
+         <div className="dropdown" id="sidemenu-dropdown-container">
             
             <div id="myDropdown" className="sidemenu">
                 {
-                    printSidemenuLinks()
+                    /*printSidemenuLinks()*/
+                    <nav className="navigation">
+
+                    <div className="category-item">
+                      <span className="category-name">Furniture</span>
+                    <div className="hidden-part">
+                      <ul>
+                        <li>Home Decoration</li>
+                        <li>Kitchen Accessories</li>
+                       <li>
+                       <Link to={`/category/furniture`} className="product-link" >Furniture</Link>
+                        </li> 
+                      </ul>
+                      </div>
+                      </div>
+                 
+                  <div className="category-item">
+                   <span className="category-name">Clothing</span>
+                  <div className="hidden-part">
+                      <ul>
+                        <li>Mens Shirts</li>
+                        <li>Mens Shoes</li>
+                        <li>Womens Dresses</li>
+                        <li>Womens Shoes</li>
+                        <li>Tops</li>
+                        
+                        <div className="sub-category-item">  
+                     Shoes
+                    <div className="sub-hidden-part">
+                      <ul>
+                        <li>Mens Shoes</li>
+                        <li>Womens Shoes</li>
+                      </ul>
+                      </div>
+                      
+                      </div>
+                       
+                 
+                      </ul>
+                    </div>
+                    </div>
+
+                    <div className="category-item">
+                      <span className="category-name">Beauty</span>
+                    <div className="hidden-part">
+                      <ul>
+                        <li>Skin Care</li>
+                        <li>Fragrances</li>
+                      </ul>
+                      </div>
+                      </div>
+
+                      <div className="category-item">
+                      <span className="category-name">Accessories</span>
+                    <div className="hidden-part">
+                      <ul>
+                        <li>
+                        <Link to={`/category/mens-watches`} className="product-link" >Mens Watches</Link>
+                        </li>
+                        <li>
+                        <Link to={`/category/womens-bags`} className="product-link" >Womens Bags</Link>
+                        </li>
+                        <li>
+                        <Link to={`/category/womens-jewellery`} className="product-link" >Womens Jewellery</Link>
+                        </li>
+                        <li>
+                        <Link to={`/category/womens-watches`} className="product-link" >Womens Watches</Link>
+                        </li>
+                      </ul>
+                      </div>
+                      </div>
+
+                      <div className="category-item">
+                      <span className="category-name">Electronics</span>
+                    <div className="hidden-part">
+                      <ul>
+                        <li>
+                        <Link to={`/category/laptops`} className="product-link" >Laptops</Link>
+                        </li>
+                        <li >
+                        <Link to={`/category/smartphones`} className="product-link" >Smartphones</Link>
+
+                        </li>
+                        
+                        <li>
+                        <Link to={`/category/tablets`} className="product-link" >Tablets</Link>
+                        </li>
+                        <li>
+                        <Link to={`/category/mobile-accessories`} className="product-link" >Mobile Accessories</Link>
+                        </li>
+                      </ul>
+                      </div>
+                      </div>
+
+
+
+                  </nav>
                 }
             </div>
         </div>
         }
+        
+ 
+
+  
+      
         </>
        
     
     )
+    /**
+     * categories
+     * Beauty - > Skin Care, Fragrances
+
+Furniture -> Home Decoration, Kitchen Accessories
+
+Clothing -> Mens Shirts, Mens Shoes, Womens Dresses, Womens Shoes, Tops
+Accessories -> Mens Watches, Womens Bags, Womens Jewellery, Womens Watches, Sunglasses
+
+Electronics -> Laptops, Smartphones, Tablets, Mobile Accessories
+
+Sports Accessories
+
+Groceries
+
+Motorcycle
+Vehicle
+
+<nav role="navigation">
+  <ul className="caterogy-types">
+    <li><a href="#">Beauty</a>
+    <ul className="sub-dropdown">
+      <li><a href="#">Skin Care</a></li>
+      <li><a href="#">Fragrances</a></li>
+      <li><a href="#">Test</a></li>
+      </ul>
+      </li>
+      <li><a href="#">Furniture</a>
+    <ul className="sub-dropdown">
+        <li><a href="#">Home Decoration</a></li>
+        <li><a href="#">Kitchen Accessories</a></li>
+      </ul>
+      </li>
+
+      <li><a href="#">Clothing</a>
+    <ul className="sub-dropdown">
+        <li><a href="#">Mens Shirts</a></li>
+        <li><a href="#">Mens Shoes</a></li>
+        <li><a href="#">Womens Dresses</a></li>
+        <li><a href="#">Womens Shoes</a></li>
+        <li><a href="#">Tops</a></li>
+      </ul>
+      </li>
+  </ul>
+</nav>
+
+     */
 }

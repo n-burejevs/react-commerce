@@ -9,7 +9,7 @@ import '../App.css';
 //you need a different cart jsx file accourding to the guide??? one for all these functions, the other for the cart page itself 
 /*Source:
 https://dev.to/anne46/cart-functionality-in-react-with-context-api-2k2f*/
-export default function Cart(props){
+export default function MiniCart(props){
 
   const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
 
@@ -24,8 +24,10 @@ export default function Cart(props){
             : cartItem
         )
       );
+      props.setcartCount(prevState => prevState + 1)
     } else {
       setCartItems([...cartItems, { ...item, quantity: 1 }]);
+      props.setcartCount(prevState => prevState + 1)
     }
   };
 
@@ -34,6 +36,7 @@ export default function Cart(props){
 
     if (isItemInCart.quantity === 1) {
       setCartItems(cartItems.filter((cartItem) => cartItem.id !== item.id));
+      if (props.cartCount > 0 ) props.setcartCount(prevState => prevState - 1)
     } else {
       setCartItems(
         cartItems.map((cartItem) =>
@@ -42,15 +45,16 @@ export default function Cart(props){
             : cartItem
         )
       );
+      if (props.cartCount > 0 ) props.setcartCount(prevState => prevState - 1)
     }
   };
-
+/*
   const clearCart = () => {
     setCartItems([]);
   };
   const itemsCount = () => {
     return cartItems.reduce((total, item) => total + item.quantity, 0);
-  }; 
+  }; */
 
   const getCartTotal = () => {
     var num = cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
@@ -71,14 +75,17 @@ export default function Cart(props){
     }
   }, []);
 
+  function closeCartMenu()
+  {
+    props.SetIsCartMenuOpen(false); 
+  }
+
 
     return(
         <>
-       
-     
-
          <div className="mini-container">
-         {props.fullview && <h1 >Cart</h1>}
+          <button className="close-mini-cart-btn" onClick={closeCartMenu}>X</button>
+         { <h1 >Cart</h1>}
   
     {cartItems.map((item) => (
       <div  key={nanoid()}>

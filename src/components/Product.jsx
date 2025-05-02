@@ -1,17 +1,16 @@
 import React from "react";
 import { nanoid } from "nanoid";
 import { Link  } from 'react-router-dom';
+import wishlist_icon from '../assets/wishlist.png';
 
 //Loading times are insanely slow!!! check in network tab in dev tools!
 
 export default function Product(props)
 { 
     //const dispatch = useDispatch()
-    //console.log(props)
+    console.log(props.source)
 
     const [products, setProducts] = React.useState([]);
-    //const [showItem, SetShowItem] = React.useState(false);
-    //const [itemId, setItemId] = React.useState();
 
       React.useEffect(() =>{
         fetch(/*'https://dummyjson.com/products?skip=10'*/props.source)
@@ -49,10 +48,13 @@ export default function Product(props)
     //update the number in navbar, items in the cart
     props.setcartCount(prevState => prevState + 1)
   };
+  function addTowishlist(product)
+  {
+    console.log(product);
+  }
 
     return(
       <>
-      {/*showItem && <SingleProduct itemId={itemId} showItem={showItem} SetShowItem={SetShowItem}  />*/}
       {  products.map(product => ( 
         <div key={nanoid()} className="product-card">      
            <Link to={`/viewproduct/${product.id}`} className="product-link" > 
@@ -60,14 +62,18 @@ export default function Product(props)
             </Link>
            
 
-           <Link to={`/viewproduct/${product.id}`} className="product-link" 
-/*state={{count: props.cartCount,width: props.width}}*/  > 
+           <Link to={`/viewproduct/${product.id}`} className="product-link" > 
       {product.title }
    </Link>
            
             <p>{/*product.description.slice(0, 40)*/}</p>
-            <div className="product-price">${product.price}</div>         
+            <div className="product-price">${product.price}</div>     
+            <div>
             <button className="product-button" onClick={()=>addToCart(product)}>add to cart</button>
+            
+            <img className={"wishlist-button-img"} src={wishlist_icon} onClick={()=>addTowishlist(product)}></img>
+            </div>    
+
         </div>
          )
         ) }
@@ -76,9 +82,4 @@ export default function Product(props)
 
 
     )
-}//onClick={()=>addToCart(product)
-//onClick={() => dispatch(addToCart(product))}
-
-//<Link to={`/viewproduct/${product.id}`} className="product-link" 
-// state={{count: props.cartCount, /*cartItems: JSON.stringify(props.cartItems)*/ width: props.width, /*setCartItems: props.setCartItems*/}}  > 
-//   </Link>
+}

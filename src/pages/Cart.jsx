@@ -5,6 +5,7 @@ import '../styles/Cartstyles.css'
 import Sidemenu from "../components/Sidemenu";
 import { nanoid } from "nanoid";
 import '../App.css';
+import { Link  } from 'react-router-dom';
 
 //you need a different cart jsx file accourding to the guide??? one for all these functions, the other for the cart page itself 
 /*Source:
@@ -90,9 +91,11 @@ export default function Cart(props){
   <div>
     {cartItems.map((item) => (
       <div  key={nanoid()}>
-         <p className="cart-item-title"> {item.title}</p>
+         <p className="cart-item-title">   <Link to={`/viewproduct/${item.id}`}> {item.title}</Link></p>
         <div className="item-container">
-          <img className="cart-item-img" src={item.thumbnail} alt={item.title}  />
+        <Link to={`/viewproduct/${item.id}`}>
+        <img className="cart-item-img" src={item.thumbnail} alt={item.title}  /> 
+        </Link>
           <div className="cart-item-data" >
             
             <p >Price: {item.price}</p>

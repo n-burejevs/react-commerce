@@ -42,6 +42,10 @@
     margin-left: 0px;
     margin-top: 27px;
 }
+.cart-item-title a{
+    text-decoration: none;
+    color: black;
+}
 
 @media (width >= 48em) {
     .cart-list-container{
@@ -82,10 +86,10 @@
         display: grid;
         grid-template-columns: 200px 1fr 1fr;
     }
-      .menu{
+      /*.menu{
         max-width: 30px;
         margin-left: 7px;
-      }
+      }*/
       .cart-page-container{
         display: flex;
         flex-direction: column;
@@ -128,13 +132,14 @@
 .mini-cart-container-absolute{
     position: absolute;
     /*this works?*/
-    right: 0;
+    right: 2px;
+    top: 35px;
 }
 
 .mini-cart-menu{
     position: relative;
-    margin-top: 390px;
-    width: 360px;
+    /*margin-top: 390px;*/
+    width: 340px;
      background-color: #f1f1f1;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -181,7 +186,6 @@
 }
 
 .mini-cart-item-title{
-   
    margin-bottom: 0px;
    margin-left: 20px;
 }
@@ -200,4 +204,23 @@
   .mini-cart-menu{ /*Hide scrollbar*/
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none;
+  }
+  .close-mini-cart-btn{
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-top: 20px;
+    margin-right: 25px;
+    border: solid;
+    border-width: 1px;
+    /*transition-duration: 0.4s;*/
+    width: 30px;
+    cursor: pointer;
+    transition: all 200ms ease-out;
+  }
+  .close-mini-cart-btn:hover{
+    opacity: 0.6;
+    box-shadow: 0 0 0 1px rgba(62, 116, 168, 0.2);
+    background-color: #3576BC;
+    transform: scale(1.05) translateY(.100rem);
   }

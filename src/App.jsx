@@ -5,37 +5,59 @@ import Sidemenu from './components/Sidemenu'
 import Filters from './components/Filters'
 import Product from "./components/Product";
 import Sort from "./components/Sort";
-//import CartContext from './components/CartContext'
-/*
-TO DO:
-https://www.w3schools.com/howto/howto_css_pagination.asp
+import UserContext from './components/UserContext'
+import Pagination from './components/Pagination'
 
-https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
-
-*/
 
 //TO DO:
+// + //add X button to close MiniCart menu
+// + //Add Heart and user icons for liked items (to navbar)
+// + //move "my account" link from navbar to the user acount icon to the left of the searchbar
+// + // https://www.w3schools.com/howto/howto_css_pagination.asp
+
+//finish adding wishlist icon and func. to product.jsx
+//finish category hover menu styling and get links from https://dummyjson.com/docs/products#products-category
+//filters!: e. g. brand
+// filters are not submited by checking checkboxes, thats why there is no data passed to handeler functions
 //add user auth context
 //Add categories
 //add discount & deals page (just add some -% off some random items)
-//Add Heart icon for liked items (to navbar)
 //Add a page for the list of liked items 
-//add Coupon page in use accounts
-
-//TO DO:
-// display recomended products, from similar caterogry (in product.jsx)
+//add Coupon page in user accounts
+//display recomended products, from similar caterogry (in product.jsx)
 //add reviews (in product.jsx)
 //create an ability to post reviews (after you "bought")
+//Add menus to user-account div and wishlist just like its with mini cart menu
+//To DO; https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
 
-//Add an ability to 
+
+//Bug: open mini cart menu in the navbar, add an item (press + button)
+//and click somewhere outside of cart menu. the menu should close itself, but it does not
+//does sth happen with ref={} after the MiniCart re-renders?
+
+//arrow buttons in single product dont work on mobile
+
+//Pagination and Sort are not desingned to work together, yet(maybe add sort query to source url string? or finally get products from a db?? )
+//!!!
+//error happens when undefined category is selected from navigation in Sidemenu and when there are products in the cart(localstorage)
 
 function App() {
-  const [productSource, setProductSource] = React.useState("https://dummyjson.com/products?skip=10")
+  const [user, setUser] = React.useState(null);
+
+  const login = (userData) => {
+    setUser(userData);
+  };
+
+  const logout = () => {
+    setUser(null);
+  };
+
+                                                            ///'https://dummyjson.com/products?limit=10&skip=10'
+  const [productSource, setProductSource] = React.useState("https://dummyjson.com/products?limit=20&skip=10")
   const [width, setWidth] = React.useState(window.innerWidth);
   React.useEffect(() => {
     const handleResize = () => {
-      //shows navbar links after hamburger is tapped and mobile view is switched to desktop view
-      //if(width > 768) { document.getElementById("myLinks").style.display == "flex"}
+      //shows navbar links after hamburger is tapped in mobile view
       setWidth(window.innerWidth);
     };
 
@@ -45,18 +67,22 @@ function App() {
     };
   }, []);
 
-
-
-
-/* At 767 width, the menu renders in the open condition. */
-/*looks bad at 767 width!*/
-
-
 const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
+/*const [cartItems, setCartItems] = React.useState([])
+try
+{//check if undefined
+ setCartItems(JSON.parse(localStorage.getItem('cartItems')))
+}
+catch{
+ setCartItems([])
+}*/
+const CountItems = () => {
+  return cartItems.reduce((total, item) => total + item.quantity, 0);
+}; 
+ const [cartCount, setcartCount ]= React.useState(CountItems)
 
- const [cartCount, setcartCount ]= React.useState(CountItems())
-
-      function CountItems(){
+     /* function CountItems(){
+        if (cartItems===null) return 0;
         let items = 0
        for(let i=0; i<cartItems.length; i++) 
        {
@@ -64,12 +90,14 @@ const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems
        }
        
       return items;
-      } 
+      } */
+
       
   return (
-    <>
+    //handle user auth
+    <UserContext.Provider value={{ user, login, logout }}>
     {/* pass the updated item count to a component, which is displaying it */}
-    <Navbar cartCount={cartCount} width={width} />
+    <Navbar cartCount={cartCount} setcartCount={setcartCount} />
     <div className='main-content-container'>
 
     <div className='sidemenu-filterpane-mobile'> 
@@ -80,13 +108,16 @@ const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems
      <div className="main-content">
                 <Sort source={productSource} setSource={setProductSource}/>
                 {/*Pass the state to update item count, when the added to cart*/}
-                <Product setcartCount={setcartCount} CountItems={CountItems} 
-                cartItems={cartItems} setCartItems={setCartItems} cartCount={cartCount} width={width} source={productSource}/>
+                <Product setcartCount={setcartCount} cartItems={cartItems} setCartItems={setCartItems}
+                 cartCount={cartCount} source={productSource}/>
+                 <Pagination source={productSource} setSource={setProductSource}/>
       </div>
     {width >= 768 && <Filters/>}
+    
     </div>
-      {}
-     </>
+      
+      </UserContext.Provider>
+
   )
 }
 
