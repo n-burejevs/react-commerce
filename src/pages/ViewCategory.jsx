@@ -4,13 +4,27 @@ import Sort from "../components/Sort";
 import Product from "../components/Product";
 import Sidemenu from "../components/Sidemenu";
 import Filters from "../components/Filters";
-
-import {
-    useParams
-  } from "react-router-dom";
+import { checkAuthToken } from '../functions';
+import { useParams } from "react-router-dom";
 
 export default function ViewCategory()
 {
+      const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
+    
+      React.useEffect(() => {
+       
+        const fetchUserInfo = async () => {
+        
+        const loggedUser = await checkAuthToken();
+      //console.log(loggedUser);
+       if(loggedUser) setUser(loggedUser ? {name: loggedUser.name, lastname: loggedUser.lastname, email: loggedUser.email} : null)
+      }
+      fetchUserInfo()
+      .catch(console.error);
+      
+      }, []);
+
+
       const [width, setWidth] = React.useState(window.innerWidth);
       React.useEffect(() => {
         const handleResize = () => {
@@ -35,7 +49,7 @@ export default function ViewCategory()
       const [cartCount, setcartCount ]= React.useState(CountItems)
 
         let { name } = useParams();
-        console.log("param",useParams());
+        //console.log("param",useParams());
        
         
 
@@ -44,7 +58,7 @@ export default function ViewCategory()
         .then(data => setProducts(data.products));*/
     return(
         <>
-        <Navbar cartCount={CountItems()} setcartCount={setcartCount} />
+        <Navbar cartCount={CountItems()} setcartCount={setcartCount} user={user} setUser={setUser} />
 
 
         <div className='main-content-container'>

@@ -82,3 +82,29 @@ ul, .sub-category-item{
 .sub-category-item:hover .sub-hidden-part{
     display: block;
 }
+/*bandaid fix to stop big nav element from rendering on screens with width less than 768( mobile)*/
+
+@media (width >= 48em)
+{
+    .navigation
+    {
+      display: block;
+    }
+   /* #sidemenu-dropdown-mobile-container
+    {
+        display: none;
+    }*/
+}
+    
+@media (width < 48em)
+{
+    .navigation
+    {
+       display: none;
+    }
+    #sidemenu-dropdown-mobile-container
+    {
+        display: block;
+        z-index: 1;
+    }
+}

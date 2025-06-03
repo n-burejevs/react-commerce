@@ -6,11 +6,28 @@ import Sidemenu from "../components/Sidemenu";
 import { nanoid } from "nanoid";
 import '../App.css';
 import { Link  } from 'react-router-dom';
+import { checkAuthToken } from '../functions';
+
 
 //you need a different cart jsx file accourding to the guide??? one for all these functions, the other for the cart page itself 
 /*Source:
 https://dev.to/anne46/cart-functionality-in-react-with-context-api-2k2f*/
-export default function Cart(props){
+export default function Cart(){
+
+        const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
+      
+        React.useEffect(() => {
+         
+          const fetchUserInfo = async () => {
+          
+          const loggedUser = await checkAuthToken();
+        //console.log(loggedUser);
+         if(loggedUser) setUser(loggedUser ? {name: loggedUser.name, lastname: loggedUser.lastname, email: loggedUser.email} : null)
+        }
+        fetchUserInfo()
+        .catch(console.error);
+        
+        }, []);
 
   const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
 
@@ -78,7 +95,7 @@ export default function Cart(props){
     //Navbar needs a prop to get the cartCount?
     return(
         <>
-        <Navbar/>
+        <Navbar user={user} setUser={setUser} />
       <div className="cart-page-container">
 
        

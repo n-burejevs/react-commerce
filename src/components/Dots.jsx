@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import React from "react";
 
-
+/*Small dots uner the image gallery that indicate which image is the current one out of whats available*/
 export default function Dots(props)
 {
     var dots = [];

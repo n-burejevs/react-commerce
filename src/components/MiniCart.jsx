@@ -1,10 +1,12 @@
 import React from "react";
-import Navbar from "../components/Navbar";
 import {/* createContext*/ useState, useEffect } from 'react';
 import '../styles/Cartstyles.css'
 import { nanoid } from "nanoid";
 import { Link  } from 'react-router-dom';
 import '../App.css';
+
+/*This menu lets user know what items are int cart right now, he can view this menu in the Navbar*/
+
 /** i need to style it for mobile, just grab the mobile styles */
 //you need a different cart jsx file accourding to the guide??? one for all these functions, the other for the cart page itself 
 /*Source:
@@ -138,7 +140,7 @@ export default function MiniCart(props){
     </button>
     */}
     
-    <button><Link to="/cart" className="cart-img">Open Cart</Link></button>
+    <Link to="/cart" className="cart-img"><button>Open Cart</button></Link>
   </div>
     ) : (
       <h1 className="text-lg font-bold">Your cart now is empty</h1>

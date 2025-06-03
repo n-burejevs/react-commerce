@@ -21,9 +21,13 @@
     padding-top: 45px;
     padding-bottom: 8px;
     justify-content: space-evenly;
-    margin-top: 24px;
     
   }
+  .main-content, .contact-page{
+    margin-top: 24px;
+  }
+
+
   .product-img{
     width: 100%;
   }
@@ -72,6 +76,7 @@
     font-size: 15px;
     border: none;
     cursor: pointer;
+    z-index: 5;
   }
 
   .dropbtn{
@@ -123,6 +128,15 @@
   align-items: center;
 }
 
+.account-menu{ 
+  display: grid;
+}
+.account-menu-widescreen, .username{
+  display: none;
+}
+.search-prod-title, .search-prod-price{
+  font-size: 12px;
+}
 
 }
 
@@ -170,6 +184,7 @@
   cursor: pointer;
   display: block;
 }*/
+/*this one cause weird indentation(margin) on single-product and login pages*/
 .sidemenu-filterpane-mobile{
   min-width: 130px;
   margin-right: 10px;
@@ -211,6 +226,15 @@
   right: 22px;
 }
 
+.account-menu, .account-menu-widescreen{
+  display: none;
+}
+.user-account-container:hover .account-menu-widescreen{
+  display: grid;
+}
+.search-prod-title, .search-prod-price{
+  font-size: 14px;
+}
 }
 /*big screen styles above^*/
 
@@ -218,6 +242,71 @@
 
 
 /*non screen size related rules*/
+
+.account-menu, .account-menu-widescreen{
+  /*display: grid;*/
+  grid-template-columns: 1fr 80px;
+  /*padding: 5px;*/
+  position: absolute;
+  /*height: 100px;*/
+  max-width: 200px;
+  background-color:rgb(240, 240, 240);
+  border-radius: 10px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
+  align-items: center;
+  justify-content: space-between;
+  /*flex-direction: column;*/
+  right: 20px;
+  ;
+}
+.account-menu p, .account-menu-widescreen p, .greet-user{
+  color: black;
+  margin-left: 15px;
+}
+.greet-user{
+   text-align: center;
+   display: block;
+   margin-left: 0px;
+}
+.greet-user-buttons{
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-content: center;
+  align-items: center;
+  /*width: 100%;*/
+}
+.greet-user-buttons button{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.login-signup-btn{
+  padding: 6px 8px 6px 8px;
+  cursor: pointer;
+  text-align: center;
+  backface-visibility: hidden;
+  background: #4a46be;
+  border: 0;
+  margin-left: 10px;
+ /* margin-right: 10px;
+  margin-bottom: 5px;
+  margin-top: 5px;*/
+  
+}
+.login-signup-btn:hover{
+  opacity: 0.7;
+}
+
+.login-signup-btn{
+  color: white;
+  text-decoration: none;
+}
+
+.user-acc-menu-p, .login-signup-btn{
+   line-height: 1.3;
+   letter-spacing: -.01em;
+   font-size: 0.8rem;
+   font-weight: 500;
+}
 
 .navbar {
   display: flex;
@@ -301,7 +390,7 @@
   padding: 6px 8px;
 }
 .user-account-container{
-  padding: 5px 8px;
+  padding: 5.5px 8.5px;
   margin-left: 5px;
 }
 
@@ -486,25 +575,40 @@
 }
 /*the div that shows up when user is searching*/
 .search-result-popout{
-  display: grid;
-  grid-template-columns: auto auto auto;
-  align-items: center;
-  justify-content: space-around;
+  
   color: black;
   width: 100%;
-  height: 80px;
+  height: 170px;
   overflow-y: scroll;
   /*Hide scrollbar*/
   -ms-overflow-style: none;  /* Internet Explorer 10+ */
   scrollbar-width: none;
-  /*3px will align with the searchfield*/
-  padding-right: 3px;
+  /*3px will align with the searchfield? or not*/
+  /*padding-right: 3px;*/
   position: absolute;
   top: 100%;
-  ;
   z-index: 4;
   
   background-color: rgb(213, 220, 247);
+}
+.search-prod-hover{
+  display: grid;
+  grid-template-columns: auto auto auto;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 10px;
+  margin-top: 5px;
+  width: 100%;
+}
+.search-prod-hover:hover{
+  opacity: 0.6;
+  cursor: pointer;
+  background-color: rgb(173, 178, 210)
+}
+.search-prod-hover a
+{
+ text-decoration: none;
+ color: black;
 }
 /*Hide scrollbar*/
 .search-result-popout::-webkit-scrollbar { 
@@ -574,4 +678,8 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+}
+.username{
+ font-size: 13px;
+ padding-left: 5px;
 }

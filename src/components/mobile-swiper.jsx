@@ -1,5 +1,6 @@
 import { useCallback, useState, useRef, React, useEffect } from "react"
-
+/*This is a helper component, provides functionality to swipe on touch devices
+ to view multiple product images inside singleproduct component*/
 /*source: https://www.freecodecamp.org/news/how-to-build-mobile-swiping-component-in-react/*/
 
 export default function MobileSwiper({ children, onSwipe }) {

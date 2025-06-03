@@ -5,10 +5,28 @@ import { nanoid } from "nanoid";
 import '../App.css'
 import '../styles/Sldieshow.css'
 import Sidemenu from '../components/Sidemenu';
-import Slideshow from "../components/slideshow";
+import Slideshow from "../components/Slideshow";
+import { checkAuthToken } from '../functions';
 /* This page needs styling*/
 export default function SingleProduct(){
        
+    const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
+  
+    React.useEffect(() => {
+     
+      const fetchUserInfo = async () => {
+      
+      const loggedUser = await checkAuthToken();
+    //console.log(loggedUser);
+     if(loggedUser) setUser(loggedUser ? {name: loggedUser.name, lastname: loggedUser.lastname, email: loggedUser.email} : null)
+    }
+    fetchUserInfo()
+    .catch(console.error);
+    
+  
+    }, []);
+
+
     const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
     
     //const { count } = useLocation().state;
@@ -63,8 +81,9 @@ export default function SingleProduct(){
 
     return(
         <div key={nanoid()} className='main-content-container'>
-            <Navbar cartCount={cartCount} />
-            <Sidemenu/>
+            <Navbar cartCount={cartCount} user={user} setUser={setUser}/>
+        <div className='sidemenu-filterpane-mobile'> <Sidemenu />  
+                        </div>
         
         <div key={singleProduct.id} className="single-product-view">
         

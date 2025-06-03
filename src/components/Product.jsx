@@ -8,7 +8,7 @@ import wishlist_icon from '../assets/wishlist.png';
 export default function Product(props)
 { 
     //const dispatch = useDispatch()
-    console.log(props.source)
+    //console.log(props.source)
 
     const [products, setProducts] = React.useState([]);
 

@@ -36,14 +36,14 @@ export default function Slideshow(props){
         
         function showNext()
         {
-           
+           //console.log("next")
             if(imageSeqNum >= newImageArray.length-1) setImageSeqNum(0);
             else {
                 setImageSeqNum(prevState => prevState + 1)
             }
         }
         function showPrev()
-        {
+        {  // console.log("prev")
             if(imageSeqNum <= 0) setImageSeqNum(newImageArray.length-1)
             else {
                 setImageSeqNum(prevState => prevState - 1)
@@ -77,8 +77,15 @@ export default function Slideshow(props){
       {/*console.log(imageSeqNum)*/}
       <div className="movable-block" /*style={position[imageSeqNum]}*/ >
       <MobileSwiper onSwipe={handleSwipe}>
-      { <button className="next-btn" onClick={showNext}><img className="arrow-btn" src={arrow} alt="Next"></img></button>}
-      { <button className="prev-btn" onClick={showPrev}><img className="arrow-btn" src={arrowReverse} alt="Previous"></img></button>}
+      { <button className="next-btn" onClick={showNext}>
+        <img className="arrow-btn" src={arrow} alt="Next"></img>
+        </button>}
+
+        {/*<img  className="next-btn" id="arrow-btn" src={arrow} onClick={showNext} alt="Next"></img>*/}
+
+      { <button className="prev-btn" onClick={showPrev}>
+        <img className="arrow-btn" src={arrowReverse} alt="Previous"></img>
+        </button>}
             {newImageArray[imageSeqNum]}
             </MobileSwiper>
             

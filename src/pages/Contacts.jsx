@@ -1,26 +1,29 @@
 import React from "react";
 import Navbar from '../components/Navbar'
 import Sidemenu from "../components/Sidemenu";
+import { checkAuthToken } from '../functions';
 
 export default function Contact(){
 
-    //get width
-    //  why do i need width????????????
-  /*const [width, setWidth] = React.useState(window.innerWidth);
-  React.useEffect(() => {
-    const handleResize = () => {
-      setWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);*/
+    const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
+  
+    React.useEffect(() => {
+     
+      const fetchUserInfo = async () => {
+      
+      const loggedUser = await checkAuthToken();
+    //console.log(loggedUser);
+     if(loggedUser) setUser(loggedUser ? {name: loggedUser.name, lastname: loggedUser.lastname, email: loggedUser.email} : null)
+    }
+    fetchUserInfo()
+    .catch(console.error);
+    
+  
+    }, []);
     
     return (
         <div>
-             <Navbar/>
+             <Navbar user={user} setUser={setUser}/>
                <div className='main-content-container'>
             
                 <div className='sidemenu-filterpane-mobile'> 

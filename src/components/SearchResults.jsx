@@ -7,23 +7,33 @@ export default function SearchResults(props)
    function printSearchedItems()
    {
    
-    var searchedProd =[];
-    //console.log(props.results);
-       // for (var key in  props.results) {
+    /*var searchedProd =[];
        for(let i=0; i<props.results.length; i++)
-        //if ( props.results.hasOwnProperty(key))
-        {//3 key attributes????
+        {
             searchedProd.push(<div key={nanoid()}><Link to={`/viewproduct/${props.results[i].id}`}> 
-                                 <img className="serached-prod-img" src={props.results[i].img}></img>
+                                 <img className="serached-prod-img" src={props.results[i].thumbnail}></img>
                                                 </Link></div>);
-            searchedProd.push(<div key={nanoid()} >{props.results[/*key*/i].title}</div>);
+            searchedProd.push(<div key={nanoid()} >{props.results[i].title}</div>);
             searchedProd.push(<div key={nanoid()}>{props.results[i].price}</div>);
              
-      // }
- 
-        return searchedProd;
+       }*/
+ //console.log(searchedProd);
+       // return searchedProd;
+       return <>
+       {props.results.map(product => (
+        <div key={nanoid()} className="search-prod-hover">
+          <div key={nanoid()}>
+            <Link to={`/viewproduct/${product.id}`}> 
+                <img  className="serached-prod-img" src={product.thumbnail}></img>
+            </Link></div>
+             <Link to={`/viewproduct/${product.id}`}> <div key={nanoid()} className="search-prod-title">{product.title}</div></Link>
+            <div key={nanoid()} className="search-prod-price">{product.price}</div>
+
+        </div>      ))}
+       </>
+
 }
-   }
+   
     return(
         <div className="search-result-popout">
         

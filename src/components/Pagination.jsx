@@ -1,6 +1,6 @@
 import React from "react";
 import '../styles/PaginationStyles.css'
-
+/**/
 function Pagination(props)
 {
     const [pageNumber, SetPageNumber] = React.useState(1);

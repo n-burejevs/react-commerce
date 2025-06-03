@@ -1,7 +1,7 @@
 .cart-list-container{
     background-color: white;
     color: black;
-    margin-top: 25px;
+    /*margin-top: 25px;*/
     border: none;
     border-radius: 10px;
     padding-left: 10px;
@@ -50,6 +50,7 @@
 @media (width >= 48em) {
     .cart-list-container{
         margin-left: 10px;
+        margin-top: 21px;
     }
     .add-remove-container, .cart-item-total{
         display: flex;

@@ -7,11 +7,12 @@ export default function Sidemenu()
        
     let container = React.createRef();
     const [open, setOpen] = React.useState(false);
+    //this solution stopped working?
     const [width, SetWidth] = React.useState(window.innerWidth);
-
-   React.useEffect(() => {
+//this no longer works? had to remove conditional rendering - width >=768 (render nav), width < 768 (render sidemenu dropdown button)
+ /*  React.useEffect(() => {
     SetWidth(window.innerWidth);
-    },[window.innerWidth]);
+    },[window.innerWidth]);*/
 
     function handleButtonClick()
     {
@@ -71,9 +72,10 @@ export default function Sidemenu()
     */
     return(
         <>
-        { width < 768 && 
-         <div className="dropdown" ref={container}>
+        {/*width < 768 && */
+         <div className="dropdown" ref={container} id="sidemenu-dropdown-mobile-container">
             <button onClick={handleButtonClick} className="dropbtn">Sidemenu</button>
+           
             {open && <div id="myDropdown" className="sidemenu">
                 {
                     printSidemenuLinks()
@@ -82,12 +84,13 @@ export default function Sidemenu()
             </div> }
         </div>
         }
-        { width >= 768 && 
+        {/*width >= 768 && */
          <div className="dropdown" id="sidemenu-dropdown-container">
             
             <div id="myDropdown" className="sidemenu">
-                {
-                    /*printSidemenuLinks()*/
+                {/*printSidemenuLinks()*/}
+               { 
+                    
                     <nav className="navigation">
 
                     <div className="category-item">
@@ -117,8 +120,8 @@ export default function Sidemenu()
                      Shoes
                     <div className="sub-hidden-part">
                       <ul>
-                        <li>Mens Shoes</li>
-                        <li>Womens Shoes</li>
+                        <li><Link to={`/category/mens-shoes`} className="product-link" >Mens Shoes</Link></li>
+                         <li><Link to={`/category/womens-shoes`} className="product-link" >Womens Shoes</Link></li>
                       </ul>
                       </div>
                       
@@ -133,8 +136,8 @@ export default function Sidemenu()
                       <span className="category-name">Beauty</span>
                     <div className="hidden-part">
                       <ul>
-                        <li>Skin Care</li>
-                        <li>Fragrances</li>
+                        <li><Link to={`/category/skin-care`} className="product-link" >Skin Care</Link></li>
+                        <li><Link to={`/category/fragrances`} className="product-link" >Fragrances</Link></li>
                       </ul>
                       </div>
                       </div>
