@@ -17,6 +17,7 @@ export function getCookie(cname) {
 }
 
 //send token code to check if what user is logged in/if logged in
+//token is not protected and is unsafe...
 export async function checkAuthToken() {
   let cookieToken = getCookie('token');
   if(cookieToken !== ''){

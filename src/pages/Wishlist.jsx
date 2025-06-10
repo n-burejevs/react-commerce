@@ -7,12 +7,14 @@ import { nanoid } from "nanoid";
 import '../App.css';
 import { Link  } from 'react-router-dom';
 import { checkAuthToken } from '../functions';
+import cart from '../assets/cart.png';
 
-
-//you need a different cart jsx file accourding to the guide??? one for all these functions, the other for the cart page itself 
+//This is a copy from Cart.jsx adjusted for wishlist, i figure the functionality is about the same, except,
+//you should be able do add items from this list to Cart,
+// which should be easily done with addToCart function and sent, and kept in localstorage
 /*Source:
 https://dev.to/anne46/cart-functionality-in-react-with-context-api-2k2f*/
-export default function Cart(){
+export default function Wishlist(){
 
         const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
       
@@ -30,31 +32,38 @@ export default function Cart(){
         }, []);
 
   const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
+  const CountItems = () => {
+  return cartItems.reduce((total, item) => total + item.quantity, 0);
+}; 
+  const [cartCount, setcartCount ]= React.useState(CountItems);
+  
+//console.log(cartItems);
+   const [wishlistItems, setWishlistItems] = useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
+//console.log(wishlistItems);
+  const addToWishList = (item) => {
+    const isItemInWishlist = wishlistItems.find((wishedItem) => wishedItem.id === item.id);
 
-  const addToCart = (item) => {
-    const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
-
-    if (isItemInCart) {
-      setCartItems(
-        cartItems.map((cartItem) =>
-          cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.quantity + 1 }
-            : cartItem
+    if (isItemInWishlist) {
+      setWishlistItems(
+        wishlistItems.map((wishedItem) =>
+          wishedItem.id === item.id
+            ? { ...wishedItem, quantity: wishedItem.quantity + 1 }
+            : wishedItem
         )
       );
     } else {
-      setCartItems([...cartItems, { ...item, quantity: 1 }]);
+      setWishlistItems([...wishlistItems, { ...item, quantity: 1 }]);
     }
   };
 
-  const removeFromCart = (item) => {
-    const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
+  const removeFromWishlist = (item) => {
+    const isItemInWishList = wishlistItems.find((cartItem) => cartItem.id === item.id);
 
-    if (isItemInCart.quantity === 1) {
-      setCartItems(cartItems.filter((cartItem) => cartItem.id !== item.id));
+    if (isItemInWishList.quantity === 1) {
+      setWishlistItems(wishlistItems.filter((cartItem) => cartItem.id !== item.id));
     } else {
-      setCartItems(
-        cartItems.map((cartItem) =>
+      setWishlistItems(
+        wishlistItems.map((cartItem) =>
           cartItem.id === item.id
             ? { ...cartItem, quantity: cartItem.quantity - 1 }
             : cartItem
@@ -63,39 +72,77 @@ export default function Cart(){
     }
   };
 
-  const clearCart = () => {
-    setCartItems([]);
+  const clearWishlist = () => {
+    setWishlistItems([]);
   };
   const itemsCount = () => {
     return cartItems.reduce((total, item) => total + item.quantity, 0);
   }; 
 
   const getCartTotal = () => {
-    var num = cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
+    var num = wishlistItems.reduce((total, item) => total + item.price * item.quantity, 0)
     return Math.round((num + Number.EPSILON) * 100) / 100
     //return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   }; 
 
 
 
-  useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  }, [cartItems]);
+  React.useEffect(() => {
+    localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
+  }, [wishlistItems]);
 
-  useEffect(() => {
-    const cartItems = localStorage.getItem("cartItems");
-    if (cartItems) {
-      setCartItems(JSON.parse(cartItems));
+  React.useEffect(() => {
+    const wishlistItems = localStorage.getItem("wishlistItems");
+    if (wishlistItems) {
+      setWishlistItems(JSON.parse(wishlistItems));
     }
   }, []);
 
+   React.useEffect(() => {
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    }, [cartItems]);
   
+    React.useEffect(() => {
+      const cartItems = localStorage.getItem("cartItems");
+      if (cartItems) {
+        setCartItems(JSON.parse(cartItems));
+      }
+    }, []);
+
+    //user can take an item from wishlist and add it to cart
+    function addToCart(item){
+    console.log(item);
+    let isItemInCart = false;
+   try{
+    isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
+   }
+    catch(e) {
+      console.log(e.message)
+    }
+
+    if (isItemInCart) {
+      
+      setCartItems(
+        cartItems.map((cartItem) =>
+          cartItem.id === item.id
+            ? { ...cartItem, quantity: cartItem.quantity + item.quantity }
+            : cartItem
+        )
+      );
+
+    } else {
+      setCartItems([...cartItems, { ...item, quantity: 1 }]);
+    }
+    //update the number in navbar, items in the cart
+    setcartCount(cartItems.quantity + item.quantity)
+  };
 
   
     //Navbar needs a prop to get the cartCount?
     return(
         <>
-        <Navbar user={user} setUser={setUser} />
+        <Navbar user={user} setUser={setUser} cartCount={itemsCount()} 
+        setcartCount={setcartCount} cartItems={cartItems} setCartItems={setCartItems} />
       <div className="cart-page-container">
 
        
@@ -104,9 +151,9 @@ export default function Cart(){
 
 
          <div className="cart-list-container">
-         <h1 >Cart</h1>
+         <h1 >Wishlist</h1>
   <div>
-    {cartItems.map((item) => (
+    {wishlistItems.map((item) => (
       <div  key={nanoid()}>
          <p className="cart-item-title">   <Link to={`/viewproduct/${item.id}`}> {item.title}</Link></p>
         <div className="item-container">
@@ -120,7 +167,7 @@ export default function Cart(){
           <div className="add-remove-container">
           <button className="cart-plsu-minus-btn"
             onClick={() => {
-              addToCart(item)
+              addToWishList(item)
             }}
           >
             +
@@ -128,10 +175,18 @@ export default function Cart(){
           <p className="cart-item-quantity">{item.quantity}</p>
           <button className="cart-plsu-minus-btn"
             onClick={() => {
-              removeFromCart(item)
+              removeFromWishlist(item)
             }}
           >
             -
+          </button>
+{/*add to cart from wishlist*/}
+                    <button className="wishlist-to-cart-btn"
+            onClick={() => {
+              addToCart(item)
+            }}
+          >
+            <img className="add-to-cart-from-wishlist-img" src={cart} alt="add to cart"/>
           </button>
           
         </div>
@@ -142,19 +197,19 @@ export default function Cart(){
     ))}
   </div>
   {
-    cartItems.length > 0 ? (
+    wishlistItems.length > 0 ? (
       <div >
     <h1 >Total: ${getCartTotal()}</h1>
     <button
       onClick={() => {
-        clearCart()
+        clearWishlist()
       }}
     >
-      Clear cart
+      Clear wishlist
     </button>
   </div>
     ) : (
-      <h1 className="text-lg font-bold">Your cart now is empty</h1>
+      <h1 className="text-lg font-bold">Your wishlist now is empty</h1>
     )
   }
 </div>

@@ -7,18 +7,6 @@ export default function SearchResults(props)
    function printSearchedItems()
    {
    
-    /*var searchedProd =[];
-       for(let i=0; i<props.results.length; i++)
-        {
-            searchedProd.push(<div key={nanoid()}><Link to={`/viewproduct/${props.results[i].id}`}> 
-                                 <img className="serached-prod-img" src={props.results[i].thumbnail}></img>
-                                                </Link></div>);
-            searchedProd.push(<div key={nanoid()} >{props.results[i].title}</div>);
-            searchedProd.push(<div key={nanoid()}>{props.results[i].price}</div>);
-             
-       }*/
- //console.log(searchedProd);
-       // return searchedProd;
        return <>
        {props.results.map(product => (
         <div key={nanoid()} className="search-prod-hover">

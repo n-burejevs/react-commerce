@@ -75,13 +75,60 @@ export default function SingleProduct(){
 
        React.useEffect(() => {
               localStorage.setItem("cartItems", JSON.stringify(cartItems));
-              localStorage.setItem("cartCount", itemsCount);
+              /*Why do i need this?*/localStorage.setItem("cartCount", itemsCount);
               setcartCount(itemsCount);
             }, [cartItems]);
 
+const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
+                    
+const CountWishedItems = () => {
+  return wishlistItems.reduce((total, item) => total + item.quantity, 0);
+}; 
+  const [wishListCount, setWishListCount]= React.useState(CountWishedItems)
+         
+  React.useEffect(() => {
+    localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
+    setWishListCount(CountWishedItems);
+    }, [wishlistItems]);
+                     
+    React.useEffect(() => {
+       const wishlistItems = localStorage.getItem("wishlistItems");
+        if (wishlistItems) {
+         setWishlistItems(JSON.parse(wishlistItems));
+            }
+            }, []);
+            
+            
+            
+            
+function addTowishlist(item)
+  {
+    let wishListed = false;
+    wishListed = wishlistItems.find((w) => w.id === item.id);
+
+    if (wishListed) {
+      
+      setWishlistItems(
+        wishlistItems.map((whisList) =>
+          whisList.id === item.id
+            ? { ...whisList, quantity: whisList.quantity + 1 }
+            : whisList
+        )
+      );
+
+    } else {
+      setWishlistItems([...wishlistItems, { ...item, quantity: 1 }]);
+      //console.log(props.wishlistItems);
+    }
+    //update the number in navbar, items in the cart
+    setWishListCount(prevState => prevState + 1)
+  }       
+
     return(
         <div key={nanoid()} className='main-content-container'>
-            <Navbar cartCount={cartCount} user={user} setUser={setUser}/>
+            <Navbar cartCount={cartCount} user={user} setUser={setUser}
+             wishListCount={wishListCount} setWishListCount={setWishListCount} />
+
         <div className='sidemenu-filterpane-mobile'> <Sidemenu />  
                         </div>
         
@@ -102,7 +149,8 @@ export default function SingleProduct(){
         <div key={nanoid()}>{singleProduct.price}</div>
         <div key={nanoid()}>{singleProduct.stock}</div>
         <div key={nanoid()}>{singleProduct.brand}</div>
-        <button key={nanoid()} onClick={()=>addToCart(singleProduct)}> Add to cart </button>
+        <button key={nanoid()} onClick={()=>addToCart(singleProduct)}>Add to cart</button>
+         <button key={nanoid()} onClick={()=>addTowishlist(singleProduct)}>Add to wishlist</button>
         </div>
         
         {/*console.log(props.cartItems)*/}

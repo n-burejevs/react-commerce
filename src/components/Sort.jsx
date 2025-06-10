@@ -31,14 +31,6 @@ React.useEffect(() => {
     };
   }, [open]);
 
-  //test
-  const [test, setTest] = React.useState();
-  React.useEffect(() =>{
-          fetch(props.source)
-          .then(res => res.json())
-          .then(data => setTest(data.products))
-          },[])
-
 function sortAscending()
 {
   props.setSource("https://dummyjson.com/products?sortBy=price&order=asc")

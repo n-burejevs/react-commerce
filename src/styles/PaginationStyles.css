@@ -15,6 +15,7 @@
     float: left;
     padding: 8px 15px;
     text-decoration: none;
+    margin: 1px;
   }
   /*
   .pagination a.active {

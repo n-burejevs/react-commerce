@@ -27,7 +27,7 @@ export default function Contact(){
                <div className='main-content-container'>
             
                 <div className='sidemenu-filterpane-mobile'> 
-                <Sidemenu show={()=>toggleShowHide("myDropdown")}/>  
+                <Sidemenu/>  
                   
                 </div>
                 <div className="contact-page">

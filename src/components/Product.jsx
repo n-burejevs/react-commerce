@@ -4,10 +4,9 @@ import { Link  } from 'react-router-dom';
 import wishlist_icon from '../assets/wishlist.png';
 
 //Loading times are insanely slow!!! check in network tab in dev tools!
-
+//added "lazy loading" to img
 export default function Product(props)
 { 
-    //const dispatch = useDispatch()
     //console.log(props.source)
 
     const [products, setProducts] = React.useState([]);
@@ -21,6 +20,15 @@ export default function Product(props)
       React.useEffect(() => {
         localStorage.setItem("cartItems", JSON.stringify(props.cartItems));
       }, [props.cartItems]);
+
+      /*duplicated in app.jsx!!!
+         React.useEffect(() => {
+        localStorage.setItem("wishlist", JSON.stringify(props.wishlistItems));
+        console.log("in product");
+        //console.log(props.wishlistItems);
+      }, [props.wishlistItems]);
+*/
+      
  
   function addToCart(item){
     console.log(item);
@@ -48,11 +56,31 @@ export default function Product(props)
     //update the number in navbar, items in the cart
     props.setcartCount(prevState => prevState + 1)
   };
-  function addTowishlist(product)
+  
+//same functions as addToCart
+  function addTowishlist(item)
   {
-    console.log(product);
-  }
+    let wishListed = false;
+    wishListed = props.wishlistItems.find((w) => w.id === item.id);
 
+    if (wishListed) {
+      
+      props.setWishlistItems(
+        props.wishlistItems.map((whisList) =>
+          whisList.id === item.id
+            ? { ...whisList, quantity: whisList.quantity + 1 }
+            : whisList
+        )
+      );
+
+    } else {
+      props.setWishlistItems([...props.wishlistItems, { ...item, quantity: 1 }]);
+      //console.log(props.wishlistItems);
+    }
+    //update the number in navbar, items in the cart
+    props.setWishListCount(prevState => prevState + 1)
+  }
+{/*console.log(wishlistItems)*/}
     return(
       <>
       {  products.map(product => ( 
@@ -63,8 +91,8 @@ export default function Product(props)
            
 
            <Link to={`/viewproduct/${product.id}`} className="product-link" > 
-      {product.title }
-   </Link>
+                {product.title }
+            </Link>
            
             <p>{/*product.description.slice(0, 40)*/}</p>
             <div className="product-price">${product.price}</div>     

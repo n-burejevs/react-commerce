@@ -89,13 +89,30 @@ export default function Cart(){
     }
   }, []);
 
+  const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
+          
+  const CountWishedItems = () => {
+      return wishlistItems.reduce((total, item) => total + item.quantity, 0);
+  }; 
+  const [wishListCount, setWishListCount]= React.useState(CountWishedItems)
   
+  React.useEffect(() => {
+    localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
+    setWishListCount(CountWishedItems);
+  }, [wishlistItems]);
+           
+  React.useEffect(() => {
+    const wishlistItems = localStorage.getItem("wishlistItems");
+    if (wishlistItems) {
+    setWishlistItems(JSON.parse(wishlistItems));
+  }
+  }, []);
 
   
     //Navbar needs a prop to get the cartCount?
     return(
         <>
-        <Navbar user={user} setUser={setUser} />
+        <Navbar user={user} setUser={setUser} wishListCount={wishListCount} setWishListCount={setWishListCount} />
       <div className="cart-page-container">
 
        

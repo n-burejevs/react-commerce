@@ -41,7 +41,7 @@ export default function ViewCategory()
        //const [products, setProducts] = React.useState([]);
 
        const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
-     
+
        const CountItems = () => {
         return cartItems.reduce((total, item) => total + item.quantity, 0);
       }; 
@@ -56,9 +56,30 @@ export default function ViewCategory()
         /* fetch(`https://dummyjson.com/products/category/${categoryName}?limit=20&skip=10`)
         .then(res => res.json())
         .then(data => setProducts(data.products));*/
-    return(
+
+const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
+        
+const CountWishedItems = () => {
+    return wishlistItems.reduce((total, item) => total + item.quantity, 0);
+}; 
+const [wishListCount, setWishListCount]= React.useState(CountWishedItems)
+
+React.useEffect(() => {
+  localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
+  setWishListCount(CountWishedItems);
+}, [wishlistItems]);
+         
+React.useEffect(() => {
+  const wishlistItems = localStorage.getItem("wishlistItems");
+  if (wishlistItems) {
+  setWishlistItems(JSON.parse(wishlistItems));
+}
+}, []);
+
+return(
         <>
-        <Navbar cartCount={CountItems()} setcartCount={setcartCount} user={user} setUser={setUser} />
+        <Navbar cartCount={CountItems()} setcartCount={setcartCount} user={user} setUser={setUser}
+        wishListCount={wishListCount} setWishListCount={setWishListCount} />
 
 
         <div className='main-content-container'>
@@ -72,7 +93,9 @@ export default function ViewCategory()
                 {/*<Sort source={productSource} setSource={setProductSource}/>*/}
                 {/*Pass the state to update item count, when the added to cart*/}
                 <Product setcartCount={setcartCount} cartItems={cartItems} setCartItems={setCartItems}
-                 cartCount={cartCount} source={`https://dummyjson.com/products/category/${name}?limit=20`}/>
+                 cartCount={cartCount} source={`https://dummyjson.com/products/category/${name}?limit=20`}
+                 wishListCount={wishListCount} setWishListCount={setWishListCount} 
+                 wishlistItems={wishlistItems} setWishlistItems={setWishlistItems}/>
                  {/*<Pagination source={productSource} setSource={setProductSource}/>*/}
       </div>
     {width >= 768 && <Filters/>}

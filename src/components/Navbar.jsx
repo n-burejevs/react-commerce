@@ -7,7 +7,7 @@ import search_icon from '../assets/search.png';
 import wishlist_icon from '../assets/wishlist.png';
 import user_account_icon from '../assets/user-account.png';
 import MiniCart from '../components/MiniCart'
-import { checkAuthToken } from "../functions";
+//import { checkAuthToken } from "../functions";
 //import useContext from
 //import UserContext from "./UserContext";
 
@@ -37,6 +37,9 @@ const [isNavMenuOpen, setIsNavMenuOpen] = React.useState(false);
 const [isCartMenuOpen, SetIsCartMenuOpen] = React.useState(false);
 const [isAccountMenuOpen, SetIsAccountMenuOpen] = React.useState(false);
 
+
+//const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
+
    function handleButtonClick(){
    // console.log("before"+isNavMenuOpen);
         setIsNavMenuOpen(prevState => !prevState);
@@ -65,12 +68,6 @@ function handleChange(event)
 //const [products, setProducts] = React.useState([]);
 
 const [searchResults, setsearchResults] = React.useState([]);
-/*
-  React.useEffect(() =>{
-  fetch('https://dummyjson.com/products')
-  .then(res => res.json())
-  .then(data => setProducts(data.products))
-  },[])*/
 
   //too many searches
   React.useEffect(() =>{
@@ -84,25 +81,6 @@ const [searchResults, setsearchResults] = React.useState([]);
    .then(res => res.json())
    .then(newData => setsearchResults(newData.products));
     
-
-     /* for(var i=0; i<products.length; i++)
-      {
-      
-      let productTitle = products[i].title;       
-         //if searched phrase matches the product
-        //cant get more than one result?!?!!?
-        if(productTitle.toLowerCase().includes(searchFor.toLowerCase())) 
-        {
-          results.title = products[i].title;
-          results.price = products[i].price;
-          results.img = products[i].thumbnail;
-          results.id = products[i].id;
-
-          setsearchResults(prevState => [...prevState, results]);
-          
-        }
-        //console.log(searchResults);
-      }*/
     }//clean search results and close the search result box
     else if(searchFor.length === 0) { 
       setSearchResultsVisible(false);
@@ -165,6 +143,7 @@ function handleClickOutside(event){
     return(
   
         <div className="navbar" >
+          {console.log(props.cartItems)}
           <div ref={container}>
           <img src={hamb} className="menu" alt="menu icon" /**/ onClick={handleButtonClick}></img>
             {isNavMenuOpen && ( <div id="myLinks" > 
@@ -197,7 +176,7 @@ function handleClickOutside(event){
 
           <div className="user-account-container" ref={accountMenuContainer}>
            
-          {/*<Link to='/my-account' className="anchor">*/}
+          
             <img className="user-account-icon" src={user_account_icon} onClick={toggleAccountMenu} alt="user-account-icon"></img>
             {/*</Link}>*/}
   
@@ -256,7 +235,8 @@ function handleClickOutside(event){
           {props.user && <div className="username">{props.user.name}</div>}
 
           <div className="wishlist-container">
-            <img className="wishlist-icon" src={wishlist_icon} alt="wishlist-icon"></img>
+             <Link to='/wishlist' > <img className="wishlist-icon" src={wishlist_icon} alt="wishlist-icon"></img></Link>
+               {props.wishListCount ? <span className="cart-item-count">{props.wishListCount}</span> : ""}
           </div>
 
           {/** this div is just for the ref  */}
@@ -267,9 +247,11 @@ function handleClickOutside(event){
          
            </div>
            <div className="mini-cart-container-absolute" >
-            {/*console.log("state: "+isCartMenuOpen)*/}
+            {/*console.log("state: "+isCartMenuOpen)*/}{console.log(props.cartCount)}
            { isCartMenuOpen && <div className="mini-cart-menu"   >
-              <MiniCart cartCount={props.cartCount} setcartCount={props.setcartCount} SetIsCartMenuOpen={SetIsCartMenuOpen}/>
+              <MiniCart cartCount={props.cartCount} setcartCount={props.setcartCount} SetIsCartMenuOpen={SetIsCartMenuOpen}
+              cartItems={props.cartItems} setCartItems={props.setCartItems}/>
+              
               </div>}
             </div>
             </div>

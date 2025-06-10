@@ -13,69 +13,62 @@ import '../App.css';
 https://dev.to/anne46/cart-functionality-in-react-with-context-api-2k2f*/
 export default function MiniCart(props){
 
-  const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
-
   const addToCart = (item) => {
-    const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
+    const isItemInCart = props.cartItems.find((cartItem) => cartItem.id === item.id);
 
     if (isItemInCart) {
-      setCartItems(
-        cartItems.map((cartItem) =>
+      props.setCartItems(
+        props.cartItems.map((cartItem) =>
           cartItem.id === item.id
             ? { ...cartItem, quantity: cartItem.quantity + 1 }
             : cartItem
         )
       );
-      props.setcartCount(prevState => prevState + 1)
     } else {
-      setCartItems([...cartItems, { ...item, quantity: 1 }]);
-      props.setcartCount(prevState => prevState + 1)
+      props.setCartItems([...props.cartItems, { ...item, quantity: 1 }]);
     }
+    props.setcartCount(prevState => prevState + 1)
   };
 
   const removeFromCart = (item) => {
-    const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
+    const isItemInCart = props.cartItems.find((cartItem) => cartItem.id === item.id);
 
     if (isItemInCart.quantity === 1) {
-      setCartItems(cartItems.filter((cartItem) => cartItem.id !== item.id));
-      if (props.cartCount > 0 ) props.setcartCount(prevState => prevState - 1)
+      props.setCartItems(props.cartItems.filter((cartItem) => cartItem.id !== item.id));
+      //if (props.cartCount > 0 ) props.setcartCount(prevState => prevState - 1)
     } else {
-      setCartItems(
-        cartItems.map((cartItem) =>
+      props.setCartItems(
+        props.cartItems.map((cartItem) =>
           cartItem.id === item.id
             ? { ...cartItem, quantity: cartItem.quantity - 1 }
             : cartItem
         )
       );
-      if (props.cartCount > 0 ) props.setcartCount(prevState => prevState - 1)
     }
+    props.setcartCount(prevState => prevState - 1)
   };
-/*
-  const clearCart = () => {
-    setCartItems([]);
-  };
-  const itemsCount = () => {
-    return cartItems.reduce((total, item) => total + item.quantity, 0);
-  }; */
 
   const getCartTotal = () => {
-    var num = cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
+    var num = props.cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
     return Math.round((num + Number.EPSILON) * 100) / 100
     //return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   }; 
-
-
+/*
+const CountItems = () => {
+  return cartItems.reduce((total, item) => total + item.quantity, 0);
+}; */
 
   useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  }, [cartItems]);
-
+    localStorage.setItem("cartItems", JSON.stringify(props.cartItems));
+    //props.setcartCount(CountItems);
+  }, [props.cartItems]);
+/*
   useEffect(() => {
     const cartItems = localStorage.getItem("cartItems");
     if (cartItems) {
-      setCartItems(JSON.parse(cartItems));
+      props.setCartItems(JSON.parse(props.cartItems));
     }
-  }, []);
+  }, []);*/
 
   function closeCartMenu()
   {
@@ -89,7 +82,7 @@ export default function MiniCart(props){
           <button className="close-mini-cart-btn" onClick={closeCartMenu}>X</button>
          { <h1 >Cart</h1>}
   
-    {cartItems.map((item) => (
+    {props.cartItems.map((item) => (
       <div  key={nanoid()}>
          <p className="mini-cart-item-title"> <Link to={`/viewproduct/${item.id}`} className="product-link" > {item.title } </Link></p>
         <div className="mini-cart-item-container">
@@ -127,18 +120,9 @@ export default function MiniCart(props){
     ))}
   
   {
-    cartItems.length > 0 ? (
+    props.cartItems.length > 0 ? (
       <div >
     <h1 >Total: ${getCartTotal()}</h1>
-  
-{ /*   <button
-      onClick={() => {
-        clearCart()
-      }}
-    >
-      Clear cart
-    </button>
-    */}
     
     <Link to="/cart" className="cart-img"><button>Open Cart</button></Link>
   </div>
