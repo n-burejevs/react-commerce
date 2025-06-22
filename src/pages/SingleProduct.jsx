@@ -126,8 +126,10 @@ function addTowishlist(item)
 
     return(
         <div key={nanoid()} className='main-content-container'>
-            <Navbar cartCount={cartCount} user={user} setUser={setUser}
-             wishListCount={wishListCount} setWishListCount={setWishListCount} />
+            <Navbar user={user} setUser={setUser}
+             wishListCount={wishListCount} setWishListCount={setWishListCount}
+             cartItems={cartItems} setCartItems={setCartItems}
+                        cartCount={cartCount} setcartCount={setcartCount} />
 
         <div className='sidemenu-filterpane-mobile'> <Sidemenu />  
                         </div>

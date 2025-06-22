@@ -18,6 +18,20 @@ export default function SignUp()
       const [errorMessage, SetErrorMessage] = React.useState({nameError: '', lastnameError: '', emailError: '', passwordError: ''});
 
       const [response, setResponse] = React.useState('');
+     
+               const CountItems = () => {
+                 return cartItems.reduce((total, item) => total + item.quantity, 0);
+               }; 
+                const [cartCount, setcartCount ]= React.useState(CountItems)
+           
+                //wishlsit functionality, copy-pasted from Cart
+                const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
+                        
+                const CountWishedItems = () => {
+                    return wishlistItems.reduce((total, item) => total + item.quantity, 0);
+                }; 
+                const [wishListCount, setWishListCount]= React.useState(CountWishedItems)
+
 
   async function sendData() {
 
@@ -127,7 +141,9 @@ function handlePasswordChange(e) {
 
     return (
         <div>
-            <Navbar cartCount={itemsCount()} user={user} setUser={setUser} />
+            <Navbar user={user} setUser={setUser} cartItems={cartItems} setCartItems={setCartItems}
+                        cartCount={cartCount} setcartCount={setcartCount}
+                        wishListCount={wishListCount} setWishListCount={setWishListCount} />
             <div className='main-content-container'>
           
             <div className='sidemenu-filterpane-mobile'> 

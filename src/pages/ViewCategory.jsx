@@ -76,29 +76,60 @@ React.useEffect(() => {
 }
 }, []);
 
+const [products, setProducts] = React.useState([]);
+
+    React.useEffect(() =>{
+    //'https://dummyjson.com/products?skip=10'
+    fetch(`https://dummyjson.com/products/category/${name}?limit=20`)
+    .then(res => res.json())
+    .then(data => setProducts(data.products))
+  },[name])
+
+//all products to get the filters working
+const [allProducts, setAllProducts] = React.useState([]);
+                    
+  React.useEffect(() =>{
+  //'https://dummyjson.com/products?skip=10'
+  fetch(`https://dummyjson.com/products/category/${name}`)
+  .then(res => res.json())
+  .then(data => setAllProducts(data.products))
+  },[])
+
+      //get to produc brands to the filter component?
+      /*  const [brands, setBrands] = React.useState([])
+      React.useEffect(() =>{
+      //'https://dummyjson.com/products?skip=10'
+        fetch(`https://dummyjson.com/products/category/${name}`)
+        .then(res => res.json())
+        .then(data => setBrands(data.products))
+        },[name])*/
+
 return(
         <>
-        <Navbar cartCount={CountItems()} setcartCount={setcartCount} user={user} setUser={setUser}
-        wishListCount={wishListCount} setWishListCount={setWishListCount} />
+        <Navbar cartCount={cartCount} setcartCount={setcartCount} user={user} setUser={setUser}
+        wishListCount={wishListCount} setWishListCount={setWishListCount}
+         cartItems={cartItems} setCartItems={setCartItems} />
 
 
         <div className='main-content-container'>
 
     <div className='sidemenu-filterpane-mobile'> 
     <Sidemenu/>  
-      {width < 768 && <Filters/>}
+      {width < 768 && <Filters products={products} setProducts={setProducts} allProducts={allProducts} setAllProducts={setAllProducts}/>}
     </div>
 
      <div className="main-content">
+
                 {/*<Sort source={productSource} setSource={setProductSource}/>*/}
-                {/*Pass the state to update item count, when the added to cart*/}
+                {/*Pass the state to update item count, when added to cart*/}
                 <Product setcartCount={setcartCount} cartItems={cartItems} setCartItems={setCartItems}
-                 cartCount={cartCount} source={`https://dummyjson.com/products/category/${name}?limit=20`}
+                 cartCount={cartCount} /*source={`https://dummyjson.com/products/category/${name}?limit=20`}*/
                  wishListCount={wishListCount} setWishListCount={setWishListCount} 
-                 wishlistItems={wishlistItems} setWishlistItems={setWishlistItems}/>
-                 {/*<Pagination source={productSource} setSource={setProductSource}/>*/}
+                 wishlistItems={wishlistItems} setWishlistItems={setWishlistItems}
+                  products={products} setProducts={setProducts}/>
+                 {/*<Pagination source={productSource} setSource={setProductSource} numberOfPages={products.length }/>*/ }
       </div>
-    {width >= 768 && <Filters/>}
+    {width >= 768 && <Filters products={products} setProducts={setProducts} allProducts={allProducts} setAllProducts={setAllProducts}/>}
     
     </div>
         </>

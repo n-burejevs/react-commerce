@@ -7,15 +7,16 @@ import wishlist_icon from '../assets/wishlist.png';
 //added "lazy loading" to img
 export default function Product(props)
 { 
-    //console.log(props.source)
-
+    //console.log(props)
+/*moved to app.jsx to pass to filter component to .filter by chosen parameters
     const [products, setProducts] = React.useState([]);
 
       React.useEffect(() =>{
-        fetch(/*'https://dummyjson.com/products?skip=10'*/props.source)
+      //'https://dummyjson.com/products?skip=10'
+        fetch(props.source)
         .then(res => res.json())
         .then(data => setProducts(data.products))
-        },[props.source])
+        },[props.source])*/
 
       React.useEffect(() => {
         localStorage.setItem("cartItems", JSON.stringify(props.cartItems));
@@ -28,8 +29,7 @@ export default function Product(props)
         //console.log(props.wishlistItems);
       }, [props.wishlistItems]);
 */
-      
- 
+
   function addToCart(item){
     console.log(item);
     let isItemInCart = false;
@@ -83,7 +83,7 @@ export default function Product(props)
 {/*console.log(wishlistItems)*/}
     return(
       <>
-      {  products.map(product => ( 
+      {  props.products.map(product => ( 
         <div key={nanoid()} className="product-card">      
            <Link to={`/viewproduct/${product.id}`} className="product-link" > 
                     <img className="product-img" loading="lazy" src={product.thumbnail} alt={product.title}></img>

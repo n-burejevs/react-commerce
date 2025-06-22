@@ -17,6 +17,7 @@ import Login from './pages/Login.jsx';
 import ViewCategory from './pages/ViewCategory.jsx';
 import Account from './pages/Account.jsx';
 import Wishlist from './pages/Wishlist.jsx';
+import Test from './pages/Test.jsx';
 //import Slideshow from './components/Slideshow.jsx';  <Route path="test" element={<Slideshow/>} />
 
 //import Home from "./pages/Home"
@@ -45,6 +46,7 @@ createRoot(document.getElementById('root')).render(
      <Route path="viewproduct/:id" element={<SingleProduct/>} />
      <Route path="category/:name" element={<ViewCategory/>} />
      <Route path="wishlist" element={<Wishlist/>} />
+     <Route path="test" element={<Test/>} />
      <Route path="*" element={<App to="/" replace />} />
    </Routes>
   </BrowserRouter>

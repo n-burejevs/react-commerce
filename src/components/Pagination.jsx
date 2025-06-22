@@ -5,11 +5,14 @@ function Pagination(props)
 {
     const [pageNumber, SetPageNumber] = React.useState(1);
     const [activePage, setActivePage] = React.useState(1);
+    const [pageAmount, setPageAmount] = React.useState(props.numberOfProd / 20 );
 
 //how to combine this with Sort?
   function changeLink()
     {
-        switch(pageNumber)
+        var calcualteSkipAmount= pageNumber * 20 - 10;
+         props.setSource(`https://dummyjson.com/products?limit=20&skip=${calcualteSkipAmount}`);
+        /*switch(pageNumber)
         {
             case 1:
             props.setSource('https://dummyjson.com/products?limit=20&skip=10');
@@ -38,7 +41,8 @@ function Pagination(props)
             default:
             props.setSource('https://dummyjson.com/products?limit=20&skip=130');
 
-        }
+        }*/
+        
     }
 
   React.useEffect(() => {
@@ -50,12 +54,26 @@ function Pagination(props)
     }
     function nextPage()
     {
-        if(pageNumber<6) {SetPageNumber(prevState => prevState +1); setActivePage(prevState => prevState +1);}
+        if(pageNumber<pageAmount) {SetPageNumber(prevState => prevState +1); setActivePage(prevState => prevState +1);}
     }
+    /*clicking on a page number*/
     function setNumber(i)
     {
        SetPageNumber(i);
        setActivePage(i);
+    }
+    function printPageLinks()
+    {
+        console.log(pageAmount);
+        var links = [];
+
+        for (let i=1; i<pageAmount; i++)
+        {
+            links.push(<a href="#" onClick={()=>setNumber(i)} id={activePage === i ? "on-this-page": "not-on-this-page"}>i</a>)
+        }
+        console.log(props.numberOfProd);
+        return links;
+        
     }
 
     return (
@@ -63,12 +81,15 @@ function Pagination(props)
         <div className="pagination-container">
     <div className="pagination">
         <a href="#" onClick={prevPage}>&laquo;</a>
-        <a href="#" onClick={()=>setNumber(1)} id={activePage === 1 ? "on-this-page": "not-on-this-page"}>1</a>
-        <a href="#" onClick={()=>setNumber(2)} id={activePage === 2 ? "on-this-page": "not-on-this-page"}>2</a>
+       { /*<a href="#" onClick={()=>setNumber(1)} id={activePage === 1 ? "on-this-page": "not-on-this-page"}>1</a>*/}
+        {
+            printPageLinks()
+        }
+      { /* <a href="#" onClick={()=>setNumber(2)} id={activePage === 2 ? "on-this-page": "not-on-this-page"}>2</a>
         <a href="#" onClick={()=>setNumber(3)} id={activePage === 3 ? "on-this-page": "not-on-this-page"}>3</a>
         <a href="#" onClick={()=>setNumber(4)} id={activePage === 4 ? "on-this-page": "not-on-this-page"}>4</a>
         <a href="#" onClick={()=>setNumber(5)} id={activePage === 5 ? "on-this-page": "not-on-this-page"}>5</a>
-        <a href="#" onClick={()=>setNumber(6)} id={activePage === 6 ? "on-this-page": "not-on-this-page"}>6</a>
+        <a href="#" onClick={()=>setNumber(6)} id={activePage === 6 ? "on-this-page": "not-on-this-page"}>6</a>*/}
         <a href="#" onClick={nextPage}>&raquo;</a>
     </div>
     </div>

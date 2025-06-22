@@ -143,7 +143,7 @@ function handleClickOutside(event){
     return(
   
         <div className="navbar" >
-          {console.log(props.cartItems)}
+          
           <div ref={container}>
           <img src={hamb} className="menu" alt="menu icon" /**/ onClick={handleButtonClick}></img>
             {isNavMenuOpen && ( <div id="myLinks" > 
@@ -187,7 +187,7 @@ function handleClickOutside(event){
      
            /*mobile and desktop versions for logged in user and not logged in*/
            return <>
-           {console.log('logged in')}
+           {/*console.log('logged in')*/}
           {isAccountMenuOpen &&
             <div className="account-menu">
              <div className="greet-user">Welcome {props.user.name+"!"}</div>
@@ -211,7 +211,7 @@ function handleClickOutside(event){
             </>
        else
           return <>
-           {console.log('NOT logged in')}
+           {/*console.log('NOT logged in')*/}
           {isAccountMenuOpen &&
             <div className="account-menu">
               <p className="user-acc-menu-p">Create a new account?</p>
@@ -247,7 +247,7 @@ function handleClickOutside(event){
          
            </div>
            <div className="mini-cart-container-absolute" >
-            {/*console.log("state: "+isCartMenuOpen)*/}{console.log(props.cartCount)}
+            {/*console.log("state: "+isCartMenuOpen)*/}{/*console.log(props.cartCount)*/}
            { isCartMenuOpen && <div className="mini-cart-menu"   >
               <MiniCart cartCount={props.cartCount} setcartCount={props.setcartCount} SetIsCartMenuOpen={SetIsCartMenuOpen}
               cartItems={props.cartItems} setCartItems={props.setCartItems}/>
