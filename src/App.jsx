@@ -55,7 +55,8 @@ import { checkAuthToken } from './functions';
 //1/ open mini cart menu in the navbar, add an item (press + button)
 //and click somewhere outside of cart menu. the menu should close by itself, but it does not
 //2/does sth happen with ref={} after the MiniCart re-renders?
-//3/Filters component is rendered 3 times?
+//3/Filters and pagination components are rendered 3 times?
+
 
 //4/arrow buttons in single product dont work on mobile, but swipping left/right does
 
@@ -157,9 +158,9 @@ React.useEffect(() => {
 
     <div className='sidemenu-filterpane-mobile'> 
     <Sidemenu/>  
-      {width < 768 && <Filters products={products} setProducts={setProducts}
+      {width < 768 && <Filters products={products} setProducts={setProducts} width={width}
                          allProducts={allProducts} setAllProducts={setAllProducts}
-                        productSource={productSource}/>}
+                        source={productSource} setSource={setProductSource}/>}
     </div>
 
      <div className="main-content">
@@ -174,9 +175,9 @@ React.useEffect(() => {
                  <Pagination source={productSource} setSource={setProductSource} /*Need to sent number of all products*/numberOfProd={allProducts.length  }/>
                  {/*console.log(products)*/}
       </div>
-    {width >= 768 && <Filters products={products} setProducts={setProducts} 
+    {width >= 768 && <Filters products={products} setProducts={setProducts} width={width}
                         allProducts={allProducts} setAllProducts={setAllProducts}
-                      productSource={productSource}/>}
+                      source={productSource} setSource={setProductSource}/>}
     
     </div>
       

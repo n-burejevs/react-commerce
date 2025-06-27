@@ -3,24 +3,16 @@ import "../styles/FilterStyles.css"
 import { nanoid } from "nanoid";
 
 export default function Filters(props)
-{   ///THIS component is rendered 3 times!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+{   ///THIS component is rendered 3 times!? 5 now?
      //Source: https://www.codedaily.io/tutorials/Create-a-Dropdown-in-React-that-Closes-When-the-Body-is-Clicked
-       //cant cancel filters!?
+      //brands wont update when switch to other category!!!!!!!!!!!!
+
     let container = React.createRef();
-    
+   
     const [open, setOpen] = React.useState(false);
-    const [width, SetWidth] = React.useState(window.innerWidth);
+    //getting window width from parent component app.jsx or viewcategory.jsx
+    //const [width, SetWidth] = React.useState(window.innerWidth);
             
-    /*const [filterActive, setFilterActive] = React.useState(false)
-          React.useEffect(() =>{
-          //'https://dummyjson.com/products?skip=10'
-            fetch(props.productSource)
-            .then(res => res.json())
-            .then(data => props.setProducts(data.products))
-            },[filterActive])*/
-
-
-//why not get it from props?
    //commented out because moved to parent, app jsx
 /*const [allProducts, setAllProducts] = React.useState([]);
     
@@ -30,17 +22,25 @@ export default function Filters(props)
             .then(res => res.json())
             .then(data => setAllProducts(data.products))
             },[])*/
- //this needs to be a state?, it dissappears after checkbox selected!
-//populate filters with brand array items!
-//makin this a state makes brand have an empty array?
-   var brands = props.allProducts.map((prod) => prod.brand);
-  //console.log(brands)
-  brands = removeDuplicate(brands);
 
-    React.useEffect(() => {
+//populate filters with brand array items!
+//get brand names from a big list
+//state is empty because, setState is async?
+const [brands, setBrands] = React.useState([]);
+// the list is the same with all categiries....
+//var brands = removeDuplicate(props.allProducts.map((prod) => prod.brand))
+
+  //'products' is an array of 20 items only
+  //when the other category is selected, filters need to be updated, re-rendered
+  /*React.useEffect(() => {
+     setBrands(removeDuplicate(props.products.map((prod) => prod.brand)))
+    },[props.product]);*/
+    
+  //getting window width from parent component app.jsx or viewcategory.jsx
+    /*React.useEffect(() => {
       SetWidth(window.innerWidth);
     },[window.innerWidth]);
-    
+    */
     function handleButtonClick()
     {
         setOpen(prevState=> !prevState)
@@ -125,16 +125,13 @@ export default function Filters(props)
 
     //https://stackoverflow.com/questions/69195359/how-to-work-with-multiple-checkboxes-in-react-and-collect-the-checked-checkboxes
 
-    // const receivedData = [{ value: "Annibale Colombo" }, { value: "Furniture Co." }, 
-      //                    { value: "Bath Trends" }, { value: "Knoll" }];
-
     const [checkedCheckboxes, setCheckedCheckboxes] = React.useState([]);
 
-      const handleCheckboxChange = (data) => {
-       //console.log("handlechange");
-    const isChecked = checkedCheckboxes.some(checkedCheckbox => checkedCheckbox === data)
-    //console.log(isChecked);
+    const handleCheckboxChange = (data) => {
+       const isChecked = checkedCheckboxes.some(checkedCheckbox => checkedCheckbox === data)
+    //console.log(checkedCheckboxes);
     if (isChecked) {
+      //if it was in the array, remove
       setCheckedCheckboxes(
         checkedCheckboxes.filter(
           (checkedCheckbox) => checkedCheckbox !== data)
@@ -143,40 +140,42 @@ export default function Filters(props)
          //State is not updated here?! but is updated in the return part
       setCheckedCheckboxes(checkedCheckboxes.concat(data));
     }
-    //call other function that filters out products based on checked filters
-    //updateProductsWithFilters();
-
-    
-    
+    //calling useEffect hook, that filters out products based on checked filters
+   
   };
-  function updateProductsWithFilters()
-  { // console.log(props.products)
-    /*props.setProducts(props.allProducts.filter(function(item) {
-        return checkedCheckboxes.includes(item); 
-      }))*/
-     var temp = [];
+  //setting state is async...
+  //display products, which corespond to 
+    React.useEffect(() => {
+       var temp = [];
+       //restore original product lis
+       if(checkedCheckboxes.length === 0) {cancelFilters(props.source)}
      for(let i=0; i<checkedCheckboxes.length; i++)
      {
         temp = temp.concat(props.allProducts.filter((item) => item.brand === checkedCheckboxes[i]))
      }
-     
-    // props.setProducts(props.allProducts.filter((item) => item.brand === data))
       props.setProducts(temp);
-      console.log(props.products)
-  }
-  /*
-function cancelFilters()
+    },[checkedCheckboxes]);
+
+//i only came up with this way, get the json array again, to restore products
+async function cancelFilters(source)
 {
-  if(!checkedCheckboxes.length) {//restore items backto original, because no checjbox is selected
-    console.log("here")
-  setFilterActive(prevState=>!prevState);
-  }
-}*/
+   fetch(source)
+  .then(res => res.json())
+  .then(data => props.setProducts(data.products))
+}
+//did not work, which dependency to use? - Had to add "name" in the useEffect dependency,
+//  which called fetch for allProducts
+ React.useEffect(() => {
+
+    setBrands(removeDuplicate(props.allProducts.map((prod) => prod.brand)));
+    console.log(props.allProducts);
+  }, [props.allProducts]);
+
 
         return(
           <>
-         
-        {width < 768 && 
+        
+        {props.width < 768 && 
            <div className="dropdown"  ref={container}>
             <button onClick={handleButtonClick} className="filter-dropdown-btn">Filters</button>
               {open &&   <div id="filter-dropdown" className="filter-pane">
@@ -217,14 +216,14 @@ function cancelFilters()
                 </div>}
           </div> 
         }
-        { width >= 768 && 
+        { props.width >= 768 && 
           <div className="dropdown">
             <div id="filter-dropdown" className="filter-pane">
         
                     <p className="filter-filters">Filters</p>
                     {/*console.log(checkedCheckboxes)*/}
                     <div className="filter-category-title">Brand</div>
-                           <div  className="brand-form">
+                           <div className="brand-form">
                             {brands?.map((data, index) => (
                          <div key={nanoid()} className="inline-container">
                               <input

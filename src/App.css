@@ -357,24 +357,19 @@
   
 }
 
-.product-name{
-  padding-top: 10px;
-  padding-bottom: 10px;
-  text-wrap: wrap;
-  text-align: center;
-}
 .product-link{
   text-decoration: none;
   color: black;
+  padding-top: 10px;
+  text-align: center;
 }
 
 .product-price{
+  padding-top: 15px;
   padding-bottom: 10px;
   margin-top: auto;
 }
-.filter-pane{
-  width: 155px;
-}
+
 .cart{
    margin-right: 15px;
    margin-left: 5px;

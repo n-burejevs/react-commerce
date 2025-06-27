@@ -14,9 +14,7 @@
 .brand-form input, .color-form input{
     cursor: pointer;
 }
-.inline-container{
-    display: inline;
-}
+
 #filter-dropdown{
     background-color: rgb(240, 240, 240)
 }
@@ -40,13 +38,17 @@
     color: white;
 }
 .inline-container{
+    display: flex;
+    align-items: center;
     margin-bottom: 5px;
 }
 .filter-pane{
     color: black;
     margin-right: 10px;
   }
-
+.filter-pane{
+  width: 170px;
+}
 }
 
 @media (width < 48em) {
@@ -85,5 +87,8 @@
     .inline-container{
         margin-bottom: 5px;
     }
+.filter-pane{
+     width: 155px;
+}
   
     }

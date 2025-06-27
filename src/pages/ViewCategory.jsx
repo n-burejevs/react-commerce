@@ -42,31 +42,22 @@ export default function ViewCategory()
 
        const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
 
-       const CountItems = () => {
-        return cartItems.reduce((total, item) => total + item.quantity, 0);
+    const CountItems = (array) => {
+     return array.reduce((total, item) => total + item.quantity, 0);
       }; 
 
-      const [cartCount, setcartCount ]= React.useState(CountItems)
-
+    const [cartCount, setcartCount]= React.useState(CountItems(cartItems));
+//get name of the category selected, to display whats in it
         let { name } = useParams();
         //console.log("param",useParams());
-       
-        
-
-        /* fetch(`https://dummyjson.com/products/category/${categoryName}?limit=20&skip=10`)
-        .then(res => res.json())
-        .then(data => setProducts(data.products));*/
 
 const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
         
-const CountWishedItems = () => {
-    return wishlistItems.reduce((total, item) => total + item.quantity, 0);
-}; 
-const [wishListCount, setWishListCount]= React.useState(CountWishedItems)
+const [wishListCount, setWishListCount]= React.useState(CountItems(wishlistItems))
 
 React.useEffect(() => {
   localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
-  setWishListCount(CountWishedItems);
+  setWishListCount(CountItems(wishlistItems));
 }, [wishlistItems]);
          
 React.useEffect(() => {
@@ -77,6 +68,7 @@ React.useEffect(() => {
 }, []);
 
 const [products, setProducts] = React.useState([]);
+const [source, setSource] = React.useState(`https://dummyjson.com/products/category/${name}?limit=20`);
 
     React.useEffect(() =>{
     //'https://dummyjson.com/products?skip=10'
@@ -89,13 +81,12 @@ const [products, setProducts] = React.useState([]);
 const [allProducts, setAllProducts] = React.useState([]);
                     
   React.useEffect(() =>{
-  //'https://dummyjson.com/products?skip=10'
   fetch(`https://dummyjson.com/products/category/${name}`)
   .then(res => res.json())
   .then(data => setAllProducts(data.products))
-  },[])
+  },[name])
 
-      //get to produc brands to the filter component?
+      //get product brands to the filter component?
       /*  const [brands, setBrands] = React.useState([])
       React.useEffect(() =>{
       //'https://dummyjson.com/products?skip=10'
@@ -115,7 +106,9 @@ return(
 
     <div className='sidemenu-filterpane-mobile'> 
     <Sidemenu/>  
-      {width < 768 && <Filters products={products} setProducts={setProducts} allProducts={allProducts} setAllProducts={setAllProducts}/>}
+      {width < 768 && <Filters products={products} setProducts={setProducts} width={width}
+                          allProducts={allProducts} setAllProducts={setAllProducts}
+                          source={source} setSource={setSource}/>}
     </div>
 
      <div className="main-content">
@@ -127,9 +120,12 @@ return(
                  wishListCount={wishListCount} setWishListCount={setWishListCount} 
                  wishlistItems={wishlistItems} setWishlistItems={setWishlistItems}
                   products={products} setProducts={setProducts}/>
+
                  {/*<Pagination source={productSource} setSource={setProductSource} numberOfPages={products.length }/>*/ }
       </div>
-    {width >= 768 && <Filters products={products} setProducts={setProducts} allProducts={allProducts} setAllProducts={setAllProducts}/>}
+    {width >= 768 && <Filters products={products} setProducts={setProducts} width={width}
+                      allProducts={allProducts} setAllProducts={setAllProducts}
+                      source={source} setSource={setSource}/>}
     
     </div>
         </>

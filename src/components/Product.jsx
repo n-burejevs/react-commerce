@@ -91,10 +91,9 @@ export default function Product(props)
            
 
            <Link to={`/viewproduct/${product.id}`} className="product-link" > 
-                {product.title }
+               {product.title}
             </Link>
-           
-            <p>{/*product.description.slice(0, 40)*/}</p>
+          
             <div className="product-price">${product.price}</div>     
             <div>
             <button className="product-button" onClick={()=>addToCart(product)}>add to cart</button>
