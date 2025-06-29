@@ -21,10 +21,13 @@ import { checkAuthToken } from './functions';
 // + //menu (shown: on hover/on click) for user to login/register, if logged in will greet the user
 // + ////reddirect user after sucessful login!! 52: login.jsx
 // + //Wishlist is added, user can add items to the wishlist, view them on .../wishlist
+// + //filters!: e. g. brand
+// + //Pagination logic to display legitimate number of pages based on number of items in products state(numberOfPages={products.length} 
+//                                                                          products needs to be full products, not limited by '20')
 
 //TO DO:
-//Pagination logic to display legitimate number of pages based on number of items in products state(numberOfPages={products.length} 
-//                                                                          products needs to be full products, not limited by '20')
+//Sidemenu on mobile? sidemenu needs refactoring in general...
+//Signup, Login, singleProduct need styling!
 //Add sort to ViewCategory.jsx https://dummyjson.com/products/category/laptops?limit=20&sortBy=price&order=asc
                //example ->    https://dummyjson.com/products/category/laptops?limit=20 - add the missing sort part?
 //login, logout api(on all pages), user password restore (PHP password_verify() forgot password example) https://www.phpmentoring.org/blog/php-password-verify-function#:~:text=The%20Password_Verify()%20function%20is,true%2C%20otherwise%20it%20returns%20false.
@@ -32,8 +35,7 @@ import { checkAuthToken } from './functions';
 
 //check if logged in in navbars account management div, greet user and have and option to logout, go to account settings
 //finish category hover menu styling and get links from https://dummyjson.com/docs/products#products-category
-//filters!: e. g. brand
-//filters are not submited by checking checkboxes, thats why there is no data passed to handeler functions
+
 //RE-DO cartItems/wishlistItems states are used everywhere(duplicated code! almost in every page/component),
 //  together with UseEffects to update/get state on change and addToCart addToWishList functions!
 
@@ -43,7 +45,7 @@ import { checkAuthToken } from './functions';
 //add Coupon page in user accounts
 //display recomended products, from similar caterogry (in product.jsx)
 //add reviews (in product.jsx)
-//create an ability to post reviews (after you "bought")
+//create an ability to post reviews (after you "bought")(thats probably too much...)
 //Add menus to user-account div and wishlist just like its with mini cart menu
 //To DO; https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
 //have logged in users cart saved in database
@@ -63,7 +65,12 @@ import { checkAuthToken } from './functions';
 //5/Pagination and Sort are not desingned to work together, yet(maybe add sort query to source url string? or finally get products from a db?? )
 //!!!
 //6/error happens when undefined category is selected from navigation in Sidemenu and when there are products in the cart(localstorage)
-//7/Filter component gets rendered 3 times? 
+//7/Filter component gets rendered 3(5???) times? 
+//8/Pagination is showing 10 pages of products, when you filter products, but there are only enough items for one page
+
+//Other:
+//filters were not submited by checking checkboxes, thats why there is no data passed to handeler functions,
+// but there is a way to dispatch an event and submit
 
 function App() {
 

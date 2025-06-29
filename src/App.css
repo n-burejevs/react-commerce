@@ -17,13 +17,13 @@
     margin-right: 15px;
   }
    
-  .main-content, .contact-page, .single-product-view{
+  .main-content, .contact-page, .single-product-view, .about-page{
     padding-top: 45px;
     padding-bottom: 8px;
     justify-content: space-evenly;
     
   }
-  .main-content, .contact-page{
+  .main-content, .contact-page, .about-page{
     margin-top: 24px;
   }
 
@@ -202,7 +202,7 @@
   display: none;
 }
 
-.main-content, .contact-page, .single-product-view{
+.main-content, .contact-page, .single-product-view, .about-page{
   margin-left: 15px;
   margin-top: 40px;
   padding-top: 30px;
@@ -356,12 +356,16 @@
   max-width: 150px;;
   
 }
-
-.product-link{
+.sidemenu-link, .product-link{
   text-decoration: none;
-  color: black;
   padding-top: 10px;
   text-align: center;
+}
+.product-link{
+  color: black;
+}
+.sidemenu-link{
+  color: white;
 }
 
 .product-price{
@@ -564,7 +568,7 @@
 }
 
 /*Contact page styles */
-.contact-page{
+.contact-page, .about-page{
   height: 1000px;
   background-color: white;
   width: 100%;
@@ -682,4 +686,7 @@
 .username{
  font-size: 13px;
  padding-left: 5px;
+}
+.contact-page, .about-page{
+  color: black;
 }

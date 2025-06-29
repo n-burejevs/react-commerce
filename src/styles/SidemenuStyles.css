@@ -90,6 +90,10 @@ ul, .sub-category-item{
     {
       display: block;
     }
+      .navigation-mobile
+    {
+       display: none;
+    }
    /* #sidemenu-dropdown-mobile-container
     {
         display: none;

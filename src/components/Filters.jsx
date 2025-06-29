@@ -5,8 +5,7 @@ import { nanoid } from "nanoid";
 export default function Filters(props)
 {   ///THIS component is rendered 3 times!? 5 now?
      //Source: https://www.codedaily.io/tutorials/Create-a-Dropdown-in-React-that-Closes-When-the-Body-is-Clicked
-      //brands wont update when switch to other category!!!!!!!!!!!!
-
+     
     let container = React.createRef();
    
     const [open, setOpen] = React.useState(false);
@@ -144,16 +143,17 @@ const [brands, setBrands] = React.useState([]);
    
   };
   //setting state is async...
-  //display products, which corespond to 
+  //display products, which correspond to selected brands
     React.useEffect(() => {
        var temp = [];
-       //restore original product lis
+       //restore original product list
        if(checkedCheckboxes.length === 0) {cancelFilters(props.source)}
      for(let i=0; i<checkedCheckboxes.length; i++)
      {
         temp = temp.concat(props.allProducts.filter((item) => item.brand === checkedCheckboxes[i]))
      }
       props.setProducts(temp);
+      
     },[checkedCheckboxes]);
 
 //i only came up with this way, get the json array again, to restore products
@@ -168,7 +168,7 @@ async function cancelFilters(source)
  React.useEffect(() => {
 
     setBrands(removeDuplicate(props.allProducts.map((prod) => prod.brand)));
-    console.log(props.allProducts);
+    //console.log(props.allProducts);
   }, [props.allProducts]);
 
 
@@ -182,20 +182,22 @@ async function cancelFilters(source)
 
                 <p className="filter-filters">Filters</p>
                     <div className="filter-category-title">Brand</div>
-                      <form /*action={handleSubmit}*/ className="brand-form">
-                      <div className="inline-container">
-                      <input type="checkbox" name="brandname1" value="Annibale Colombo"></input><label >Annibale Colombo</label>
-                      </div>
-                      <div className="inline-container">
-                     <input type="checkbox" name="brandname2" value="Furniture Co."></input> <label>Furniture Co.</label>
-                      </div>
-                      <div className="inline-container">
-                     <input type="checkbox" name="brandname3"  value="Bath Trends"></input> <label>Bath Trends</label>
-                      </div>
-                      <div className="inline-container">
-                     <input type="checkbox" name="brandname4"  value="Knoll"></input> <label>Knoll</label>
-                      </div>
-                      </form>
+                         <div className="brand-form">
+                            {brands?.map((data, index) => (
+                         <div key={nanoid()} className="inline-container">
+                              <input
+                             
+                                key={`cb-${index}`}
+                                value={data}
+                                type="checkbox"
+                                checked={checkedCheckboxes.some(checkedCheckbox => checkedCheckbox === data)}
+                                onChange={() => handleCheckboxChange(data)}
+                              />
+                               <label>{data}</label>
+                         </div>
+                              
+                            ))}
+                         </div>
 
                       <div className="filter-category-title">Color</div>
                       <form /*action={handleSubmit}*/ className="color-form">

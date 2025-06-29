@@ -51,17 +51,7 @@ export default function Sidemenu()
     {
         return categoryList.map( item => <a key={nanoid()}>{item} </a>)
     }          
-/*
-    function handleCategorySelect(data)
-    {
-      console.log("requested", data);
-      var request = new XMLHttpRequest();
-      request.open('GET', '/my/url', true);
-        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-          request.send(data);
 
- 
-    }*/
 
     /*how to do it for mobile?
       function toggleShowHide(elementName) {
@@ -78,8 +68,104 @@ export default function Sidemenu()
            
             {open && <div id="myDropdown" className="sidemenu">
                 {
-                    printSidemenuLinks()
+                    /*printSidemenuLinks()*/
                 }
+                                    <nav className=".navigation-mobile">
+
+                    <div className="category-item">
+                      <span className="category-name">Furniture</span>
+                    <div className="hidden-part">
+                      <ul>
+                        <li>Home Decoration</li>
+                        <li>Kitchen Accessories</li>
+                       <li>
+                       <Link to={`/category/furniture`} className="sidemenu-link" >Furniture</Link>
+                        </li> 
+                      </ul>
+                      </div>
+                      </div>
+                 
+                  <div className="category-item">
+                   <span className="category-name">Clothing</span>
+                  <div className="hidden-part">
+                      <ul>
+                        <li>Mens Shirts</li>
+                        <li>Mens Shoes</li>
+                        <li>Womens Dresses</li>
+                        <li>Womens Shoes</li>
+                        <li>Tops</li>
+                        
+                        <div className="sub-category-item">  
+                     Shoes
+                    <div className="sub-hidden-part">
+                      <ul>
+                        <li><Link to={`/category/mens-shoes`} className="sidemenu-link" >Mens Shoes</Link></li>
+                         <li><Link to={`/category/womens-shoes`} className="sidemenu-link" >Womens Shoes</Link></li>
+                      </ul>
+                      </div>
+                      
+                      </div>
+                       
+                 
+                      </ul>
+                    </div>
+                    </div>
+
+                    <div className="category-item">
+                      <span className="category-name">Beauty</span>
+                    <div className="hidden-part">
+                      <ul>
+                        <li><Link to={`/category/skin-care`} className="sidemenu-link" >Skin Care</Link></li>
+                        <li><Link to={`/category/fragrances`} className="sidemenu-link" >Fragrances</Link></li>
+                      </ul>
+                      </div>
+                      </div>
+
+                      <div className="category-item">
+                      <span className="category-name">Accessories</span>
+                    <div className="hidden-part">
+                      <ul>
+                        <li>
+                        <Link to={`/category/mens-watches`} className="sidemenu-link" >Mens Watches</Link>
+                        </li>
+                        <li>
+                        <Link to={`/category/womens-bags`} className="sidemenu-link" >Womens Bags</Link>
+                        </li>
+                        <li>
+                        <Link to={`/category/womens-jewellery`} className="sidemenu-link" >Womens Jewellery</Link>
+                        </li>
+                        <li>
+                        <Link to={`/category/womens-watches`} className="sidemenu-link" >Womens Watches</Link>
+                        </li>
+                      </ul>
+                      </div>
+                      </div>
+
+                      <div className="category-item">
+                      <span className="category-name">Electronics</span>
+                    <div className="hidden-part">
+                      <ul>
+                        <li>
+                        <Link to={`/category/laptops`} className="sidemenu-link" >Laptops</Link>
+                        </li>
+                        <li >
+                        <Link to={`/category/smartphones`} className="sidemenu-link" >Smartphones</Link>
+
+                        </li>
+                        
+                        <li>
+                        <Link to={`/category/tablets`} className="sidemenu-link" >Tablets</Link>
+                        </li>
+                        <li>
+                        <Link to={`/category/mobile-accessories`} className="sidemenu-link" >Mobile Accessories</Link>
+                        </li>
+                      </ul>
+                      </div>
+                      </div>
+
+
+
+                  </nav>
 
             </div> }
         </div>
@@ -100,7 +186,7 @@ export default function Sidemenu()
                         <li>Home Decoration</li>
                         <li>Kitchen Accessories</li>
                        <li>
-                       <Link to={`/category/furniture`} className="product-link" >Furniture</Link>
+                       <Link to={`/category/furniture`} className="sidemenu-link" >Furniture</Link>
                         </li> 
                       </ul>
                       </div>
@@ -120,8 +206,8 @@ export default function Sidemenu()
                      Shoes
                     <div className="sub-hidden-part">
                       <ul>
-                        <li><Link to={`/category/mens-shoes`} className="product-link" >Mens Shoes</Link></li>
-                         <li><Link to={`/category/womens-shoes`} className="product-link" >Womens Shoes</Link></li>
+                        <li><Link to={`/category/mens-shoes`} className="sidemenu-link" >Mens Shoes</Link></li>
+                         <li><Link to={`/category/womens-shoes`} className="sidemenu-link" >Womens Shoes</Link></li>
                       </ul>
                       </div>
                       
@@ -136,8 +222,8 @@ export default function Sidemenu()
                       <span className="category-name">Beauty</span>
                     <div className="hidden-part">
                       <ul>
-                        <li><Link to={`/category/skin-care`} className="product-link" >Skin Care</Link></li>
-                        <li><Link to={`/category/fragrances`} className="product-link" >Fragrances</Link></li>
+                        <li><Link to={`/category/skin-care`} className="sidemenu-link" >Skin Care</Link></li>
+                        <li><Link to={`/category/fragrances`} className="sidemenu-link" >Fragrances</Link></li>
                       </ul>
                       </div>
                       </div>
@@ -147,16 +233,16 @@ export default function Sidemenu()
                     <div className="hidden-part">
                       <ul>
                         <li>
-                        <Link to={`/category/mens-watches`} className="product-link" >Mens Watches</Link>
+                        <Link to={`/category/mens-watches`} className="sidemenu-link" >Mens Watches</Link>
                         </li>
                         <li>
-                        <Link to={`/category/womens-bags`} className="product-link" >Womens Bags</Link>
+                        <Link to={`/category/womens-bags`} className="sidemenu-link" >Womens Bags</Link>
                         </li>
                         <li>
-                        <Link to={`/category/womens-jewellery`} className="product-link" >Womens Jewellery</Link>
+                        <Link to={`/category/womens-jewellery`} className="sidemenu-link" >Womens Jewellery</Link>
                         </li>
                         <li>
-                        <Link to={`/category/womens-watches`} className="product-link" >Womens Watches</Link>
+                        <Link to={`/category/womens-watches`} className="sidemenu-link" >Womens Watches</Link>
                         </li>
                       </ul>
                       </div>
@@ -167,18 +253,18 @@ export default function Sidemenu()
                     <div className="hidden-part">
                       <ul>
                         <li>
-                        <Link to={`/category/laptops`} className="product-link" >Laptops</Link>
+                        <Link to={`/category/laptops`} className="sidemenu-link" >Laptops</Link>
                         </li>
                         <li >
-                        <Link to={`/category/smartphones`} className="product-link" >Smartphones</Link>
+                        <Link to={`/category/smartphones`} className="sidemenu-link" >Smartphones</Link>
 
                         </li>
                         
                         <li>
-                        <Link to={`/category/tablets`} className="product-link" >Tablets</Link>
+                        <Link to={`/category/tablets`} className="sidemenu-link" >Tablets</Link>
                         </li>
                         <li>
-                        <Link to={`/category/mobile-accessories`} className="product-link" >Mobile Accessories</Link>
+                        <Link to={`/category/mobile-accessories`} className="sidemenu-link" >Mobile Accessories</Link>
                         </li>
                       </ul>
                       </div>

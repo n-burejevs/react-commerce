@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from '../components/Navbar'
 import { checkAuthToken } from '../functions';
-
+import Sidemenu from "../components/Sidemenu";
 
 export default function About(){
 
@@ -41,9 +41,22 @@ export default function About(){
             <Navbar user={user} setUser={setUser} cartItems={cartItems} setCartItems={setCartItems}
             cartCount={cartCount} setcartCount={setcartCount}
             wishListCount={wishListCount} setWishListCount={setWishListCount} />
-            <h1>
+  
+                           <div className='main-content-container'>
+            
+                <div className='sidemenu-filterpane-mobile'> 
+                <Sidemenu/>  
+                  
+                </div>
+                <div className="about-page">
+          <h1>
                     This page is about About
             </h1>
+                </div>
+               {/* elements for contact page here here */}
+
+              
+                </div>
         </div>
     );
 };

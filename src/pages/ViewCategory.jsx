@@ -6,6 +6,7 @@ import Sidemenu from "../components/Sidemenu";
 import Filters from "../components/Filters";
 import { checkAuthToken } from '../functions';
 import { useParams } from "react-router-dom";
+import Pagination from '../components/Pagination'
 
 export default function ViewCategory()
 {
@@ -97,6 +98,7 @@ const [allProducts, setAllProducts] = React.useState([]);
 
 return(
         <>
+        {/*console.log(products)*/}
         <Navbar cartCount={cartCount} setcartCount={setcartCount} user={user} setUser={setUser}
         wishListCount={wishListCount} setWishListCount={setWishListCount}
          cartItems={cartItems} setCartItems={setCartItems} />
@@ -113,7 +115,7 @@ return(
 
      <div className="main-content">
 
-                {/*<Sort source={productSource} setSource={setProductSource}/>*/}
+                {/*<Sort source={source} setSource={setSource}/>*/}
                 {/*Pass the state to update item count, when added to cart*/}
                 <Product setcartCount={setcartCount} cartItems={cartItems} setCartItems={setCartItems}
                  cartCount={cartCount} /*source={`https://dummyjson.com/products/category/${name}?limit=20`}*/
@@ -121,7 +123,7 @@ return(
                  wishlistItems={wishlistItems} setWishlistItems={setWishlistItems}
                   products={products} setProducts={setProducts}/>
 
-                 {/*<Pagination source={productSource} setSource={setProductSource} numberOfPages={products.length }/>*/ }
+                 {<Pagination source={source} setSource={setSource} numberOfProd={allProducts.length }/> }
       </div>
     {width >= 768 && <Filters products={products} setProducts={setProducts} width={width}
                       allProducts={allProducts} setAllProducts={setAllProducts}
