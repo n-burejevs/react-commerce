@@ -66,9 +66,10 @@ export default function Cart(){
   const clearCart = () => {
     setCartItems([]);
   };
-  const itemsCount = () => {
-    return cartItems.reduce((total, item) => total + item.quantity, 0);
-  }; 
+  const CountItems = (array) => {
+  return array.reduce((total, item) => total + item.quantity, 0);
+}; 
+ const [cartCount, setcartCount ]= React.useState(CountItems(cartItems));
 
   const getCartTotal = () => {
     var num = cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
@@ -78,11 +79,11 @@ export default function Cart(){
 
 
 
-  useEffect(() => {
+  React.useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const cartItems = localStorage.getItem("cartItems");
     if (cartItems) {
       setCartItems(JSON.parse(cartItems));
@@ -91,14 +92,11 @@ export default function Cart(){
 
   const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
           
-  const CountWishedItems = () => {
-      return wishlistItems.reduce((total, item) => total + item.quantity, 0);
-  }; 
-  const [wishListCount, setWishListCount]= React.useState(CountWishedItems)
+  const [wishListCount, setWishListCount]= React.useState(CountItems(wishlistItems))
   
   React.useEffect(() => {
     localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
-    setWishListCount(CountWishedItems);
+    setWishListCount(CountItems(wishlistItems));
   }, [wishlistItems]);
            
   React.useEffect(() => {
@@ -112,7 +110,10 @@ export default function Cart(){
     //Navbar needs a prop to get the cartCount?
     return(
         <>
-        <Navbar user={user} setUser={setUser} wishListCount={wishListCount} setWishListCount={setWishListCount} />
+        <Navbar cartCount={cartCount} setcartCount={setcartCount}
+        user={user} setUser={setUser} 
+        wishListCount={wishListCount} setWishListCount={setWishListCount}
+        cartItems={cartItems} setCartItems={setCartItems} />
       <div className="cart-page-container">
 
        

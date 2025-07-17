@@ -1,6 +1,6 @@
-#firstname, #lastname, #email, #password{
+/*#firstname, #lastname, #email, #password{
     margin-bottom: 15px;
-}
+}*/
 /*#lastname{
     
 }
@@ -8,14 +8,22 @@
    
 }
 #password{
-    
+     
 }*/
 .error-message{
     color: red;
 }
 
-.form-container{
+.login-form, .form-container{
     display: flex;
     flex-direction: column;
-    
+    margin-bottom: 30px;
+}
+.input-fields, .signup-form{
+    display: grid;
+    row-gap: 5px;
+}
+
+.btn-submit{
+    margin-top: 20px;
 }

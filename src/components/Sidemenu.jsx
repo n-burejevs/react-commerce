@@ -8,7 +8,7 @@ export default function Sidemenu()
     let container = React.createRef();
     const [open, setOpen] = React.useState(false);
     //this solution stopped working?
-    const [width, SetWidth] = React.useState(window.innerWidth);
+    //const [width, SetWidth] = React.useState(window.innerWidth);
 //this no longer works? had to remove conditional rendering - width >=768 (render nav), width < 768 (render sidemenu dropdown button)
  /*  React.useEffect(() => {
     SetWidth(window.innerWidth);
@@ -70,14 +70,14 @@ export default function Sidemenu()
                 {
                     /*printSidemenuLinks()*/
                 }
-                                    <nav className=".navigation-mobile">
+                                    <nav className="navigation-mobile">
 
                     <div className="category-item">
                       <span className="category-name">Furniture</span>
                     <div className="hidden-part">
                       <ul>
-                        <li>Home Decoration</li>
-                        <li>Kitchen Accessories</li>
+                        <li><Link to={`/category/home-decoration`} className="sidemenu-link" >Home Decoration</Link></li>
+                        <li><Link to={`/category/kitchen-accessories`} className="sidemenu-link" >Kitchen Accessories</Link></li>
                        <li>
                        <Link to={`/category/furniture`} className="sidemenu-link" >Furniture</Link>
                         </li> 
@@ -89,11 +89,11 @@ export default function Sidemenu()
                    <span className="category-name">Clothing</span>
                   <div className="hidden-part">
                       <ul>
-                        <li>Mens Shirts</li>
-                        <li>Mens Shoes</li>
-                        <li>Womens Dresses</li>
-                        <li>Womens Shoes</li>
-                        <li>Tops</li>
+                        <li><Link to={`/category/mens-shirts`} className="sidemenu-link" >Mens Shirts</Link></li>
+                        <li><Link to={`/category/mens-shoes`} className="sidemenu-link" >Mens Shoes</Link></li>
+                        <li><Link to={`/category/womens-dresses`} className="sidemenu-link" >Womens Dresses</Link></li>
+                        <li><Link to={`/category/womens-shoes`} className="sidemenu-link" >Womens Shoes</Link></li>
+                        <li><Link to={`/category/tops`} className="sidemenu-link" >Tops</Link></li>
                         
                         <div className="sub-category-item">  
                      Shoes
@@ -183,8 +183,8 @@ export default function Sidemenu()
                       <span className="category-name">Furniture</span>
                     <div className="hidden-part">
                       <ul>
-                        <li>Home Decoration</li>
-                        <li>Kitchen Accessories</li>
+                        <li><Link to={`/category/home-decoration`} className="sidemenu-link" >Home Decoration</Link></li>
+                        <li><Link to={`/category/kitchen-accessories`} className="sidemenu-link" >Kitchen Accessories</Link></li>
                        <li>
                        <Link to={`/category/furniture`} className="sidemenu-link" >Furniture</Link>
                         </li> 
@@ -196,11 +196,11 @@ export default function Sidemenu()
                    <span className="category-name">Clothing</span>
                   <div className="hidden-part">
                       <ul>
-                        <li>Mens Shirts</li>
-                        <li>Mens Shoes</li>
-                        <li>Womens Dresses</li>
-                        <li>Womens Shoes</li>
-                        <li>Tops</li>
+                        <li><Link to={`/category/mens-shirts`} className="sidemenu-link" >Mens Shirts</Link></li>
+                        <li><Link to={`/category/mens-shoes`} className="sidemenu-link" >Mens Shoes</Link></li>
+                        <li><Link to={`/category/womens-dresses`} className="sidemenu-link" >Womens Dresses</Link></li>
+                        <li><Link to={`/category/womens-shoes`} className="sidemenu-link" >Womens Shoes</Link></li>
+                        <li><Link to={`/category/tops`} className="sidemenu-link" >Tops</Link></li>
                         
                         <div className="sub-category-item">  
                      Shoes

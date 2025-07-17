@@ -157,7 +157,7 @@ function handlePasswordChange(e) {
                /* action="http://localhost/react-commerce/index.php"*/
                /*method="post"*/
                /*action={handleSubmit}*/
-                onSubmit={(event) =>handleSubmit(event)}>
+                onSubmit={(event) =>handleSubmit(event)} className="signup-form">
 
 
                   <label htmlFor="firstname">First Name:</label>
@@ -174,14 +174,19 @@ function handlePasswordChange(e) {
                   <label htmlFor="password">Password:</label>
                   <input id="password" type="password" onChange={handlePasswordChange} defaultValue={"12345678"} name="password" ></input>
                   <br/>                 
-                  <div className="error-message">{printErrors}</div>
-                  <div>{response}</div>
+                  <div className="error-message">
+                    {printErrors}
+                    {response.status === "success" ? "Registration complete, you can login now": ""}
+                    {response.status === "error" ? "Registration failed, please retry": ""}
+
+                  </div>
+                  
                   <button>Sign up</button>
 
                 </form>
                 </div>
                 {/*wtf is with response??????????????????????????????????????????*/}
-                 {response.status === "success" ? "Registration complete, you can login now": "Registration failed, please retry"}
+               
             </div>
             </div>
         </div>

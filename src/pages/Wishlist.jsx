@@ -31,14 +31,14 @@ export default function Wishlist(){
         
         }, []);
 
-  const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
+  const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
   const CountItems = () => {
   return cartItems.reduce((total, item) => total + item.quantity, 0);
 }; 
   const [cartCount, setcartCount ]= React.useState(CountItems);
   
 //console.log(cartItems);
-   const [wishlistItems, setWishlistItems] = useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
+   const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
 //console.log(wishlistItems);
   const addToWishList = (item) => {
     const isItemInWishlist = wishlistItems.find((wishedItem) => wishedItem.id === item.id);
@@ -200,7 +200,7 @@ export default function Wishlist(){
     wishlistItems.length > 0 ? (
       <div >
     <h1 >Total: ${getCartTotal()}</h1>
-    <button
+    <button className="clear-wishlist-btn"
       onClick={() => {
         clearWishlist()
       }}

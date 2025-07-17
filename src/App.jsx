@@ -56,17 +56,14 @@ import { checkAuthToken } from './functions';
 //Fixed/adding to cart from miniCart menu does not update cartCount in Navbar - 
 //1/ open mini cart menu in the navbar, add an item (press + button)
 //and click somewhere outside of cart menu. the menu should close by itself, but it does not
-//2/does sth happen with ref={} after the MiniCart re-renders?
-//3/Filters and pagination components are rendered 3 times?
-
-
-//4/arrow buttons in single product dont work on mobile, but swipping left/right does
-
-//5/Pagination and Sort are not desingned to work together, yet(maybe add sort query to source url string? or finally get products from a db?? )
+//does sth happen with ref={} after the MiniCart re-renders?
+//2/Filters and pagination components are rendered 3 times?
+//3/arrow buttons in single product dont work on mobile, but swipping left/right does
+//4/Pagination and Sort are not desingned to work together, yet(maybe add sort query to source url string? or finally get products from a db?? )
 //!!!
-//6/error happens when undefined category is selected from navigation in Sidemenu and when there are products in the cart(localstorage)
-//7/Filter component gets rendered 3(5???) times? 
-//8/Pagination is showing 10 pages of products, when you filter products, but there are only enough items for one page
+//5/error happens when undefined category is selected from navigation in Sidemenu and when there are products in the cart(localstorage)
+//6/Filter component gets rendered 3(5???) times? 
+//7/Pagination is showing 10 pages of products, when you filter products, but there are only enough items for one page
 
 //Other:
 //filters were not submited by checking checkboxes, thats why there is no data passed to handeler functions,

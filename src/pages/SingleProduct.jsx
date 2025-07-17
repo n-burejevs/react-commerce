@@ -1,12 +1,13 @@
 import React from "react";
 import { useParams, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import { nanoid } from "nanoid";
+//import { nanoid } from "nanoid";
 import '../App.css'
 import '../styles/Sldieshow.css'
 import Sidemenu from '../components/Sidemenu';
 import Slideshow from "../components/Slideshow";
 import { checkAuthToken } from '../functions';
+
 /* This page needs styling*/
 export default function SingleProduct(){
        
@@ -22,8 +23,6 @@ export default function SingleProduct(){
     }
     fetchUserInfo()
     .catch(console.error);
-    
-  
     }, []);
 
 
@@ -31,18 +30,18 @@ export default function SingleProduct(){
     
     //const { count } = useLocation().state;
 
-    const itemsCount = () => {
-      return cartItems.reduce((total, item) => total + item.quantity, 0);
+    const itemsCount = (array) => {
+      return array.reduce((total, item) => total + item.quantity, 0);
     }; 
 
-    const [cartCount, setcartCount ]= React.useState(itemsCount)
+    const [cartCount, setcartCount ]= React.useState(itemsCount(cartItems))
 
-    const [ singleProduct, SetSingleProduct] = React.useState([]);
+    const [singleProduct, SetSingleProduct] = React.useState([]);
    
     let { id } = useParams(); 
 
     React.useEffect(() => {
-    // search a single product
+    // search for a single product
         fetch(`https://dummyjson.com/products/${id}`)
         .then(res => res.json())
         .then(data => SetSingleProduct(data)); 
@@ -72,23 +71,23 @@ export default function SingleProduct(){
         }
       };
 
-
+//do i need to save the amount of cart items in the localstorage?
        React.useEffect(() => {
               localStorage.setItem("cartItems", JSON.stringify(cartItems));
-              /*Why do i need this?*/localStorage.setItem("cartCount", itemsCount);
-              setcartCount(itemsCount);
+              //localStorage.setItem("cartCount", itemsCount);
+              setcartCount(itemsCount(cartItems));
             }, [cartItems]);
 
 const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
                     
-const CountWishedItems = () => {
+/*const CountWishedItems = () => {
   return wishlistItems.reduce((total, item) => total + item.quantity, 0);
-}; 
-  const [wishListCount, setWishListCount]= React.useState(CountWishedItems)
+}; */
+  const [wishListCount, setWishListCount]= React.useState(itemsCount(wishlistItems))
          
   React.useEffect(() => {
     localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
-    setWishListCount(CountWishedItems);
+    setWishListCount(itemsCount(wishlistItems));
     }, [wishlistItems]);
                      
     React.useEffect(() => {
@@ -125,38 +124,42 @@ function addTowishlist(item)
   }       
 
     return(
-        <div key={nanoid()} className='main-content-container'>
+  <div  className='main-content-container'>
             <Navbar user={user} setUser={setUser}
              wishListCount={wishListCount} setWishListCount={setWishListCount}
              cartItems={cartItems} setCartItems={setCartItems}
                         cartCount={cartCount} setcartCount={setcartCount} />
 
-        <div className='sidemenu-filterpane-mobile'> <Sidemenu />  
-                        </div>
+        <div className='sidemenu-filterpane-mobile'> <Sidemenu /> </div>
         
-        <div key={singleProduct.id} className="single-product-view">
+<div  className="single-product-view">
         
-        <h3 key={nanoid()}>{singleProduct.title}</h3>
+        
      
-        <div key={nanoid()}>
-          {}
+        <div >
+         <div className="single-prod-title"><h3 >{singleProduct.title}</h3></div>
         {singleProduct.images ? /*singleProduct.images.map(img=><img key={nanoid()} className="single-prod-img" src={img}></img>) :
          "Error loading images"*/
-         <Slideshow images ={singleProduct.images}/> : "Error loading images"
+         <Slideshow images = {singleProduct.images}/> : "Error loading images"
         }
          {/*<Slideshow images = {singleProduct.images} />*/}
         </div>
+      <div className="product-data">
 
-        <div key={nanoid()}>{singleProduct.description}</div>
-        <div key={nanoid()}>{singleProduct.price}</div>
-        <div key={nanoid()}>{singleProduct.stock}</div>
-        <div key={nanoid()}>{singleProduct.brand}</div>
-        <button key={nanoid()} onClick={()=>addToCart(singleProduct)}>Add to cart</button>
-         <button key={nanoid()} onClick={()=>addTowishlist(singleProduct)}>Add to wishlist</button>
+        <div className="single-prod-desc">{singleProduct.description}</div>
+        <div className="single-prod-price" >Price: {singleProduct.price}</div>
+        <div >Items in stock: {singleProduct.stock}</div>
+        <div className="single-prod-brandname">Brand: {singleProduct.brand}</div>
+        <div className="single-prod-button-container">
+          <button  onClick={()=>addToCart(singleProduct)}>Add to cart</button>
+            <button onClick={()=>addTowishlist(singleProduct)}>Add to wishlist</button>
         </div>
+      </div>
+
+</div>
         
         {/*console.log(props.cartItems)*/}
-        </div>
+  </div>
     
     )
 }

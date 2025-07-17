@@ -55,13 +55,7 @@
     position: absolute;
   }
 
-  /*sidemenu mobile styles*/
-
-  .main-content-container{
-    margin-top: 35px;
-    display: flex;
-    flex-direction: column;
-  }
+ 
 
   /* Dropdown Button */
   .dropbtn, .filter-dropdown-btn {
@@ -95,16 +89,16 @@
 .sidemenu, .filter-pane {
   position: absolute;
   background-color: #f1f1f1;
-  min-width: 160px;
+  /*min-width: 160px;*/
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
-  max-height: 350px;
-  overflow-y: scroll;
+  /*max-height: 350px;*/
+  /*overflow-y: scroll;*/
 }
 /* Links inside the dropdown */
 .sidemenu a{
   color: black;
-  padding: 12px 16px;
+ /* padding: 10px 16px;*/
   text-decoration: none;
   display: block;
 }
@@ -123,10 +117,23 @@
 #myLinksWideScr{ display: none;}
 
 .single-product-view{
+  /*display: flex;*/
+  flex-direction: column;
+  /*align-items: center;*/
+  margin-top: 24px;
+}
+.product-data{
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-top: 24px;
+  justify-content: center;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.single-prod-desc{
+  text-align: center;
+}
+.single-prod-brandname{
+  margin-top: 15px;
 }
 
 .account-menu{ 
@@ -236,7 +243,19 @@
 .search-prod-title, .search-prod-price{
   font-size: 14px;
 }
+
+.single-product-view{
+  flex-direction: row;
 }
+.product-data{
+  max-width: 500px;
+  margin-top: 100px;
+  margin-left: 30px;
+  padding-right: 20px;
+}
+
+}
+
 /*big screen styles above^*/
 
 
@@ -356,7 +375,7 @@
   max-width: 150px;;
   
 }
-.sidemenu-link, .product-link{
+.product-link{
   text-decoration: none;
   padding-top: 10px;
   text-align: center;
@@ -657,16 +676,32 @@
   height: max-content;
   border: none;
   border-radius: 10px;
-  /*display: flex;**/
-  /*??????????????????????????*/
-  /*justify-content: space-evenly;*/
-  /*justify-content:space-around;*/
+  display: flex;
+  justify-content:center;
 
   color: black;
 }
-.single-product-view h3{
+.single-prod-title h3{
   margin-bottom: 0;
 }
+.single-prod-title{
+  display: flex;
+  justify-content: center;
+}
+.single-prod-button-container{
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  row-gap: 15px;
+  column-gap: 25px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.single-prod-price{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
 
 *{box-sizing:border-box}
 

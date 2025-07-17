@@ -1,3 +1,11 @@
+/*slideshow*/
+@media (width >= 48em) {
+  .gallery-container{
+    padding-left: 20px;
+  }
+}
+
+
 .gallery-container{
   background-color: white;
   width: 100%;
@@ -20,7 +28,7 @@
   position: absolute;
   top: 50%;
   border: none;
-  width: 40px;
+  width: 25px;
   background-color: rgba(0, 0, 0, 0);
   cursor: pointer;
   /*z-index: 20;*/
@@ -50,6 +58,7 @@
 }
 .dot-container{
   text-align:center;
+  margin-bottom: 20px;
 }
 .active, .dot:hover {
   background-color: #717171;

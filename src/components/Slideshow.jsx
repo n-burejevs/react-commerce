@@ -8,6 +8,12 @@ import Dots from '../components/Dots'
 
 export default function Slideshow(props){
 
+    //someone might want to click on a Dot to view an image?
+    function selectImageWithDot(id)
+    {
+        setImageSeqNum(id);
+    }
+
    // const [singleProduct, SetSingleProduct] = React.useState([]);
     const [imageSeqNum, setImageSeqNum] = React.useState(0);
  
@@ -68,7 +74,7 @@ export default function Slideshow(props){
       </div>
      
         </div>
-        <Dots amount={newImageArray.length} position={imageSeqNum}/>
+        <Dots amount={newImageArray.length} position={imageSeqNum} selectImageWithDot={selectImageWithDot}/>
         </div>
       
     )

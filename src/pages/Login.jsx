@@ -4,6 +4,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Sidemenu from "../components/Sidemenu";
 import { checkAuthToken } from "../functions";
+import '../styles/FormStyles.css'
 
 /*
 You signup/login from you front end
@@ -45,7 +46,7 @@ export default function Login() {
      
       if (userEmail !== "" && userPassw !== "") {
         
-        console.log(userEmail, userPassw);
+        //console.log(userEmail, userPassw);
         sendData();
       }
       else alert("please provide a valid input");
@@ -61,11 +62,15 @@ export default function Login() {
 
     const result = await res.json();
     setResponse(result.message);
-  
-//cookie for a week
-     setCookie('token', result.token, 7)
+
       //send user to homepage after login?
-      if(result.status === 'success') { window.location.replace("/localhost:5173"); }
+      if(result.status === 'success')
+      { 
+          //cookie for a week
+           setCookie('token', result.token, 7)
+           //redirect
+             window.location.replace("/localhost:5173");
+      }
     //console.log(response);
   }
 //https://www.w3schools.com/js/js_cookies.asp
@@ -112,8 +117,10 @@ export default function Login() {
       <Sidemenu />  
     </div>
   <div className="main-content">
-     <form onSubmit={handleSubmitEvent}>
-    <div className="form_control">
+    
+     <form onSubmit={handleSubmitEvent} className="login-form">
+      <h1>Login form</h1>
+    <div className="input-fields" >
       <label htmlFor="user-email">Email:</label>
       <input
         type="email"
@@ -124,8 +131,7 @@ export default function Login() {
         defaultValue={"email@email.com"}
       />
 
-    </div>
-    <div className="form_control">
+
       <label htmlFor="password">Password:</label>
       <input
         type="password"
@@ -136,9 +142,15 @@ export default function Login() {
       />
     
     </div>
+   
+     <div className="error-message">
+        {response === "error" ? "Login attempt failed" : ""}
+     </div>
     <button className="btn-submit">Submit</button>
+    {/*response.status == "success" && JSON.stringify(response)*/}
+    
   </form>
-  {JSON.stringify(response)}
+  
   </div>
   
   </div>

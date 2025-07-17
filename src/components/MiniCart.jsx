@@ -124,7 +124,7 @@ const CountItems = () => {
       <div >
     <h1 >Total: ${getCartTotal()}</h1>
     
-    <Link to="/cart" className="cart-img"><button>Open Cart</button></Link>
+    <Link to="/cart" className="go-to-cart-link">Open Cart</Link>
   </div>
     ) : (
       <h1 className="text-lg font-bold">Your cart now is empty</h1>
