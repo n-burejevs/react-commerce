@@ -7,9 +7,14 @@ import Filters from "../components/Filters";
 import { checkAuthToken } from '../functions';
 import { useParams } from "react-router-dom";
 import Pagination from '../components/Pagination'
+import { useContext } from 'react';
+import { CartContext } from '../components/context/cart';
 
 export default function ViewCategory()
 {
+
+  const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, cartCount, CountItems, setcartCount } = useContext(CartContext);
+  
       const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
     
       React.useEffect(() => {
@@ -39,15 +44,6 @@ export default function ViewCategory()
         };
       }, []);
     
-       //const [products, setProducts] = React.useState([]);
-
-       const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
-
-    const CountItems = (array) => {
-     return array.reduce((total, item) => total + item.quantity, 0);
-      }; 
-
-    const [cartCount, setcartCount]= React.useState(CountItems(cartItems));
 //get name of the category selected, to display whats in it
         let { name } = useParams();
         //console.log("param",useParams());
@@ -101,7 +97,7 @@ return(
         {/*console.log(products)*/}
         <Navbar cartCount={cartCount} setcartCount={setcartCount} user={user} setUser={setUser}
         wishListCount={wishListCount} setWishListCount={setWishListCount}
-         cartItems={cartItems} setCartItems={setCartItems} />
+         cartItems={cartItems} />
 
 
         <div className='main-content-container'>
@@ -117,7 +113,7 @@ return(
 
                 {/*<Sort source={source} setSource={setSource}/>*/}
                 {/*Pass the state to update item count, when added to cart*/}
-                <Product setcartCount={setcartCount} cartItems={cartItems} setCartItems={setCartItems}
+                <Product setcartCount={setcartCount} cartItems={cartItems}
                  cartCount={cartCount} /*source={`https://dummyjson.com/products/category/${name}?limit=20`}*/
                  wishListCount={wishListCount} setWishListCount={setWishListCount} 
                  wishlistItems={wishlistItems} setWishlistItems={setWishlistItems}

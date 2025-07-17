@@ -249,8 +249,7 @@ function handleClickOutside(event){
            <div className="mini-cart-container-absolute" >
             {/*console.log("state: "+isCartMenuOpen)*/}{/*console.log(props.cartCount)*/}
            { isCartMenuOpen && <div className="mini-cart-menu"   >
-              <MiniCart cartCount={props.cartCount} setcartCount={props.setcartCount} SetIsCartMenuOpen={SetIsCartMenuOpen}
-              cartItems={props.cartItems} setCartItems={props.setCartItems}/>
+              <MiniCart SetIsCartMenuOpen={SetIsCartMenuOpen} />
               
               </div>}
             </div>

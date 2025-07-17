@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import {/* createContext*/ useState, useEffect } from 'react';
+//import {/* createContext*/ useState, useEffect } from 'react';
 import '../styles/Cartstyles.css'
 import Sidemenu from "../components/Sidemenu";
 import { nanoid } from "nanoid";
@@ -8,11 +8,14 @@ import '../App.css';
 import { Link  } from 'react-router-dom';
 import { checkAuthToken } from '../functions';
 
+import { useContext } from 'react';
+import { CartContext } from '../components/context/cart';
 
-//you need a different cart jsx file accourding to the guide??? one for all these functions, the other for the cart page itself 
 /*Source:
 https://dev.to/anne46/cart-functionality-in-react-with-context-api-2k2f*/
 export default function Cart(){
+
+        const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, cartCount, CountItems, setcartCount } = useContext(CartContext);
 
         const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
       
@@ -29,9 +32,9 @@ export default function Cart(){
         
         }, []);
 
-  const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
+  /*const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])*/
 
-  const addToCart = (item) => {
+  /*const addToCart = (item) => {
     const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
 
     if (isItemInCart) {
@@ -45,9 +48,9 @@ export default function Cart(){
     } else {
       setCartItems([...cartItems, { ...item, quantity: 1 }]);
     }
-  };
+  };*/
 
-  const removeFromCart = (item) => {
+ /* const removeFromCart = (item) => {
     const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
 
     if (isItemInCart.quantity === 1) {
@@ -61,24 +64,21 @@ export default function Cart(){
         )
       );
     }
-  };
+  };*/
 
-  const clearCart = () => {
+  /*const clearCart = () => {
     setCartItems([]);
-  };
-  const CountItems = (array) => {
-  return array.reduce((total, item) => total + item.quantity, 0);
-}; 
- const [cartCount, setcartCount ]= React.useState(CountItems(cartItems));
+  };*/
 
-  const getCartTotal = () => {
+
+  /*const getCartTotal = () => {
     var num = cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
     return Math.round((num + Number.EPSILON) * 100) / 100
     //return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-  }; 
+  }; */
 
 
-
+/*
   React.useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
@@ -88,7 +88,7 @@ export default function Cart(){
     if (cartItems) {
       setCartItems(JSON.parse(cartItems));
     }
-  }, []);
+  }, []);*/
 
   const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
           
@@ -105,7 +105,6 @@ export default function Cart(){
     setWishlistItems(JSON.parse(wishlistItems));
   }
   }, []);
-
   
     //Navbar needs a prop to get the cartCount?
     return(
@@ -113,7 +112,7 @@ export default function Cart(){
         <Navbar cartCount={cartCount} setcartCount={setcartCount}
         user={user} setUser={setUser} 
         wishListCount={wishListCount} setWishListCount={setWishListCount}
-        cartItems={cartItems} setCartItems={setCartItems} />
+        cartItems={cartItems} /*setCartItems={setCartItems} *//>
       <div className="cart-page-container">
 
        

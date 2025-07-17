@@ -3,59 +3,14 @@ import { nanoid } from "nanoid";
 import { Link  } from 'react-router-dom';
 import wishlist_icon from '../assets/wishlist.png';
 
+import { useContext } from 'react'
+import { CartContext } from '../components/context/cart'
+
 //Loading times are insanely slow!!! check in network tab in dev tools!
 //added "lazy loading" to img
 export default function Product(props)
 { 
-    //console.log(props)
-/*moved to app.jsx to pass to filter component to .filter by chosen parameters
-    const [products, setProducts] = React.useState([]);
-
-      React.useEffect(() =>{
-      //'https://dummyjson.com/products?skip=10'
-        fetch(props.source)
-        .then(res => res.json())
-        .then(data => setProducts(data.products))
-        },[props.source])*/
-
-      React.useEffect(() => {
-        localStorage.setItem("cartItems", JSON.stringify(props.cartItems));
-      }, [props.cartItems]);
-
-      /*duplicated in app.jsx!!!
-         React.useEffect(() => {
-        localStorage.setItem("wishlist", JSON.stringify(props.wishlistItems));
-        console.log("in product");
-        //console.log(props.wishlistItems);
-      }, [props.wishlistItems]);
-*/
-
-  function addToCart(item){
-    console.log(item);
-    let isItemInCart = false;
-   try{
-    isItemInCart = props.cartItems.find((cartItem) => cartItem.id === item.id);
-   }
-    catch(e) {
-      console.log(e.message)
-    }
-
-    if (isItemInCart) {
-      
-      props.setCartItems(
-        props.cartItems.map((cartItem) =>
-          cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.quantity + 1 }
-            : cartItem
-        )
-      );
-
-    } else {
-      props.setCartItems([...props.cartItems, { ...item, quantity: 1 }]);
-    }
-    //update the number in navbar, items in the cart
-    props.setcartCount(prevState => prevState + 1)
-  };
+  const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, cartCount, CountItems, setcartCount } = useContext(CartContext);
   
 //same functions as addToCart
   function addTowishlist(item)

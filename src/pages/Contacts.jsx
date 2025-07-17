@@ -3,16 +3,14 @@ import Navbar from '../components/Navbar'
 import Sidemenu from "../components/Sidemenu";
 import { checkAuthToken } from '../functions';
 
+import { useContext } from 'react';
+import { CartContext } from '../components/context/cart';
+
 export default function Contact(){
 
-    const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
+  const { cartItems, /*addToCart, removeFromCart, clearCart, getCartTotal,*/ cartCount, /*CountItems,*/ setcartCount } = useContext(CartContext);
 
-    const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
-    
-        const CountItems = () => {
-          return cartItems.reduce((total, item) => total + item.quantity, 0);
-        }; 
-         const [cartCount, setcartCount ]= React.useState(CountItems)
+    const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
     
          //wishlsit functionality, copy-pasted from Cart
          const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
@@ -38,7 +36,7 @@ export default function Contact(){
     
     return (
         <div>
-          <Navbar user={user} setUser={setUser} cartItems={cartItems} setCartItems={setCartItems}
+          <Navbar user={user} setUser={setUser} cartItems={cartItems} /*setCartItems={setCartItems}*/
                       cartCount={cartCount} setcartCount={setcartCount}
                       wishListCount={wishListCount} setWishListCount={setWishListCount} />
                <div className='main-content-container'>

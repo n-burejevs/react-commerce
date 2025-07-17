@@ -8,9 +8,14 @@ import Sidemenu from '../components/Sidemenu';
 import Slideshow from "../components/Slideshow";
 import { checkAuthToken } from '../functions';
 
+import { useContext } from 'react';
+import { CartContext } from '../components/context/cart';
+
 /* This page needs styling*/
 export default function SingleProduct(){
        
+    const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, cartCount, CountItems, setcartCount } = useContext(CartContext);
+
     const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
   
     React.useEffect(() => {
@@ -26,7 +31,7 @@ export default function SingleProduct(){
     }, []);
 
 
-    const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
+    //const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
     
     //const { count } = useLocation().state;
 
@@ -34,7 +39,7 @@ export default function SingleProduct(){
       return array.reduce((total, item) => total + item.quantity, 0);
     }; 
 
-    const [cartCount, setcartCount ]= React.useState(itemsCount(cartItems))
+    //const [cartCount, setcartCount ]= React.useState(itemsCount(cartItems))
 
     const [singleProduct, SetSingleProduct] = React.useState([]);
    
@@ -54,7 +59,7 @@ export default function SingleProduct(){
     /*const location = useLocation()
     const { count } = location.state;*/
 
-    const addToCart = (item) => {
+    /*const addToCart = (item) => {
        // console.log(cartItems);
         const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
     
@@ -69,14 +74,14 @@ export default function SingleProduct(){
         } else {
           setCartItems([...cartItems, { ...item, quantity: 1 }]);
         }
-      };
+      };*/
 
 //do i need to save the amount of cart items in the localstorage?
-       React.useEffect(() => {
+       /*React.useEffect(() => {
               localStorage.setItem("cartItems", JSON.stringify(cartItems));
               //localStorage.setItem("cartCount", itemsCount);
               setcartCount(itemsCount(cartItems));
-            }, [cartItems]);
+            }, [cartItems]);*/
 
 const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
                     
@@ -127,7 +132,7 @@ function addTowishlist(item)
   <div  className='main-content-container'>
             <Navbar user={user} setUser={setUser}
              wishListCount={wishListCount} setWishListCount={setWishListCount}
-             cartItems={cartItems} setCartItems={setCartItems}
+             cartItems={cartItems} /*setCartItems={setCartItems}*/
                         cartCount={cartCount} setcartCount={setcartCount} />
 
         <div className='sidemenu-filterpane-mobile'> <Sidemenu /> </div>

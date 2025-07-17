@@ -1,9 +1,11 @@
 import React from "react";
-import {/* createContext*/ useState, useEffect } from 'react';
 import '../styles/Cartstyles.css'
 import { nanoid } from "nanoid";
 import { Link  } from 'react-router-dom';
 import '../App.css';
+
+import { useContext } from 'react'
+import { CartContext } from '../components/context/cart'
 
 /*This menu lets user know what items are int cart right now, he can view this menu in the Navbar*/
 
@@ -13,68 +15,12 @@ import '../App.css';
 https://dev.to/anne46/cart-functionality-in-react-with-context-api-2k2f*/
 export default function MiniCart(props){
 
-  const addToCart = (item) => {
-    const isItemInCart = props.cartItems.find((cartItem) => cartItem.id === item.id);
-
-    if (isItemInCart) {
-      props.setCartItems(
-        props.cartItems.map((cartItem) =>
-          cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.quantity + 1 }
-            : cartItem
-        )
-      );
-    } else {
-      props.setCartItems([...props.cartItems, { ...item, quantity: 1 }]);
-    }
-    props.setcartCount(prevState => prevState + 1)
-  };
-
-  const removeFromCart = (item) => {
-    const isItemInCart = props.cartItems.find((cartItem) => cartItem.id === item.id);
-
-    if (isItemInCart.quantity === 1) {
-      props.setCartItems(props.cartItems.filter((cartItem) => cartItem.id !== item.id));
-      //if (props.cartCount > 0 ) props.setcartCount(prevState => prevState - 1)
-    } else {
-      props.setCartItems(
-        props.cartItems.map((cartItem) =>
-          cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.quantity - 1 }
-            : cartItem
-        )
-      );
-    }
-    props.setcartCount(prevState => prevState - 1)
-  };
-
-  const getCartTotal = () => {
-    var num = props.cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
-    return Math.round((num + Number.EPSILON) * 100) / 100
-    //return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-  }; 
-/*
-const CountItems = () => {
-  return cartItems.reduce((total, item) => total + item.quantity, 0);
-}; */
-
-  useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(props.cartItems));
-    //props.setcartCount(CountItems);
-  }, [props.cartItems]);
-/*
-  useEffect(() => {
-    const cartItems = localStorage.getItem("cartItems");
-    if (cartItems) {
-      props.setCartItems(JSON.parse(props.cartItems));
-    }
-  }, []);*/
+   const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, cartCount, CountItems, setcartCount } = useContext(CartContext);
 
   function closeCartMenu()
   {
     props.SetIsCartMenuOpen(false); 
   }
-
 
     return(
         <>
@@ -82,7 +28,7 @@ const CountItems = () => {
           <button className="close-mini-cart-btn" onClick={closeCartMenu}>X</button>
          { <h1 >Cart</h1>}
   
-    {props.cartItems.map((item) => (
+    {cartItems.map((item) => (
       <div  key={nanoid()}>
          <p className="mini-cart-item-title"> <Link to={`/viewproduct/${item.id}`} className="product-link" > {item.title } </Link></p>
         <div className="mini-cart-item-container">
@@ -120,7 +66,7 @@ const CountItems = () => {
     ))}
   
   {
-    props.cartItems.length > 0 ? (
+    cartItems.length > 0 ? (
       <div >
     <h1 >Total: ${getCartTotal()}</h1>
     

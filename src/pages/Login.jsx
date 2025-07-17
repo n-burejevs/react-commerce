@@ -5,6 +5,8 @@ import Navbar from "../components/Navbar";
 import Sidemenu from "../components/Sidemenu";
 import { checkAuthToken } from "../functions";
 import '../styles/FormStyles.css'
+import { useContext } from 'react';
+import { CartContext } from '../components/context/cart';
 
 /*
 You signup/login from you front end
@@ -16,6 +18,8 @@ To keep user logged in you can use a stored token (again, in a cookie if you are
 
 export default function Login() {
 
+  const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, cartCount, CountItems, setcartCount } = useContext(CartContext);
+
     const [userEmail, setUserEmail] = React.useState("");
     const [userPassw, setUserPassw] = React.useState("");
 
@@ -23,12 +27,12 @@ export default function Login() {
 
      const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
 
-     const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
+    // const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
      
-         const CountItems = () => {
+     /*    const CountItems = () => {
            return cartItems.reduce((total, item) => total + item.quantity, 0);
-         }; 
-          const [cartCount, setcartCount ]= React.useState(CountItems)
+         }; */
+        //  const [cartCount, setcartCount ]= React.useState(CountItems)
      
           //wishlsit functionality, copy-pasted from Cart
           const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
@@ -107,7 +111,7 @@ export default function Login() {
 
   return (
   <>
-  <Navbar user={user} setUser={setUser} cartItems={cartItems} setCartItems={setCartItems}
+  <Navbar user={user} setUser={setUser} cartItems={cartItems} /* setCartItems={setCartItems}*/
              cartCount={cartCount} setcartCount={setcartCount}
              wishListCount={wishListCount} setWishListCount={setWishListCount} />
   

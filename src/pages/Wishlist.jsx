@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import {/* createContext*/ useState, useEffect } from 'react';
 import '../styles/Cartstyles.css'
 import Sidemenu from "../components/Sidemenu";
 import { nanoid } from "nanoid";
@@ -8,6 +7,8 @@ import '../App.css';
 import { Link  } from 'react-router-dom';
 import { checkAuthToken } from '../functions';
 import cart from '../assets/cart.png';
+import { useContext } from 'react';
+import { CartContext } from '../components/context/cart';
 
 //This is a copy from Cart.jsx adjusted for wishlist, i figure the functionality is about the same, except,
 //you should be able do add items from this list to Cart,
@@ -15,6 +16,8 @@ import cart from '../assets/cart.png';
 /*Source:
 https://dev.to/anne46/cart-functionality-in-react-with-context-api-2k2f*/
 export default function Wishlist(){
+
+  const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, cartCount, CountItems, setcartCount } = useContext(CartContext);
 
         const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
       
@@ -30,12 +33,6 @@ export default function Wishlist(){
         .catch(console.error);
         
         }, []);
-
-  const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
-  const CountItems = () => {
-  return cartItems.reduce((total, item) => total + item.quantity, 0);
-}; 
-  const [cartCount, setcartCount ]= React.useState(CountItems);
   
 //console.log(cartItems);
    const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
@@ -77,15 +74,7 @@ export default function Wishlist(){
   };
   const itemsCount = () => {
     return cartItems.reduce((total, item) => total + item.quantity, 0);
-  }; 
-
-  const getCartTotal = () => {
-    var num = wishlistItems.reduce((total, item) => total + item.price * item.quantity, 0)
-    return Math.round((num + Number.EPSILON) * 100) / 100
-    //return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-  }; 
-
-
+  };
 
   React.useEffect(() => {
     localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
@@ -97,58 +86,15 @@ export default function Wishlist(){
       setWishlistItems(JSON.parse(wishlistItems));
     }
   }, []);
-
-   React.useEffect(() => {
-      localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    }, [cartItems]);
-  
-    React.useEffect(() => {
-      const cartItems = localStorage.getItem("cartItems");
-      if (cartItems) {
-        setCartItems(JSON.parse(cartItems));
-      }
-    }, []);
-
-    //user can take an item from wishlist and add it to cart
-    function addToCart(item){
-    console.log(item);
-    let isItemInCart = false;
-   try{
-    isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
-   }
-    catch(e) {
-      console.log(e.message)
-    }
-
-    if (isItemInCart) {
-      
-      setCartItems(
-        cartItems.map((cartItem) =>
-          cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.quantity + item.quantity }
-            : cartItem
-        )
-      );
-
-    } else {
-      setCartItems([...cartItems, { ...item, quantity: 1 }]);
-    }
-    //update the number in navbar, items in the cart
-    setcartCount(cartItems.quantity + item.quantity)
-  };
-
   
     //Navbar needs a prop to get the cartCount?
     return(
         <>
         <Navbar user={user} setUser={setUser} cartCount={itemsCount()} 
-        setcartCount={setcartCount} cartItems={cartItems} setCartItems={setCartItems} />
+        setcartCount={setcartCount} cartItems={cartItems} /* setCartItems={setCartItems}*/ />
       <div className="cart-page-container">
 
-       
        <Sidemenu/>
-
-
 
          <div className="cart-list-container">
          <h1 >Wishlist</h1>

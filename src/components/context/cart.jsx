@@ -5,6 +5,11 @@ export const CartContext = createContext()
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
 
+  const CountItems = (array) => {
+  return array.reduce((total, item) => total + item.quantity, 0);
+}; 
+ const [cartCount, setcartCount ]= useState(CountItems(cartItems));
+
   const addToCart = (item) => {
     const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
 
@@ -42,7 +47,8 @@ export const CartProvider = ({ children }) => {
   };
 
   const getCartTotal = () => {
-    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+    var temp = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+    return Math.round((temp + Number.EPSILON) * 100) / 100;
   };
 
   useEffect(() => {
@@ -56,6 +62,10 @@ export const CartProvider = ({ children }) => {
     }
   }, []);
 
+     useEffect(() => {
+    setcartCount(CountItems(cartItems));
+  }, [cartItems]);
+
   return (
     <CartContext.Provider
       value={{
@@ -64,6 +74,9 @@ export const CartProvider = ({ children }) => {
         removeFromCart,
         clearCart,
         getCartTotal,
+        cartCount,
+        setcartCount,
+        CountItems,
       }}
     >
       {children}

@@ -9,6 +9,9 @@ import Sort from "./components/Sort";
 import Pagination from './components/Pagination'
 import { checkAuthToken } from './functions';
 
+import { useContext } from 'react'
+import { CartContext } from './components/context/cart'
+
 //Done: 
 // + //add X button to close MiniCart menu
 // + //Add Heart and user icons for liked items (to navbar)
@@ -71,6 +74,8 @@ import { checkAuthToken } from './functions';
 
 function App() {
 
+  const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, cartCount, CountItems, setcartCount } = useContext(CartContext);
+
   const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
 
   React.useEffect(() => {
@@ -101,13 +106,6 @@ function App() {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-   
-const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []);
-
-const CountItems = (array) => {
-  return array.reduce((total, item) => total + item.quantity, 0);
-}; 
- const [cartCount, setcartCount ]= React.useState(CountItems(cartItems));
 
 //wishlsit functionality, copy-pasted from Cart
 const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : []);
@@ -157,7 +155,7 @@ React.useEffect(() => {
     {/* pass the updated item count to a component, which is displaying it */}
     <Navbar cartCount={cartCount} setcartCount={setcartCount} user={user} setUser={setUser} 
     wishListCount={wishListCount} setWishListCount={setWishListCount}
-    cartItems={cartItems} setCartItems={setCartItems} />
+    cartItems={cartItems} /*setCartItems={setCartItems}*/ />
     <div className='main-content-container'>
 
     <div className='sidemenu-filterpane-mobile'> 
@@ -171,7 +169,7 @@ React.useEffect(() => {
                 <Sort source={productSource} setSource={setProductSource}/>
                 {/*Pass the state to update item count, when the added to cart*/}
                {<Product cartCount={cartCount} setcartCount={setcartCount}
-                         cartItems={cartItems} setCartItems={setCartItems}
+                         cartItems={cartItems} /*setCartItems={setCartItems}*/
                         /*source={productSource} */
                         wishlistItems={wishlistItems} setWishlistItems={setWishlistItems}
                         wishListCount={wishListCount} setWishListCount={setWishListCount}
