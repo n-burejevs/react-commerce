@@ -35,7 +35,14 @@ export default function Wishlist(){
         }, []);
   
 //console.log(cartItems);
-   const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
+   const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? 
+                                                            JSON.parse(localStorage.getItem('wishlist')) : [])
+
+  const itemsCount = (array) => {
+    return array.reduce((total, item) => total + item.quantity, 0);
+  };
+    const [wishListCount, setWishListCount]= React.useState(itemsCount(wishlistItems))
+
 //console.log(wishlistItems);
   const addToWishList = (item) => {
     const isItemInWishlist = wishlistItems.find((wishedItem) => wishedItem.id === item.id);
@@ -51,6 +58,7 @@ export default function Wishlist(){
     } else {
       setWishlistItems([...wishlistItems, { ...item, quantity: 1 }]);
     }
+     setWishListCount(prevState => prevState + 1)
   };
 
   const removeFromWishlist = (item) => {
@@ -67,13 +75,16 @@ export default function Wishlist(){
         )
       );
     }
+    setWishListCount(prevState => prevState - 1)
   };
 
   const clearWishlist = () => {
     setWishlistItems([]);
   };
-  const itemsCount = () => {
-    return cartItems.reduce((total, item) => total + item.quantity, 0);
+
+    const getWishListTotal = () => {
+    var temp = wishlistItems.reduce((total, item) => total + item.price * item.quantity, 0);
+    return Math.round((temp + Number.EPSILON) * 100) / 100;
   };
 
   React.useEffect(() => {
@@ -90,8 +101,9 @@ export default function Wishlist(){
     //Navbar needs a prop to get the cartCount?
     return(
         <>
-        <Navbar user={user} setUser={setUser} cartCount={itemsCount()} 
-        setcartCount={setcartCount} cartItems={cartItems} /* setCartItems={setCartItems}*/ />
+        <Navbar user={user} setUser={setUser} cartCount={cartCount} 
+                 wishListCount={wishListCount}
+        setcartCount={setcartCount}  />
       <div className="cart-page-container">
 
        <Sidemenu/>
@@ -145,7 +157,7 @@ export default function Wishlist(){
   {
     wishlistItems.length > 0 ? (
       <div >
-    <h1 >Total: ${getCartTotal()}</h1>
+    <h1 >Total: ${getWishListTotal()}</h1>
     <button className="clear-wishlist-btn"
       onClick={() => {
         clearWishlist()

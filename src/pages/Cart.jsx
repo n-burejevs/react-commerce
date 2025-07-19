@@ -32,64 +32,6 @@ export default function Cart(){
         
         }, []);
 
-  /*const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])*/
-
-  /*const addToCart = (item) => {
-    const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
-
-    if (isItemInCart) {
-      setCartItems(
-        cartItems.map((cartItem) =>
-          cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.quantity + 1 }
-            : cartItem
-        )
-      );
-    } else {
-      setCartItems([...cartItems, { ...item, quantity: 1 }]);
-    }
-  };*/
-
- /* const removeFromCart = (item) => {
-    const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
-
-    if (isItemInCart.quantity === 1) {
-      setCartItems(cartItems.filter((cartItem) => cartItem.id !== item.id));
-    } else {
-      setCartItems(
-        cartItems.map((cartItem) =>
-          cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.quantity - 1 }
-            : cartItem
-        )
-      );
-    }
-  };*/
-
-  /*const clearCart = () => {
-    setCartItems([]);
-  };*/
-
-
-  /*const getCartTotal = () => {
-    var num = cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
-    return Math.round((num + Number.EPSILON) * 100) / 100
-    //return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-  }; */
-
-
-/*
-  React.useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  }, [cartItems]);
-
-  React.useEffect(() => {
-    const cartItems = localStorage.getItem("cartItems");
-    if (cartItems) {
-      setCartItems(JSON.parse(cartItems));
-    }
-  }, []);*/
-
   const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
           
   const [wishListCount, setWishListCount]= React.useState(CountItems(wishlistItems))
@@ -109,7 +51,7 @@ export default function Cart(){
     //Navbar needs a prop to get the cartCount?
     return(
         <>
-        <Navbar cartCount={cartCount} setcartCount={setcartCount}
+        <Navbar cartCount={cartCount}
         user={user} setUser={setUser} 
         wishListCount={wishListCount} setWishListCount={setWishListCount}
         cartItems={cartItems} /*setCartItems={setCartItems} *//>

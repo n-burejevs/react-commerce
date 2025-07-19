@@ -36,8 +36,8 @@ export default function Contact(){
     
     return (
         <div>
-          <Navbar user={user} setUser={setUser} cartItems={cartItems} /*setCartItems={setCartItems}*/
-                      cartCount={cartCount} setcartCount={setcartCount}
+          <Navbar user={user} setUser={setUser}
+                      cartCount={cartCount}
                       wishListCount={wishListCount} setWishListCount={setWishListCount} />
                <div className='main-content-container'>
             

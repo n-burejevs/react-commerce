@@ -8,13 +8,6 @@ import '../styles/FormStyles.css'
 import { useContext } from 'react';
 import { CartContext } from '../components/context/cart';
 
-/*
-You signup/login from you front end
-You backend validates the user info and generates authentication token (and maybe refresh token) and sends it to the front
-Front end uses said tokens in each call to the backend
-Backend validates the token and allows access accordingly
-To keep user logged in you can use a stored token (again, in a cookie if you are on web) and refresh it if needed
-*/
 
 export default function Login() {
 
@@ -26,13 +19,6 @@ export default function Login() {
     const [response, setResponse] = React.useState("");
 
      const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
-
-    // const [cartItems, setCartItems] = React.useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
-     
-     /*    const CountItems = () => {
-           return cartItems.reduce((total, item) => total + item.quantity, 0);
-         }; */
-        //  const [cartCount, setcartCount ]= React.useState(CountItems)
      
           //wishlsit functionality, copy-pasted from Cart
           const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
@@ -112,7 +98,7 @@ export default function Login() {
   return (
   <>
   <Navbar user={user} setUser={setUser} cartItems={cartItems} /* setCartItems={setCartItems}*/
-             cartCount={cartCount} setcartCount={setcartCount}
+             cartCount={cartCount} 
              wishListCount={wishListCount} setWishListCount={setWishListCount} />
   
   <div className='main-content-container'>

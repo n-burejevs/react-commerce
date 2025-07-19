@@ -97,7 +97,7 @@ return(
         {/*console.log(products)*/}
         <Navbar cartCount={cartCount} setcartCount={setcartCount} user={user} setUser={setUser}
         wishListCount={wishListCount} setWishListCount={setWishListCount}
-         cartItems={cartItems} />
+         />
 
 
         <div className='main-content-container'>
@@ -113,8 +113,7 @@ return(
 
                 {/*<Sort source={source} setSource={setSource}/>*/}
                 {/*Pass the state to update item count, when added to cart*/}
-                <Product setcartCount={setcartCount} cartItems={cartItems}
-                 cartCount={cartCount} /*source={`https://dummyjson.com/products/category/${name}?limit=20`}*/
+                <Product /*source={`https://dummyjson.com/products/category/${name}?limit=20`}*/
                  wishListCount={wishListCount} setWishListCount={setWishListCount} 
                  wishlistItems={wishlistItems} setWishlistItems={setWishlistItems}
                   products={products} setProducts={setProducts}/>

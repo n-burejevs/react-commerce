@@ -19,11 +19,6 @@ export default function SignUp()
       const [errorMessage, SetErrorMessage] = React.useState({nameError: '', lastnameError: '', emailError: '', passwordError: ''});
 
       const [response, setResponse] = React.useState('');
-     
-             /*  const CountItems = () => {
-                 return cartItems.reduce((total, item) => total + item.quantity, 0);
-               }; */
-              //  const [cartCount, setcartCount ]= React.useState(CountItems)
            
                 //wishlsit functionality, copy-pasted from Cart
                 const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
@@ -186,7 +181,6 @@ function handlePasswordChange(e) {
 
                 </form>
                 </div>
-                {/*wtf is with response??????????????????????????????????????????*/}
                
             </div>
             </div>

@@ -27,9 +27,14 @@ import { CartContext } from './components/context/cart'
 // + //filters!: e. g. brand
 // + //Pagination logic to display legitimate number of pages based on number of items in products state(numberOfPages={products.length} 
 //                                                                          products needs to be full products, not limited by '20')
+// + //RE-DO cartItems states are used everywhere(duplicated code! almost in every page/component),
+//  together with UseEffects to update/get state on change and addToCart addToWishList functions!
+
 
 //TO DO:
-//Sidemenu on mobile? sidemenu needs refactoring in general...
+//code clean up(commented out), remove unused props?
+//wishlist code to be moved to cart.jsx
+//sidemenu needs refactoring in general...
 //Signup, Login, singleProduct need styling!
 //Add sort to ViewCategory.jsx https://dummyjson.com/products/category/laptops?limit=20&sortBy=price&order=asc
                //example ->    https://dummyjson.com/products/category/laptops?limit=20 - add the missing sort part?
@@ -38,9 +43,6 @@ import { CartContext } from './components/context/cart'
 
 //check if logged in in navbars account management div, greet user and have and option to logout, go to account settings
 //finish category hover menu styling and get links from https://dummyjson.com/docs/products#products-category
-
-//RE-DO cartItems/wishlistItems states are used everywhere(duplicated code! almost in every page/component),
-//  together with UseEffects to update/get state on change and addToCart addToWishList functions!
 
 //add user auth context? or not
 //add categories(more)
@@ -52,11 +54,9 @@ import { CartContext } from './components/context/cart'
 //Add menus to user-account div and wishlist just like its with mini cart menu
 //To DO; https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
 //have logged in users cart saved in database
-//make sure loggied in user cant register again? check if email is taken or not!!!!!!
-//remove old commented-out code?
+//make sure loggied in user cant register again?
 
 //BUGS:
-//Fixed/adding to cart from miniCart menu does not update cartCount in Navbar - 
 //1/ open mini cart menu in the navbar, add an item (press + button)
 //and click somewhere outside of cart menu. the menu should close by itself, but it does not
 //does sth happen with ref={} after the MiniCart re-renders?
@@ -146,16 +146,13 @@ React.useEffect(() => {
                     .then(res => res.json())
                     .then(data => setAllProducts(data.products))
                     },[])
-        //console.log(allProducts);
   return (
     //handle user auth
    
       <>
-       {/*<UserContext.Provider value={{ user, login, logout }}>*/}
     {/* pass the updated item count to a component, which is displaying it */}
-    <Navbar cartCount={cartCount} setcartCount={setcartCount} user={user} setUser={setUser} 
-    wishListCount={wishListCount} setWishListCount={setWishListCount}
-    cartItems={cartItems} /*setCartItems={setCartItems}*/ />
+    <Navbar cartCount={cartCount} /*setcartCount={setcartCount} */user={user} setUser={setUser} 
+    wishListCount={wishListCount} setWishListCount={setWishListCount} />
     <div className='main-content-container'>
 
     <div className='sidemenu-filterpane-mobile'> 
@@ -168,10 +165,7 @@ React.useEffect(() => {
      <div className="main-content">
                 <Sort source={productSource} setSource={setProductSource}/>
                 {/*Pass the state to update item count, when the added to cart*/}
-               {<Product cartCount={cartCount} setcartCount={setcartCount}
-                         cartItems={cartItems} /*setCartItems={setCartItems}*/
-                        /*source={productSource} */
-                        wishlistItems={wishlistItems} setWishlistItems={setWishlistItems}
+               {<Product wishlistItems={wishlistItems} setWishlistItems={setWishlistItems}
                         wishListCount={wishListCount} setWishListCount={setWishListCount}
                         products={products} setProducts={setProducts}/>}
                  <Pagination source={productSource} setSource={setProductSource} /*Need to sent number of all products*/numberOfProd={allProducts.length  }/>

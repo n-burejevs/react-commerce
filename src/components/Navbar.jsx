@@ -38,13 +38,9 @@ const [isCartMenuOpen, SetIsCartMenuOpen] = React.useState(false);
 const [isAccountMenuOpen, SetIsAccountMenuOpen] = React.useState(false);
 
 
-//const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
-
    function handleButtonClick(){
-   // console.log("before"+isNavMenuOpen);
         setIsNavMenuOpen(prevState => !prevState);
-     //  console.log("after"+isNavMenuOpen);
-    
+ 
   }; 
   
   function ToggleCart(){
@@ -65,8 +61,6 @@ function handleChange(event)
   setSearchFor(event.target.value);
 }
 
-//const [products, setProducts] = React.useState([]);
-
 const [searchResults, setsearchResults] = React.useState([]);
 
   //too many searches
@@ -74,8 +68,6 @@ const [searchResults, setsearchResults] = React.useState([]);
     if(searchFor.length > 2){
 
       setSearchResultsVisible(true)
-
-      //const results = {};
 
      fetch(`https://dummyjson.com/products/search?q=${searchFor}`)
    .then(res => res.json())
@@ -247,7 +239,7 @@ function handleClickOutside(event){
          
            </div>
            <div className="mini-cart-container-absolute" >
-            {/*console.log("state: "+isCartMenuOpen)*/}{/*console.log(props.cartCount)*/}
+            
            { isCartMenuOpen && <div className="mini-cart-menu"   >
               <MiniCart SetIsCartMenuOpen={SetIsCartMenuOpen} />
               
