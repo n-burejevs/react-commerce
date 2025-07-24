@@ -92,13 +92,13 @@ const [allProducts, setAllProducts] = React.useState([]);
         .then(data => setBrands(data.products))
         },[name])*/
 
+   //const [pageNumber, SetPageNumber] = React.useState(1);
+
 return(
         <>
-        {/*console.log(products)*/}
-        <Navbar cartCount={cartCount} setcartCount={setcartCount} user={user} setUser={setUser}
+        <Navbar cartCount={cartCount} user={user} setUser={setUser}
         wishListCount={wishListCount} setWishListCount={setWishListCount}
          />
-
 
         <div className='main-content-container'>
 
@@ -111,14 +111,16 @@ return(
 
      <div className="main-content">
 
-                {/*<Sort source={source} setSource={setSource}/>*/}
+                {<Sort source={source} setSource={setSource} products={products} setProducts={setProducts} />}
                 {/*Pass the state to update item count, when added to cart*/}
                 <Product /*source={`https://dummyjson.com/products/category/${name}?limit=20`}*/
                  wishListCount={wishListCount} setWishListCount={setWishListCount} 
                  wishlistItems={wishlistItems} setWishlistItems={setWishlistItems}
-                  products={products} setProducts={setProducts}/>
+                  products={products} setProducts={setProducts}
+                  /*pageNumber={pageNumber}*//>
 
-                 {<Pagination source={source} setSource={setSource} numberOfProd={allProducts.length }/> }
+                 {<Pagination source={source} setSource={setSource} numberOfProd={allProducts.length }
+                              /*pageNumber={pageNumber} SetPageNumber={SetPageNumber}*//> }
       </div>
     {width >= 768 && <Filters products={products} setProducts={setProducts} width={width}
                       allProducts={allProducts} setAllProducts={setAllProducts}

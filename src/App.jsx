@@ -29,7 +29,7 @@ import { CartContext } from './components/context/cart'
 //                                                                          products needs to be full products, not limited by '20')
 // + //RE-DO cartItems states are used everywhere(duplicated code! almost in every page/component),
 //  together with UseEffects to update/get state on change and addToCart addToWishList functions!
-
+// + //check if logged in in navbars account management div, greet user and have and option to logout, go to account settings
 
 //TO DO:
 //code clean up(commented out), remove unused props?
@@ -41,7 +41,7 @@ import { CartContext } from './components/context/cart'
 //login, logout api(on all pages), user password restore (PHP password_verify() forgot password example) https://www.phpmentoring.org/blog/php-password-verify-function#:~:text=The%20Password_Verify()%20function%20is,true%2C%20otherwise%20it%20returns%20false.
 //useEffect to check cookies? user is logged in and so on... have to check cookies and set the user on every page? navbar recieves props.user from every page
 
-//check if logged in in navbars account management div, greet user and have and option to logout, go to account settings
+
 //finish category hover menu styling and get links from https://dummyjson.com/docs/products#products-category
 
 //add user auth context? or not
@@ -74,7 +74,7 @@ import { CartContext } from './components/context/cart'
 
 function App() {
 
-  const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, cartCount, CountItems, setcartCount } = useContext(CartContext);
+  const { /*cartItems, addToCart, removeFromCart, clearCart, getCartTotal,*/ cartCount, CountItems, /*setcartCount*/ } = useContext(CartContext);
 
   const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
 

@@ -10,10 +10,7 @@ function Pagination(props)
    // const [pageAmount, setPageAmount] = React.useState();/*Math.ceil(props.numberOfProd / 20)*;*/
    //dont need to make this a state?
     const pageAmount = Math.ceil(props.numberOfProd / 20);
-   /*React.useEffect(() => {
-      setPageAmount(Math.ceil(props.numberOfProd / 20));
-    }, [props.allProducts]);*/
-    
+  
 //how to combine this with Sort?
   function changeLink()
     {

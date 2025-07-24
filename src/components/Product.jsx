@@ -35,11 +35,43 @@ export default function Product(props)
     //update the number in navbar, items in the cart
     props.setWishListCount(prevState => prevState + 1)
   }
+ /* function renderProducts()
+  {
+    var items = [];
+
+    for (let i =0; i<props.products.lenght; i++)
+    {
+      if(i>=props.PageNumber*20 && i<props.PageNumber*20+20)
+      items.push(
+                <div key={nanoid()} className="product-card">      
+           <Link to={`/viewproduct/${props.product[i].id}`} className="product-link" > 
+                    <img className="product-img" loading="lazy" src={props.product[i].thumbnail} alt={props.product[i].title}></img>
+            </Link>
+           
+
+           <Link to={`/viewproduct/${props.product[i].id}`} className="product-link" > 
+               {props.product[i].title}
+            </Link>
+          
+            <div className="product-price">${props.product[i].price}</div>     
+            <div>
+            <button className="product-button" onClick={()=>addToCart(props.product[i])}>add to cart</button>
+            
+            <img className={"wishlist-button-img"} src={wishlist_icon} onClick={()=>addTowishlist(props.product[i])}></img>
+            </div>    
+
+        </div>
+      )
+    }
+    return items;
+  }*/
 {/*console.log(wishlistItems)*/}
     return(
       <>
-      {  props.products.map(product => ( 
-        <div key={nanoid()} className="product-card">      
+        {/*renderProducts()*/}
+      {  props.products.map((product) => (
+        
+          <div key={nanoid()} className="product-card">      
            <Link to={`/viewproduct/${product.id}`} className="product-link" > 
                     <img className="product-img" loading="lazy" src={product.thumbnail} alt={product.title}></img>
             </Link>
@@ -57,6 +89,7 @@ export default function Product(props)
             </div>    
 
         </div>
+            
          )
         ) }
      

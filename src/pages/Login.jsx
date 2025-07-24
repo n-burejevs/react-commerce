@@ -11,7 +11,7 @@ import { CartContext } from '../components/context/cart';
 
 export default function Login() {
 
-  const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, cartCount, CountItems, setcartCount } = useContext(CartContext);
+  const { /*cartItems, addToCart, removeFromCart, clearCart, getCartTotal,*/ cartCount/*, CountItems, setcartCount*/ } = useContext(CartContext);
 
     const [userEmail, setUserEmail] = React.useState("");
     const [userPassw, setUserPassw] = React.useState("");
@@ -84,8 +84,11 @@ export default function Login() {
     
     const loggedUser = await checkAuthToken();
     //console.log(loggedUser);
- if(loggedUser) setUser(loggedUser ? {name: loggedUser.name, lastname: loggedUser.lastname, email: loggedUser.email} : null)
-  }
+ if(loggedUser) {
+    //user already is logged in
+    window.location.replace("/localhost:5173");
+  //setUser(loggedUser ? {name: loggedUser.name, lastname: loggedUser.lastname, email: loggedUser.email} : null)
+  }}
   fetchUserInfo()
   .catch(console.error);
   
@@ -97,7 +100,7 @@ export default function Login() {
 
   return (
   <>
-  <Navbar user={user} setUser={setUser} cartItems={cartItems} /* setCartItems={setCartItems}*/
+  <Navbar user={user} setUser={setUser} /*cartItems={cartItems} setCartItems={setCartItems}*/
              cartCount={cartCount} 
              wishListCount={wishListCount} setWishListCount={setWishListCount} />
   
@@ -116,9 +119,8 @@ export default function Login() {
         type="email"
         id="user-email"
         name="email"
-        placeholder="example@yahoo.com"
+        placeholder="email@email.com"
         onChange={handleEmailChange}
-        defaultValue={"email@email.com"}
       />
 
 
@@ -127,7 +129,6 @@ export default function Login() {
         type="password"
         id="password"
         name="password"
-        defaultValue={"12345678"}
         onChange={handlePasswordChange}
       />
     

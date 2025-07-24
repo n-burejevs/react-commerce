@@ -10,7 +10,7 @@ import { CartContext } from '../components/context/cart';
 
 export default function SignUp()
 {
-    const { cartItems, /*addToCart, removeFromCart, clearCart, getCartTotal,*/ cartCount, /*CountItems,*/ setcartCount } = useContext(CartContext);
+    const {/* cartItems, addToCart, removeFromCart, clearCart, getCartTotal,*/ cartCount, /*CountItems,*/ /*setcartCount*/ } = useContext(CartContext);
 
     const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
  
@@ -21,12 +21,12 @@ export default function SignUp()
       const [response, setResponse] = React.useState('');
            
                 //wishlsit functionality, copy-pasted from Cart
-                const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
+      const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
                         
-                const CountWishedItems = () => {
-                    return wishlistItems.reduce((total, item) => total + item.quantity, 0);
-                }; 
-                const [wishListCount, setWishListCount]= React.useState(CountWishedItems)
+      const CountWishedItems = () => {
+          return wishlistItems.reduce((total, item) => total + item.quantity, 0);
+      }; 
+      const [wishListCount, setWishListCount]= React.useState(CountWishedItems)
 
 
   async function sendData() {
@@ -73,7 +73,7 @@ function /*SignUp*/handleSubmit(/*formData*/event)
       
       if(formIsFilled === false) {SetErrorMessage(errors);}
       else {
-        console.log("all is filled", userData);
+        //console.log("all is filled", userData);
         //clean up old error messages?
          SetErrorMessage({nameError: '', lastnameError: '', emailError: '', passwordError: ''})
          //what to do with form data?
@@ -113,7 +113,17 @@ function handlePasswordChange(e) {
       
       const loggedUser = await checkAuthToken();
     //console.log(loggedUser);
-     if(loggedUser) setUser(loggedUser ? {name: loggedUser.name, lastname: loggedUser.lastname, email: loggedUser.email} : null)
+     if(loggedUser) {
+      //setUser(loggedUser ? {name: loggedUser.name, lastname: loggedUser.lastname, email: loggedUser.email} : null)
+      
+      //user already did sign up and is logged in
+       window.location.replace("/localhost:5173");
+       //redirect("/localhost:5173")
+    }
+  
+     
+    
+    //redirect('/');
     }
     fetchUserInfo()
     .catch(console.error);
@@ -137,8 +147,8 @@ function handlePasswordChange(e) {
 
     return (
         <div>
-            <Navbar user={user} setUser={setUser} cartItems={cartItems}/* setCartItems={setCartItems}*/
-                        cartCount={cartCount} setcartCount={setcartCount}
+            <Navbar user={user} setUser={setUser} /*cartItems={cartItems}*//* setCartItems={setCartItems}*/
+                        cartCount={cartCount}
                         wishListCount={wishListCount} setWishListCount={setWishListCount} />
             <div className='main-content-container'>
           
@@ -157,18 +167,18 @@ function handlePasswordChange(e) {
 
 
                   <label htmlFor="firstname">First Name:</label>
-                  <input id="firstname" type="text" name="firstname" onChange={handleFirstNameChange} defaultValue={"testname"/*userData.firstname*/} ></input>
+                  <input id="firstname" type="text" name="firstname" onChange={handleFirstNameChange} placeholder={"testname"/*userData.firstname*/} ></input>
                   <br/>
                   <label htmlFor="lastname">Last Name:</label>
-                  <input id="lastname" type="text" name="lastname" onChange={handleLastNameChange} defaultValue={"testlastname"/*userData.lastname*/}></input>
+                  <input id="lastname" type="text" name="lastname" onChange={handleLastNameChange} placeholder={"testlastname"/*userData.lastname*/}></input>
                   <br/>
 
                   <label htmlFor="email">Email:</label>
-                  <input id="email" type="email" name="email" onChange={handleEmailChange} defaultValue={"email@email.com"/*userData.email*/}></input>
+                  <input id="email" type="email" name="email" onChange={handleEmailChange} placeholder={"email@email.com"/*userData.email*/}></input>
                   
                   <br/>
                   <label htmlFor="password">Password:</label>
-                  <input id="password" type="password" onChange={handlePasswordChange} defaultValue={"12345678"} name="password" ></input>
+                  <input id="password" type="password" onChange={handlePasswordChange} name="password" ></input>
                   <br/>                 
                   <div className="error-message">
                     {printErrors}
