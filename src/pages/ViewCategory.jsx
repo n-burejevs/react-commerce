@@ -8,13 +8,16 @@ import { checkAuthToken } from '../functions';
 import { useParams } from "react-router-dom";
 import Pagination from '../components/Pagination'
 import { useContext } from 'react';
+
 import { CartContext } from '../components/context/cart';
+import { WishlistContext } from '../components/context/wishlist';
 
 export default function ViewCategory()
 {
 
   const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, cartCount, CountItems, setcartCount } = useContext(CartContext);
-  
+   const {wishlistItems, addTowishlist, removeFromWishlist, clearWishlist, getWishListTotal, wishListCount, setWishListCount, CountWishedItems} = useContext(WishlistContext);
+   
       const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
     
       React.useEffect(() => {
@@ -47,22 +50,6 @@ export default function ViewCategory()
 //get name of the category selected, to display whats in it
         let { name } = useParams();
         //console.log("param",useParams());
-
-const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
-        
-const [wishListCount, setWishListCount]= React.useState(CountItems(wishlistItems))
-
-React.useEffect(() => {
-  localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
-  setWishListCount(CountItems(wishlistItems));
-}, [wishlistItems]);
-         
-React.useEffect(() => {
-  const wishlistItems = localStorage.getItem("wishlistItems");
-  if (wishlistItems) {
-  setWishlistItems(JSON.parse(wishlistItems));
-}
-}, []);
 
 const [products, setProducts] = React.useState([]);
 const [source, setSource] = React.useState(`https://dummyjson.com/products/category/${name}?limit=20`);
@@ -113,10 +100,7 @@ return(
 
                 {<Sort source={source} setSource={setSource} products={products} setProducts={setProducts} />}
                 {/*Pass the state to update item count, when added to cart*/}
-                <Product /*source={`https://dummyjson.com/products/category/${name}?limit=20`}*/
-                 wishListCount={wishListCount} setWishListCount={setWishListCount} 
-                 wishlistItems={wishlistItems} setWishlistItems={setWishlistItems}
-                  products={products} setProducts={setProducts}
+                <Product products={products} setProducts={setProducts}
                   /*pageNumber={pageNumber}*//>
 
                  {<Pagination source={source} setSource={setSource} numberOfProd={allProducts.length }

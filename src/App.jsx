@@ -11,6 +11,7 @@ import { checkAuthToken } from './functions';
 
 import { useContext } from 'react'
 import { CartContext } from './components/context/cart'
+import { WishlistContext } from './components/context/wishlist'
 
 //Done: 
 // + //add X button to close MiniCart menu
@@ -27,8 +28,8 @@ import { CartContext } from './components/context/cart'
 // + //filters!: e. g. brand
 // + //Pagination logic to display legitimate number of pages based on number of items in products state(numberOfPages={products.length} 
 //                                                                          products needs to be full products, not limited by '20')
-// + //RE-DO cartItems states are used everywhere(duplicated code! almost in every page/component),
-//  together with UseEffects to update/get state on change and addToCart addToWishList functions!
+// + //cartItems wishlist states are were used everywhere(duplicated code! almost in every page/component),
+//  together with UseEffects. moved to separate files and using context now
 // + //check if logged in in navbars account management div, greet user and have and option to logout, go to account settings
 
 //TO DO:
@@ -75,7 +76,7 @@ import { CartContext } from './components/context/cart'
 function App() {
 
   const { /*cartItems, addToCart, removeFromCart, clearCart, getCartTotal,*/ cartCount, CountItems, /*setcartCount*/ } = useContext(CartContext);
-
+  const {/*wishlistItems, addTowishlist, removeFromWishlist, clearWishlist, getWishListTotal,*/ wishListCount, setWishListCount, /*CountWishedItems*/} = useContext(WishlistContext);
   const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
 
   React.useEffect(() => {
@@ -106,26 +107,6 @@ function App() {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
-//wishlsit functionality, copy-pasted from Cart
-const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : []);
-        /*
-const CountWishedItems = () => {
-    return wishlistItems.reduce((total, item) => total + item.quantity, 0);
-}; */
-const [wishListCount, setWishListCount]= React.useState(CountItems(wishlistItems))
-
-React.useEffect(() => {
-  localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
-  setWishListCount(CountItems(wishlistItems));
-}, [wishlistItems]);
-         
-React.useEffect(() => {
-  const wishlistItems = localStorage.getItem("wishlistItems");
-  if (wishlistItems) {
-  setWishlistItems(JSON.parse(wishlistItems));
-}
-}, []);
 
  const [products, setProducts] = React.useState([]);
 
@@ -163,11 +144,9 @@ React.useEffect(() => {
     </div>
 
      <div className="main-content">
-                <Sort source={productSource} setSource={setProductSource}/>
+                <Sort source={productSource} setSource={setProductSource} products={products} setProducts={setProducts}/>
                 {/*Pass the state to update item count, when the added to cart*/}
-               {<Product wishlistItems={wishlistItems} setWishlistItems={setWishlistItems}
-                        wishListCount={wishListCount} setWishListCount={setWishListCount}
-                        products={products} setProducts={setProducts}/>}
+               {<Product products={products} setProducts={setProducts}/>}
                  <Pagination source={productSource} setSource={setProductSource} /*Need to sent number of all products*/numberOfProd={allProducts.length  }/>
                  {/*console.log(products)*/}
       </div>

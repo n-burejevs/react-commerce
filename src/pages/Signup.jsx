@@ -7,12 +7,15 @@ import { checkAuthToken } from "../functions";
 
 import { useContext } from 'react';
 import { CartContext } from '../components/context/cart';
+import { WishlistContext } from '../components/context/wishlist';
 
 export default function SignUp()
 {
-    const {/* cartItems, addToCart, removeFromCart, clearCart, getCartTotal,*/ cartCount, /*CountItems,*/ /*setcartCount*/ } = useContext(CartContext);
+  const {/* cartItems, addToCart, removeFromCart, clearCart, getCartTotal,*/ cartCount, /*CountItems,*/ /*setcartCount*/ } = useContext(CartContext);
 
-    const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
+  const { wishListCount, setWishListCount } = useContext(WishlistContext);
+    
+  const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
  
       //try to save user's entered data
       const [userData, setUserData] = React.useState({firstname: '', lastname: '', email: '', password: ''});
@@ -21,13 +24,6 @@ export default function SignUp()
       const [response, setResponse] = React.useState('');
            
                 //wishlsit functionality, copy-pasted from Cart
-      const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
-                        
-      const CountWishedItems = () => {
-          return wishlistItems.reduce((total, item) => total + item.quantity, 0);
-      }; 
-      const [wishListCount, setWishListCount]= React.useState(CountWishedItems)
-
 
   async function sendData() {
 

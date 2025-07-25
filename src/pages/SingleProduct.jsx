@@ -10,12 +10,15 @@ import { checkAuthToken } from '../functions';
 
 import { useContext } from 'react';
 import { CartContext } from '../components/context/cart';
+import { WishlistContext } from '../components/context/wishlist';
 
 /* This page needs styling*/
 export default function SingleProduct(){
        
     const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, cartCount, CountItems, setcartCount } = useContext(CartContext);
-
+    
+    const { addTowishlist, wishListCount, setWishListCount } = useContext(WishlistContext);
+    
     const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
   
     React.useEffect(() => {
@@ -45,46 +48,6 @@ export default function SingleProduct(){
         .then(data => SetSingleProduct(data)); 
         
     },[id]);
-
-const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
-                    
-  const [wishListCount, setWishListCount]= React.useState(itemsCount(wishlistItems))
-         
-  React.useEffect(() => {
-    localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
-    setWishListCount(itemsCount(wishlistItems));
-    }, [wishlistItems]);
-                     
-    React.useEffect(() => {
-       const wishlistItems = localStorage.getItem("wishlistItems");
-        if (wishlistItems) {
-         setWishlistItems(JSON.parse(wishlistItems));
-            }
-            }, []);
-              
-            
-function addTowishlist(item)
-  {
-    let wishListed = false;
-    wishListed = wishlistItems.find((w) => w.id === item.id);
-
-    if (wishListed) {
-      
-      setWishlistItems(
-        wishlistItems.map((whisList) =>
-          whisList.id === item.id
-            ? { ...whisList, quantity: whisList.quantity + 1 }
-            : whisList
-        )
-      );
-
-    } else {
-      setWishlistItems([...wishlistItems, { ...item, quantity: 1 }]);
-      //console.log(props.wishlistItems);
-    }
-    //update the number in navbar, items in the cart
-    setWishListCount(prevState => prevState + 1)
-  }       
 
     return(
   <div  className='main-content-container'>

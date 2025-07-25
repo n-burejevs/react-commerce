@@ -10,6 +10,7 @@ import { checkAuthToken } from '../functions';
 
 import { useContext } from 'react';
 import { CartContext } from '../components/context/cart';
+import { WishlistContext } from '../components/context/wishlist';
 
 /*Source:
 https://dev.to/anne46/cart-functionality-in-react-with-context-api-2k2f*/
@@ -17,6 +18,8 @@ export default function Cart(){
 
         const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, cartCount, CountItems, setcartCount } = useContext(CartContext);
 
+        const { wishlistItems, wishListCount, setWishListCount } = useContext(WishlistContext);
+         
         const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
       
         React.useEffect(() => {
@@ -31,22 +34,6 @@ export default function Cart(){
         .catch(console.error);
         
         }, []);
-
-  const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
-          
-  const [wishListCount, setWishListCount]= React.useState(CountItems(wishlistItems))
-  
-  React.useEffect(() => {
-    localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
-    setWishListCount(CountItems(wishlistItems));
-  }, [wishlistItems]);
-           
-  React.useEffect(() => {
-    const wishlistItems = localStorage.getItem("wishlistItems");
-    if (wishlistItems) {
-    setWishlistItems(JSON.parse(wishlistItems));
-  }
-  }, []);
   
     //Navbar needs a prop to get the cartCount?
     return(

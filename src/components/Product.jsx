@@ -5,6 +5,7 @@ import wishlist_icon from '../assets/wishlist.png';
 
 import { useContext } from 'react'
 import { CartContext } from '../components/context/cart'
+import { WishlistContext } from '../components/context/wishlist';
 
 //Loading times are insanely slow!!! check in network tab in dev tools!
 //added "lazy loading" to img
@@ -12,16 +13,18 @@ export default function Product(props)
 { 
   const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, cartCount, CountItems, setcartCount } = useContext(CartContext);
   
+  const {wishlistItems, addTowishlist, removeFromWishlist, clearWishlist, getWishListTotal, wishListCount, setWishListCount, CountWishedItems} = useContext(WishlistContext);
+     /*
 //same functions as addToCart
-  function addTowishlist(item)
+ function addTowishlist(item)
   {
     let wishListed = false;
-    wishListed = props.wishlistItems.find((w) => w.id === item.id);
+    wishListed = wishlistItems.find((w) => w.id === item.id);
 
     if (wishListed) {
       
-      props.setWishlistItems(
-        props.wishlistItems.map((whisList) =>
+      setWishlistItems(
+        wishlistItems.map((whisList) =>
           whisList.id === item.id
             ? { ...whisList, quantity: whisList.quantity + 1 }
             : whisList
@@ -29,12 +32,12 @@ export default function Product(props)
       );
 
     } else {
-      props.setWishlistItems([...props.wishlistItems, { ...item, quantity: 1 }]);
+      setWishlistItems([...wishlistItems, { ...item, quantity: 1 }]);
       //console.log(props.wishlistItems);
     }
     //update the number in navbar, items in the cart
-    props.setWishListCount(prevState => prevState + 1)
-  }
+    setWishListCount(prevState => prevState + 1)
+  }*/
  /* function renderProducts()
   {
     var items = [];

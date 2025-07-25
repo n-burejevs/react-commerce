@@ -5,19 +5,14 @@ import Sidemenu from "../components/Sidemenu";
 
 import { useContext } from 'react';
 import { CartContext } from '../components/context/cart';
+import { WishlistContext } from '../components/context/wishlist';
 
 export default function About(){
 
-    const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, cartCount, CountItems, setcartCount } = useContext(CartContext);
+    const { cartCount } = useContext(CartContext);
 
-     //wishlsit functionality, copy-pasted from Cart
-     const [wishlistItems, setWishlistItems] = React.useState(localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [])
-             
-     const CountWishedItems = () => {
-         return wishlistItems.reduce((total, item) => total + item.quantity, 0);
-     }; 
-     const [wishListCount, setWishListCount]= React.useState(CountWishedItems)
-
+    const { wishListCount, setWishListCount} = useContext(WishlistContext);
+     
     const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
       
         React.useEffect(() => {

@@ -19,11 +19,12 @@ import Account from './pages/Account.jsx';
 import Wishlist from './pages/Wishlist.jsx';
 import Test from './pages/Test.jsx';
 import { CartProvider } from './components/context/cart.jsx'
-
+import { WishlistProvider } from './components/context/wishlist.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
  <CartProvider>
+  <WishlistProvider>
   <BrowserRouter>
    <Routes>
 
@@ -42,6 +43,7 @@ createRoot(document.getElementById('root')).render(
      <Route path="*" element={<App to="/" replace />} />
    </Routes>
   </BrowserRouter>
+  </WishlistProvider>
   </CartProvider>
   </StrictMode>
 )

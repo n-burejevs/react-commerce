@@ -53,6 +53,7 @@ export const CartProvider = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    setcartCount(CountItems(cartItems));
   }, [cartItems]);
 
   useEffect(() => {
@@ -61,10 +62,6 @@ export const CartProvider = ({ children }) => {
       setCartItems(JSON.parse(cartItems));
     }
   }, []);
-
-     useEffect(() => {
-    setcartCount(CountItems(cartItems));
-  }, [cartItems]);
 
   return (
     <CartContext.Provider
