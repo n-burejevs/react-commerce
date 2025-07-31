@@ -28,26 +28,22 @@ import { WishlistContext } from './components/context/wishlist'
 // + //filters!: e. g. brand
 // + //Pagination logic to display legitimate number of pages based on number of items in products state(numberOfPages={products.length} 
 //                                                                          products needs to be full products, not limited by '20')
-// + //cartItems wishlist states are were used everywhere(duplicated code! almost in every page/component),
+// + //cartItems wishlist states were everywhere(duplicated code! almost in every page/component),
 //  together with UseEffects. moved to separate files and using context now
 // + //check if logged in in navbars account management div, greet user and have and option to logout, go to account settings
 
 //TO DO:
+//Sort & paginattion
+//User account page
 //code clean up(commented out), remove unused props?
-//wishlist code to be moved to cart.jsx
-//sidemenu needs refactoring in general...
-//Signup, Login, singleProduct need styling!
-//Add sort to ViewCategory.jsx https://dummyjson.com/products/category/laptops?limit=20&sortBy=price&order=asc
-               //example ->    https://dummyjson.com/products/category/laptops?limit=20 - add the missing sort part?
-//login, logout api(on all pages), user password restore (PHP password_verify() forgot password example) https://www.phpmentoring.org/blog/php-password-verify-function#:~:text=The%20Password_Verify()%20function%20is,true%2C%20otherwise%20it%20returns%20false.
+//login, logout to context?, user password restore (PHP password_verify() forgot password example) https://www.phpmentoring.org/blog/php-password-verify-function#:~:text=The%20Password_Verify()%20function%20is,true%2C%20otherwise%20it%20returns%20false.
 //useEffect to check cookies? user is logged in and so on... have to check cookies and set the user on every page? navbar recieves props.user from every page
-
 
 //finish category hover menu styling and get links from https://dummyjson.com/docs/products#products-category
 
-//add user auth context? or not
 //add categories(more)
 //add discount & deals page (just add some -% off some random items)
+
 //add Coupon page in user accounts
 //display recomended products, from similar caterogry (in product.jsx)
 //add reviews (in product.jsx)
@@ -55,7 +51,6 @@ import { WishlistContext } from './components/context/wishlist'
 //Add menus to user-account div and wishlist just like its with mini cart menu
 //To DO; https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
 //have logged in users cart saved in database
-//make sure loggied in user cant register again?
 
 //BUGS:
 //1/ open mini cart menu in the navbar, add an item (press + button)
