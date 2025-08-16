@@ -1,16 +1,14 @@
 import React from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
-//import { nanoid } from "nanoid";
 import '../App.css'
 import '../styles/Sldieshow.css'
 import Sidemenu from '../components/Sidemenu';
 import Slideshow from "../components/Slideshow";
-import { checkAuthToken } from '../functions';
-
 import { useContext } from 'react';
 import { CartContext } from '../components/context/cart';
 import { WishlistContext } from '../components/context/wishlist';
+import { UserContext } from '../components/context/user'
 
 /* This page needs styling*/
 export default function SingleProduct(){
@@ -19,23 +17,7 @@ export default function SingleProduct(){
     
     const { addTowishlist, wishListCount, setWishListCount } = useContext(WishlistContext);
     
-    const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
-  
-    React.useEffect(() => {
-     
-      const fetchUserInfo = async () => {
-      
-      const loggedUser = await checkAuthToken();
-    //console.log(loggedUser);
-     if(loggedUser) setUser(loggedUser ? {name: loggedUser.name, lastname: loggedUser.lastname, email: loggedUser.email} : null)
-    }
-    fetchUserInfo()
-    .catch(console.error);
-    }, []);
-
-    const itemsCount = (array) => {
-      return array.reduce((total, item) => total + item.quantity, 0);
-    }; 
+    const { user, setUser} = useContext(UserContext);
 
     const [singleProduct, SetSingleProduct] = React.useState([]);
    

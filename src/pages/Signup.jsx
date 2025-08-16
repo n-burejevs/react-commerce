@@ -3,19 +3,18 @@ import Navbar from "../components/Navbar";
 import Sidemenu from '../components/Sidemenu';
 import '../App.css';
 import '../styles/FormStyles.css'
-import { checkAuthToken } from "../functions";
-
 import { useContext } from 'react';
 import { CartContext } from '../components/context/cart';
 import { WishlistContext } from '../components/context/wishlist';
+import { UserContext } from '../components/context/user'
 
 export default function SignUp()
 {
   const {/* cartItems, addToCart, removeFromCart, clearCart, getCartTotal,*/ cartCount, /*CountItems,*/ /*setcartCount*/ } = useContext(CartContext);
 
   const { wishListCount, setWishListCount } = useContext(WishlistContext);
-    
-  const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
+
+  const { user, setUser} = useContext(UserContext);
  
       //try to save user's entered data
       const [userData, setUserData] = React.useState({firstname: '', lastname: '', email: '', password: ''});
@@ -110,11 +109,9 @@ function handlePasswordChange(e) {
       const loggedUser = await checkAuthToken();
     //console.log(loggedUser);
      if(loggedUser) {
-      //setUser(loggedUser ? {name: loggedUser.name, lastname: loggedUser.lastname, email: loggedUser.email} : null)
       
       //user already did sign up and is logged in
-       window.location.replace("/localhost:5173");
-       //redirect("/localhost:5173")
+       window.location.replace("/");
     }
   
      

@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/FilterStyles.css"
 import { nanoid } from "nanoid";
+import MultiRangeSlider from "./MultiRangeSlider";
 
 export default function Filters(props)
 {   ///THIS component is rendered 3 times!? 5 now?
@@ -150,7 +151,9 @@ const [brands, setBrands] = React.useState([]);
        if(checkedCheckboxes.length === 0) {cancelFilters(props.source)}
      for(let i=0; i<checkedCheckboxes.length; i++)
      {
+      //check if items have no brand?
         temp = temp.concat(props.allProducts.filter((item) => item.brand === checkedCheckboxes[i]))
+
      }
       props.setProducts(temp);
       
@@ -166,8 +169,10 @@ async function cancelFilters(source)
 //did not work, which dependency to use? - Had to add "name" in the useEffect dependency,
 //  which called fetch for allProducts
  React.useEffect(() => {
-
-    setBrands(removeDuplicate(props.allProducts.map((prod) => prod.brand)));
+    let needTosort = removeDuplicate(props.allProducts.map((prod) => prod.brand))
+    //when using Sort and sorting by price asc or desc, the items(brand names) in the Filters jump around
+    //when sorted, the always stay in the same order
+    setBrands(needTosort.sort());
     //console.log(props.allProducts);
   }, [props.allProducts]);
 
@@ -259,6 +264,12 @@ async function cancelFilters(source)
                      <div className="inline-container">
                       <input type="checkbox" name="colors" value="White"></input><label>White</label>
                       </div>
+                      </form >
+                      
+                       <div className="filter-category-title">Price</div>
+                      <form className="price-form">
+                        <MultiRangeSlider/>
+
                       </form>
                    
                         </div>

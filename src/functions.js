@@ -1,5 +1,8 @@
+//This one is moved to context/user.jsx
 //extract cookie value by name
 //https://www.w3schools.com/js/js_cookies.asp
+
+/*
 export function getCookie(cname) {
   let name = cname + "=";
   let decodedCookie = decodeURIComponent(document.cookie);
@@ -15,9 +18,11 @@ export function getCookie(cname) {
   }
   return "";
 }
+*/
 
 //send token code to check if what user is logged in/if logged in
 //token is not protected and is unsafe...
+/*
 export async function checkAuthToken() {
   let cookieToken = getCookie('token');
   if(cookieToken !== ''){
@@ -34,4 +39,4 @@ export async function checkAuthToken() {
   else return false;
  
     //console.log(response);
-  }
+  }*/

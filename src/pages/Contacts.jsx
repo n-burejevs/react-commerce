@@ -1,33 +1,19 @@
 import React from "react";
 import Navbar from '../components/Navbar'
 import Sidemenu from "../components/Sidemenu";
-import { checkAuthToken } from '../functions';
 
 import { useContext } from 'react';
 import { CartContext } from '../components/context/cart';
 import { WishlistContext } from '../components/context/wishlist';
+import { UserContext } from '../components/context/user'
 
 export default function Contact(){
 
   const { cartItems, cartCount, setcartCount } = useContext(CartContext);
 
   const {wishlistItems,  wishListCount, setWishListCount, CountWishedItems} = useContext(WishlistContext);
-  
-  const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
-  
-    React.useEffect(() => {
-     
-      const fetchUserInfo = async () => {
-      
-      const loggedUser = await checkAuthToken();
-    //console.log(loggedUser);
-     if(loggedUser) setUser(loggedUser ? {name: loggedUser.name, lastname: loggedUser.lastname, email: loggedUser.email} : null)
-    }
-    fetchUserInfo()
-    .catch(console.error);
-    
-  
-    }, []);
+
+  const { user, setUser} = useContext(UserContext);
     
     return (
         <div>

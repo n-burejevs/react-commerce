@@ -4,13 +4,12 @@ import Sort from "../components/Sort";
 import Product from "../components/Product";
 import Sidemenu from "../components/Sidemenu";
 import Filters from "../components/Filters";
-import { checkAuthToken } from '../functions';
 import { useParams } from "react-router-dom";
 import Pagination from '../components/Pagination'
 import { useContext } from 'react';
-
 import { CartContext } from '../components/context/cart';
 import { WishlistContext } from '../components/context/wishlist';
+import { UserContext } from '../components/context/user'
 
 export default function ViewCategory()
 {
@@ -18,22 +17,8 @@ export default function ViewCategory()
   const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, cartCount, CountItems, setcartCount } = useContext(CartContext);
    const {wishlistItems, addTowishlist, removeFromWishlist, clearWishlist, getWishListTotal, wishListCount, setWishListCount, CountWishedItems} = useContext(WishlistContext);
    
-      const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
+   const { user, setUser} = useContext(UserContext);
     
-      React.useEffect(() => {
-       
-        const fetchUserInfo = async () => {
-        
-        const loggedUser = await checkAuthToken();
-      //console.log(loggedUser);
-       if(loggedUser) setUser(loggedUser ? {name: loggedUser.name, lastname: loggedUser.lastname, email: loggedUser.email} : null)
-      }
-      fetchUserInfo()
-      .catch(console.error);
-      
-      }, []);
-
-
       const [width, setWidth] = React.useState(window.innerWidth);
       React.useEffect(() => {
         const handleResize = () => {
@@ -98,13 +83,17 @@ return(
 
      <div className="main-content">
 
-                {<Sort source={source} setSource={setSource} products={products} setProducts={setProducts} />}
+                {<Sort source={source} setSource={setSource}
+                      products={products} setProducts={setProducts}
+                      allProducts={allProducts} setAllProducts={setAllProducts} />}
                 {/*Pass the state to update item count, when added to cart*/}
                 <Product products={products} setProducts={setProducts}
-                  /*pageNumber={pageNumber}*//>
+                  allProducts={allProducts} setAllProducts={setAllProducts}
+                  />
 
                  {<Pagination source={source} setSource={setSource} numberOfProd={allProducts.length }
-                              /*pageNumber={pageNumber} SetPageNumber={SetPageNumber}*//> }
+                              allProducts={allProducts} setAllProducts={setAllProducts}  products={products} setProducts={setProducts}
+                  />}
       </div>
     {width >= 768 && <Filters products={products} setProducts={setProducts} width={width}
                       allProducts={allProducts} setAllProducts={setAllProducts}

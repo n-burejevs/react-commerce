@@ -1,10 +1,12 @@
 import React from "react";
 
 export default function Sort(props)
-{  
+{
 
 //const [sortedProductSource, setSortedProductSource] = React.useState(props.source);
-let sortedProductSource = props.source;
+//is it sorted or not?
+//let sortedProductSource = props.source;
+
    /*Source: https://www.codedaily.io/tutorials/Create-a-Dropdown-in-React-that-Closes-When-the-Body-is-Clicked */
    
 let container = React.createRef();
@@ -36,7 +38,7 @@ React.useEffect(() => {
   function compareAsc(a, b) {
   return a.price - b.price;
 }
-function comparedesc(a, b) {
+function compareDesc(a, b) {
   return b.price - a.price;
 }
 function compareByDate(a, b) {
@@ -45,12 +47,14 @@ function compareByDate(a, b) {
 
 function sortAscending()
 {
-  props.setProducts(props.products.slice().sort(compareAsc));
+  props.setAllProducts(props.allProducts.slice().sort(compareAsc));
+
   setOpen(false);
 }
 function sortDescending()
-{
-  props.setProducts(props.products.slice().sort(comparedesc));
+{//console.log(props.products)
+  props.setAllProducts(props.allProducts.slice().sort(compareDesc));
+  
   setOpen(false);
 }
 //the source data for the products has the same date for each item in the array???
@@ -58,17 +62,30 @@ function sortDescending()
 function sortNew()
 {
   console.log(props.products)//.map(item => item.meta.createdAt))
-  props.setProducts(props.products.slice().sort(compareByDate));
+  props.setAllProducts(props.allProducts.slice().sort(compareByDate));
+  
   setOpen(false);
 }
-//why???
+//why??? //maybe just remove this, i probably dont need it
+/*
 function sortPopular()
 {
   props.setSource(sortedProductSource);//"https://dummyjson.com/products")
+  
   ///console.log(props.source.filter((item) => item.brand === "Annibale Colombo"))
 
   setOpen(false);
-}
+}*/
+
+//what do you do if React does not want to re-render because sorted doesnt mean changed?
+//okay, here is what i do:
+  //change products list after sort, show the items sorted
+   React.useEffect(() => {
+    props.setProducts(props.allProducts.slice(0,20))
+
+  }, [props.allProducts]);
+
+  
 
   
     return(
@@ -80,7 +97,9 @@ function sortPopular()
           <a onClick={sortAscending}>Price Asc</a>
           <a onClick={sortDescending}>Price Desc</a>
           <a onClick={sortNew}>New</a>
-          <a onClick={sortPopular}>Popular</a>
+          {/* This makes no sense so i removed it*/
+           /* <a onClick={sortPopular}>Popular</a>*/
+            }
           </div>)}
       </div>
       </>

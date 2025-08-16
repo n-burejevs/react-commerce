@@ -1,13 +1,11 @@
-//import useContext from "react";
 import React from "react";
-//import UserContext from "../components/UserContext";
 import Navbar from "../components/Navbar";
 import Sidemenu from "../components/Sidemenu";
-import { checkAuthToken } from "../functions";
 import '../styles/FormStyles.css'
 import { useContext } from 'react';
 import { CartContext } from '../components/context/cart';
 import { WishlistContext } from '../components/context/wishlist';
+import { UserContext } from '../components/context/user'
 
 export default function Login() {
 
@@ -18,11 +16,12 @@ export default function Login() {
     const [userEmail, setUserEmail] = React.useState("");
     const [userPassw, setUserPassw] = React.useState("");
 
-    const [response, setResponse] = React.useState("");
+    const [response, setResponse] = React.useState({status: "", message: ""});
 
-     const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
+    const { user, setUser, checkAuthToken} = useContext(UserContext);
+
+    // const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
      
-
     const handleSubmitEvent = (e) => {
       e.preventDefault();
      
@@ -43,7 +42,7 @@ export default function Login() {
     });
 
     const result = await res.json();
-    setResponse(result.message);
+    setResponse({status: result.status, message: result.message});
 
       //send user to homepage after login?
       if(result.status === 'success')
@@ -51,7 +50,7 @@ export default function Login() {
           //cookie for a week
            setCookie('token', result.token, 7)
            //redirect
-             window.location.replace("/localhost:5173");
+             window.location.replace("/");
       }
     //console.log(response);
   }
@@ -78,8 +77,8 @@ export default function Login() {
     //console.log(loggedUser);
  if(loggedUser) {
     //user already is logged in
-    window.location.replace("/localhost:5173");
-  //setUser(loggedUser ? {name: loggedUser.name, lastname: loggedUser.lastname, email: loggedUser.email} : null)
+    window.location.replace("/");
+  
   }}
   fetchUserInfo()
   .catch(console.error);
@@ -127,7 +126,8 @@ export default function Login() {
     </div>
    
      <div className="error-message">
-        {response === "error" ? "Login attempt failed" : ""}
+        {/*response === "error" ? "Login attempt failed" : ""*/console.log(response)}
+        {response.status == "error" && response.message}
      </div>
     <button className="btn-submit">Submit</button>
     {/*response.status == "success" && JSON.stringify(response)*/}

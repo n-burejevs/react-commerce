@@ -14,64 +14,11 @@ export default function Product(props)
   const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, cartCount, CountItems, setcartCount } = useContext(CartContext);
   
   const {wishlistItems, addTowishlist, removeFromWishlist, clearWishlist, getWishListTotal, wishListCount, setWishListCount, CountWishedItems} = useContext(WishlistContext);
-     /*
-//same functions as addToCart
- function addTowishlist(item)
-  {
-    let wishListed = false;
-    wishListed = wishlistItems.find((w) => w.id === item.id);
+  
 
-    if (wishListed) {
-      
-      setWishlistItems(
-        wishlistItems.map((whisList) =>
-          whisList.id === item.id
-            ? { ...whisList, quantity: whisList.quantity + 1 }
-            : whisList
-        )
-      );
-
-    } else {
-      setWishlistItems([...wishlistItems, { ...item, quantity: 1 }]);
-      //console.log(props.wishlistItems);
-    }
-    //update the number in navbar, items in the cart
-    setWishListCount(prevState => prevState + 1)
-  }*/
- /* function renderProducts()
-  {
-    var items = [];
-
-    for (let i =0; i<props.products.lenght; i++)
-    {
-      if(i>=props.PageNumber*20 && i<props.PageNumber*20+20)
-      items.push(
-                <div key={nanoid()} className="product-card">      
-           <Link to={`/viewproduct/${props.product[i].id}`} className="product-link" > 
-                    <img className="product-img" loading="lazy" src={props.product[i].thumbnail} alt={props.product[i].title}></img>
-            </Link>
-           
-
-           <Link to={`/viewproduct/${props.product[i].id}`} className="product-link" > 
-               {props.product[i].title}
-            </Link>
-          
-            <div className="product-price">${props.product[i].price}</div>     
-            <div>
-            <button className="product-button" onClick={()=>addToCart(props.product[i])}>add to cart</button>
-            
-            <img className={"wishlist-button-img"} src={wishlist_icon} onClick={()=>addTowishlist(props.product[i])}></img>
-            </div>    
-
-        </div>
-      )
-    }
-    return items;
-  }*/
-{/*console.log(wishlistItems)*/}
     return(
       <>
-        {/*renderProducts()*/}
+        {/*console.log("rendered")*/}
       {  props.products.map((product) => (
         
           <div key={nanoid()} className="product-card">      

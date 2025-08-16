@@ -5,13 +5,11 @@ import Sidemenu from './components/Sidemenu'
 import Filters from './components/Filters'
 import Product from "./components/Product";
 import Sort from "./components/Sort";
-//import UserContext from './components/UserContext'
 import Pagination from './components/Pagination'
-import { checkAuthToken } from './functions';
-
 import { useContext } from 'react'
 import { CartContext } from './components/context/cart'
 import { WishlistContext } from './components/context/wishlist'
+import { UserContext } from './components/context/user'
 
 //Done: 
 // + //add X button to close MiniCart menu
@@ -31,24 +29,18 @@ import { WishlistContext } from './components/context/wishlist'
 // + //cartItems wishlist states were everywhere(duplicated code! almost in every page/component),
 //  together with UseEffects. moved to separate files and using context now
 // + //check if logged in in navbars account management div, greet user and have and option to logout, go to account settings
+// + //user state is in context
 
 //TO DO:
 //Sort & paginattion
 //User account page
+//price slider(MultiRangeSlider) in Filters! (get price values from props. find min max, but how to filter by price then?)
 //code clean up(commented out), remove unused props?
-//login, logout to context?, user password restore (PHP password_verify() forgot password example) https://www.phpmentoring.org/blog/php-password-verify-function#:~:text=The%20Password_Verify()%20function%20is,true%2C%20otherwise%20it%20returns%20false.
-//useEffect to check cookies? user is logged in and so on... have to check cookies and set the user on every page? navbar recieves props.user from every page
-
+//user password restore (PHP password_verify() forgot password example) https://www.phpmentoring.org/blog/php-password-verify-function#:~:text=The%20Password_Verify()%20function%20is,true%2C%20otherwise%20it%20returns%20false.
 //finish category hover menu styling and get links from https://dummyjson.com/docs/products#products-category
 
 //add categories(more)
 //add discount & deals page (just add some -% off some random items)
-
-//add Coupon page in user accounts
-//display recomended products, from similar caterogry (in product.jsx)
-//add reviews (in product.jsx)
-//create an ability to post reviews (after you "bought")(thats probably too much...)
-//Add menus to user-account div and wishlist just like its with mini cart menu
 //To DO; https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
 //have logged in users cart saved in database
 
@@ -56,13 +48,16 @@ import { WishlistContext } from './components/context/wishlist'
 //1/ open mini cart menu in the navbar, add an item (press + button)
 //and click somewhere outside of cart menu. the menu should close by itself, but it does not
 //does sth happen with ref={} after the MiniCart re-renders?
-//2/Filters and pagination components are rendered 3 times?
 //3/arrow buttons in single product dont work on mobile, but swipping left/right does
 //4/Pagination and Sort are not desingned to work together, yet(maybe add sort query to source url string? or finally get products from a db?? )
-//!!!
 //5/error happens when undefined category is selected from navigation in Sidemenu and when there are products in the cart(localstorage)
 //6/Filter component gets rendered 3(5???) times? 
-//7/Pagination is showing 10 pages of products, when you filter products, but there are only enough items for one page
+//7/sort is sorting products state, which has only 20 items!!!, how to sort entire list?
+//8/ context/user error/bug
+// [vite] (client) hmr invalidate /src/components/context/user.jsx 
+// Could not Fast Refresh ("UserContext" export is incompatible).
+//  Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+//9/ filtering by brand "other" doesnt show anything
 
 //Other:
 //filters were not submited by checking checkboxes, thats why there is no data passed to handeler functions,
@@ -70,25 +65,13 @@ import { WishlistContext } from './components/context/wishlist'
 
 function App() {
 
-  const { /*cartItems, addToCart, removeFromCart, clearCart, getCartTotal,*/ cartCount, CountItems, /*setcartCount*/ } = useContext(CartContext);
-  const {/*wishlistItems, addTowishlist, removeFromWishlist, clearWishlist, getWishListTotal,*/ wishListCount, setWishListCount, /*CountWishedItems*/} = useContext(WishlistContext);
-  const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
+  const {cartCount, CountItems } = useContext(CartContext);
+  const {wishListCount, setWishListCount} = useContext(WishlistContext);
+  const { user, setUser} = useContext(UserContext);
 
-  React.useEffect(() => {
-   
-    const fetchUserInfo = async () => {
-    
-    const loggedUser = await checkAuthToken();
-  //console.log(loggedUser);
-   if(loggedUser) setUser(loggedUser ? {name: loggedUser.name, lastname: loggedUser.lastname, email: loggedUser.email} : null)
-  }
-  fetchUserInfo()
-  .catch(console.error);
-  
-
-  }, []);
                                                             ///'https://dummyjson.com/products?limit=10&skip=10'
-  const [productSource, setProductSource] = React.useState("https://dummyjson.com/products?limit=20&skip=10")
+  const [productSource, setProductSource] = React.useState("https://dummyjson.com/products?limit=20")
+  
   const [width, setWidth] = React.useState(window.innerWidth);
 //
   React.useEffect(() => {
@@ -103,6 +86,7 @@ function App() {
     };
   }, []);
 
+  //products to show at once, picking 20 out of allProducts state in Pagination component(hope it works)
  const [products, setProducts] = React.useState([]);
 
       React.useEffect(() =>{
@@ -123,8 +107,6 @@ function App() {
                     .then(data => setAllProducts(data.products))
                     },[])
   return (
-    //handle user auth
-   
       <>
     {/* pass the updated item count to a component, which is displaying it */}
     <Navbar cartCount={cartCount} /*setcartCount={setcartCount} */user={user} setUser={setUser} 
@@ -139,10 +121,16 @@ function App() {
     </div>
 
      <div className="main-content">
-                <Sort source={productSource} setSource={setProductSource} products={products} setProducts={setProducts}/>
+                <Sort source={productSource} setSource={setProductSource}
+                 products={products} setProducts={setProducts}
+                allProducts={allProducts} setAllProducts={setAllProducts}/>
                 {/*Pass the state to update item count, when the added to cart*/}
-               {<Product products={products} setProducts={setProducts}/>}
-                 <Pagination source={productSource} setSource={setProductSource} /*Need to sent number of all products*/numberOfProd={allProducts.length  }/>
+               {<Product products={products} setProducts={setProducts}
+               
+                />}
+                 <Pagination source={productSource} setSource={setProductSource} /*Need to sent number of all products*/numberOfProd={allProducts.length}
+                  allProducts={allProducts} setAllProducts={setAllProducts}  products={products} setProducts={setProducts}
+                  />
                  {/*console.log(products)*/}
       </div>
     {width >= 768 && <Filters products={products} setProducts={setProducts} width={width}
@@ -151,7 +139,6 @@ function App() {
     
     </div>
       
-      {/*</UserContext.Provider>*/}
       </>
   )
 }
