@@ -2,6 +2,7 @@ import React from "react";
 import { nanoid } from "nanoid";
 import { Link } from "react-router-dom";
 import '../styles/SidemenuStyles.css'
+import useClickOutside from "../hooks/useClickOutside";
 export default function Sidemenu()
 {/*Source: https://www.codedaily.io/tutorials/Create-a-Dropdown-in-React-that-Closes-When-the-Body-is-Clicked */
        
@@ -19,6 +20,8 @@ export default function Sidemenu()
        setOpen(prevState=> !prevState)
     }; 
 
+    useClickOutside(container, open, setOpen);
+    /*
     function handleClickOutside(event){
         if(
             container.current &&
@@ -26,15 +29,15 @@ export default function Sidemenu()
           ) {
               setOpen(false);
             }
-    }
-
+    }*/
 
     /*Hide dropdown when clicked outside of it*/
+    /*
      React.useEffect(() => {
       document.addEventListener("mousedown", handleClickOutside);
        return () => { 
         document.removeEventListener("mousedown", handleClickOutside);
-      };}, [open]);
+      };}, [open]);*/
 
     const [categoryList, seCategoryList] = React.useState([]);
     

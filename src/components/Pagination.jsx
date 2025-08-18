@@ -1,6 +1,6 @@
 import React from "react";
 import '../styles/PaginationStyles.css'
-import { nanoid } from "nanoid";
+
 /**/
 function Pagination(props)
 {
@@ -10,7 +10,6 @@ function Pagination(props)
    //dont need to make this a state?
     const pageAmount = Math.ceil(props.numberOfProd / 20);
   
-//how to combine this with Sort?
 function changeLink()
 {
     //var skipAmount=  pageNumber * 20 - 10;
@@ -49,7 +48,7 @@ function changeLink()
 
        for (let i=1; i<=pageAmount; i++)
         {
-            links.push(<a href="#" key={nanoid(4)} onClick={()=>setNumber(i)} id={activePage === i ? "on-this-page": "not-on-this-page"}>{i}</a>)
+            links.push(<a href="#" key={i} onClick={()=>setNumber(i)} id={activePage === i ? "on-this-page": "not-on-this-page"}>{i}</a>)
         }
         return links;
         

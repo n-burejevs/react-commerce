@@ -169,6 +169,7 @@
     text-decoration: none;
     color: whitesmoke;
     overflow: hidden;
+    text-wrap: nowrap;
   }
   /*search result div is hidden because of this -> padding decreased to 10.5px*/
 /* .navbar { overflow: hidden; }*/

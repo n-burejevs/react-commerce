@@ -126,7 +126,7 @@ export default function Login() {
     </div>
    
      <div className="error-message">
-        {/*response === "error" ? "Login attempt failed" : ""*/console.log(response)}
+        {/*response === "error" ? "Login attempt failed" : ""*//*console.log(response)*/}
         {response.status == "error" && response.message}
      </div>
     <button className="btn-submit">Submit</button>

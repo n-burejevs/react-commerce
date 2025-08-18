@@ -32,27 +32,28 @@ import { UserContext } from './components/context/user'
 // + //user state is in context
 
 //TO DO:
-//Sort & paginattion
+//useNavigate for redirects?
 //User account page
 //price slider(MultiRangeSlider) in Filters! (get price values from props. find min max, but how to filter by price then?)
 //code clean up(commented out), remove unused props?
 //user password restore (PHP password_verify() forgot password example) https://www.phpmentoring.org/blog/php-password-verify-function#:~:text=The%20Password_Verify()%20function%20is,true%2C%20otherwise%20it%20returns%20false.
 //finish category hover menu styling and get links from https://dummyjson.com/docs/products#products-category
-
+//links for pages in pagination.jsx need to be a state, so i can update it, based on number of products(after filtered out)
 //add categories(more)
 //add discount & deals page (just add some -% off some random items)
 //To DO; https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
 //have logged in users cart saved in database
 
 //BUGS:
+//-2/ losing item from filters...
+//-1/ checking all item in filters only displays one page
+//0/ now items in the filters quickly move everytime page reloads
 //1/ open mini cart menu in the navbar, add an item (press + button)
 //and click somewhere outside of cart menu. the menu should close by itself, but it does not
 //does sth happen with ref={} after the MiniCart re-renders?
 //3/arrow buttons in single product dont work on mobile, but swipping left/right does
-//4/Pagination and Sort are not desingned to work together, yet(maybe add sort query to source url string? or finally get products from a db?? )
 //5/error happens when undefined category is selected from navigation in Sidemenu and when there are products in the cart(localstorage)
 //6/Filter component gets rendered 3(5???) times? 
-//7/sort is sorting products state, which has only 20 items!!!, how to sort entire list?
 //8/ context/user error/bug
 // [vite] (client) hmr invalidate /src/components/context/user.jsx 
 // Could not Fast Refresh ("UserContext" export is incompatible).
@@ -65,13 +66,13 @@ import { UserContext } from './components/context/user'
 
 function App() {
 
-  const {cartCount, CountItems } = useContext(CartContext);
+  const {cartCount } = useContext(CartContext);
   const {wishListCount, setWishListCount} = useContext(WishlistContext);
   const { user, setUser} = useContext(UserContext);
 
                                                             ///'https://dummyjson.com/products?limit=10&skip=10'
-  const [productSource, setProductSource] = React.useState("https://dummyjson.com/products?limit=20")
-  
+  const [productSource, setProductSource] = React.useState("https://dummyjson.com/products?limit=0&skip=0")
+                                                            
   const [width, setWidth] = React.useState(window.innerWidth);
 //
   React.useEffect(() => {
@@ -89,20 +90,20 @@ function App() {
   //products to show at once, picking 20 out of allProducts state in Pagination component(hope it works)
  const [products, setProducts] = React.useState([]);
 
-      React.useEffect(() =>{
+      /*React.useEffect(() =>{
       //'https://dummyjson.com/products?skip=10'
         fetch(productSource)
         .then(res => res.json())
         .then(data => setProducts(data.products))
 
-        },[productSource])
+        },[productSource])*/
 
 //all products to get the filters working, and pagination
             const [allProducts, setAllProducts] = React.useState([]);
             
                   React.useEffect(() =>{
                   //'https://dummyjson.com/products?skip=10'
-                    fetch('https://dummyjson.com/products?limit=0&skip=0')
+                    fetch(productSource)
                     .then(res => res.json())
                     .then(data => setAllProducts(data.products))
                     },[])

@@ -14,8 +14,8 @@ import { UserContext } from '../components/context/user'
 export default function ViewCategory()
 {
 
-  const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, cartCount, CountItems, setcartCount } = useContext(CartContext);
-   const {wishlistItems, addTowishlist, removeFromWishlist, clearWishlist, getWishListTotal, wishListCount, setWishListCount, CountWishedItems} = useContext(WishlistContext);
+  const { cartCount} = useContext(CartContext);
+   const { wishListCount, setWishListCount} = useContext(WishlistContext);
    
    const { user, setUser} = useContext(UserContext);
     
@@ -33,23 +33,25 @@ export default function ViewCategory()
       }, []);
     
 //get name of the category selected, to display whats in it
-        let { name } = useParams();
-        //console.log("param",useParams());
+        var { name } = useParams();
+       // console.log("param",useParams());
 
 const [products, setProducts] = React.useState([]);
-const [source, setSource] = React.useState(`https://dummyjson.com/products/category/${name}?limit=20`);
+const [source, setSource] = React.useState(`https://dummyjson.com/products/category/${name}`);
 
-    React.useEffect(() =>{
+   /* React.useEffect(() =>{
     //'https://dummyjson.com/products?skip=10'
-    fetch(`https://dummyjson.com/products/category/${name}?limit=20`)
+    fetch(`https://dummyjson.com/products/category/${name}`)
     .then(res => res.json())
     .then(data => setProducts(data.products))
-  },[name])
+  },[name])*/
 
 //all products to get the filters working
 const [allProducts, setAllProducts] = React.useState([]);
                     
   React.useEffect(() =>{
+    setSource(`https://dummyjson.com/products/category/${name}`);
+
   fetch(`https://dummyjson.com/products/category/${name}`)
   .then(res => res.json())
   .then(data => setAllProducts(data.products))

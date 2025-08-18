@@ -9,9 +9,9 @@ import { UserContext } from '../components/context/user'
 
 export default function Contact(){
 
-  const { cartItems, cartCount, setcartCount } = useContext(CartContext);
+  const {cartCount } = useContext(CartContext);
 
-  const {wishlistItems,  wishListCount, setWishListCount, CountWishedItems} = useContext(WishlistContext);
+  const {wishListCount, setWishListCount} = useContext(WishlistContext);
 
   const { user, setUser} = useContext(UserContext);
     

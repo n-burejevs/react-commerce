@@ -17,7 +17,7 @@ export default function Slideshow(props){
    // const [singleProduct, SetSingleProduct] = React.useState([]);
     const [imageSeqNum, setImageSeqNum] = React.useState(0);
  
-       const newImageArray = props.images.map(img=><img key={nanoid()} className="single-prod-img" src={img}></img>)
+       const newImageArray = props.images.map(img=><img key={nanoid()} alt="product-image" className="single-prod-img" src={img}></img>)
         
         function showNext()
         {

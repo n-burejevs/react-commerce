@@ -10,19 +10,17 @@ import { UserContext } from '../components/context/user'
 
 export default function SignUp()
 {
-  const {/* cartItems, addToCart, removeFromCart, clearCart, getCartTotal,*/ cartCount, /*CountItems,*/ /*setcartCount*/ } = useContext(CartContext);
+  const {cartCount} = useContext(CartContext);
 
   const { wishListCount, setWishListCount } = useContext(WishlistContext);
 
-  const { user, setUser} = useContext(UserContext);
+  const { user, setUser, checkAuthToken} = useContext(UserContext);
  
       //try to save user's entered data
       const [userData, setUserData] = React.useState({firstname: '', lastname: '', email: '', password: ''});
       const [errorMessage, SetErrorMessage] = React.useState({nameError: '', lastnameError: '', emailError: '', passwordError: ''});
 
       const [response, setResponse] = React.useState('');
-           
-                //wishlsit functionality, copy-pasted from Cart
 
   async function sendData() {
 
@@ -37,71 +35,24 @@ export default function SignUp()
     //console.log(response);
   }
 
-function /*SignUp*/handleSubmit(/*formData*/event)
-{
-        event.preventDefault();
-        var formIsFilled = true;
-        var errors = {nameError: '', lastnameError: '', emailError: '', passwordError: ''};
+function handleSubmit(e) {
+  e.preventDefault();
+  const newErrors = {};
+  if (userData.firstname.trim().length === 0) newErrors.firstname = "Provide First name";
+    if (userData.lastname.trim().length === 0) newErrors.lastname = "Provide Last name";
+      if (userData.email.trim().length === 0) newErrors.email = "Provide email";
+        if (userData.password.trim().length < 8) newErrors.password = "Provide a better/longer password"
 
-      if (userData.firstname.trim().length === 0) {
-        console.log("The firstname is empty");
-        errors = ({...errors, nameError: 'Provide First name'});
-        formIsFilled = false;
-      } 
-      if (userData.lastname.trim().length === 0) {
-        console.log("The lastname is empty");
-        errors = ({...errors, lastnameError: 'Provide Last name'});
-        formIsFilled = false;
-      } 
-    
-      if (userData.email.trim().length === 0) {
-        console.log("The email is empty");
-        errors = ({...errors, emailError: 'Provide email'});
-        formIsFilled = false;
-      }
-      
-      if (userData.password.trim().length < 8) {
-        console.log("The password is short");
-        errors = ({...errors, emailError: 'Provide password, atleast 8 symbols long '});
-        formIsFilled = false;
-      }
-      
-      if(formIsFilled === false) {SetErrorMessage(errors);}
-      else {
-        //console.log("all is filled", userData);
-        //clean up old error messages?
-         SetErrorMessage({nameError: '', lastnameError: '', emailError: '', passwordError: ''})
-         //what to do with form data?
-         //validate it on backend, upload to db
-           sendData();
-        }
-        
+  SetErrorMessage(newErrors);
+  if (Object.keys(newErrors).length === 0) {
+    sendData();
   }
-/*Do i need these function if i get form from event.target?*/
-function handleFirstNameChange(e) {
-      setUserData({
-        ...userData, // Copy the old fields
-        firstname: e.target.value // But override this one
-      });
-    }
-function handleLastNameChange(e) {
-      setUserData({
-        ...userData, 
-        lastname: e.target.value 
-      });
-    }
-function handleEmailChange(e) {
-  setUserData({
-    ...userData, 
-    email: e.target.value 
-  });
 }
-function handlePasswordChange(e) {
-  setUserData({
-    ...userData,
-    password: e.target.value
-  });
-  }
+
+function handleChange(e) {
+  setUserData({...userData, [e.target.name]: e.target.value});
+}
+
     React.useEffect(() => {
    
       const fetchUserInfo = async () => {
@@ -113,10 +64,7 @@ function handlePasswordChange(e) {
       //user already did sign up and is logged in
        window.location.replace("/");
     }
-  
-     
-    
-    //redirect('/');
+
     }
     fetchUserInfo()
     .catch(console.error);
@@ -140,7 +88,7 @@ function handlePasswordChange(e) {
 
     return (
         <div>
-            <Navbar user={user} setUser={setUser} /*cartItems={cartItems}*//* setCartItems={setCartItems}*/
+            <Navbar user={user} setUser={setUser}
                         cartCount={cartCount}
                         wishListCount={wishListCount} setWishListCount={setWishListCount} />
             <div className='main-content-container'>
@@ -152,26 +100,22 @@ function handlePasswordChange(e) {
             <div className="main-content">
             <div className="form-container">
               <h1>Sign up form</h1>
-                <form /*action={SignUp}*/  
-               /* action="http://localhost/react-commerce/index.php"*/
-               /*method="post"*/
-               /*action={handleSubmit}*/
-                onSubmit={(event) =>handleSubmit(event)} className="signup-form">
+                <form onSubmit={(event) =>handleSubmit(event)} className="signup-form">
 
 
                   <label htmlFor="firstname">First Name:</label>
-                  <input id="firstname" type="text" name="firstname" onChange={handleFirstNameChange} placeholder={"testname"/*userData.firstname*/} ></input>
+                  <input id="firstname" type="text" name="firstname" onChange={handleChange} placeholder={"testname"/*userData.firstname*/} ></input>
                   <br/>
                   <label htmlFor="lastname">Last Name:</label>
-                  <input id="lastname" type="text" name="lastname" onChange={handleLastNameChange} placeholder={"testlastname"/*userData.lastname*/}></input>
+                  <input id="lastname" type="text" name="lastname" onChange={handleChange} placeholder={"testlastname"/*userData.lastname*/}></input>
                   <br/>
 
                   <label htmlFor="email">Email:</label>
-                  <input id="email" type="email" name="email" onChange={handleEmailChange} placeholder={"email@email.com"/*userData.email*/}></input>
+                  <input id="email" type="email" name="email" onChange={handleChange} placeholder={"email@email.com"/*userData.email*/}></input>
                   
                   <br/>
                   <label htmlFor="password">Password:</label>
-                  <input id="password" type="password" onChange={handlePasswordChange} name="password" ></input>
+                  <input id="password" type="password" onChange={handleChange} name="password" ></input>
                   <br/>                 
                   <div className="error-message">
                     {printErrors}

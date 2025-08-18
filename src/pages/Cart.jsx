@@ -14,9 +14,9 @@ import { UserContext } from '../components/context/user'
 https://dev.to/anne46/cart-functionality-in-react-with-context-api-2k2f*/
 export default function Cart(){
 
-        const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, cartCount, CountItems, setcartCount } = useContext(CartContext);
+        const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, cartCount } = useContext(CartContext);
 
-        const { wishlistItems, wishListCount, setWishListCount } = useContext(WishlistContext);
+        const { wishListCount, setWishListCount } = useContext(WishlistContext);
 
         const { user, setUser} = useContext(UserContext);
   

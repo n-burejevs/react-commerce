@@ -1,4 +1,5 @@
 import React from "react";
+import useClickOutside from "../hooks/useClickOutside";
 
 export default function Sort(props)
 {
@@ -6,8 +7,6 @@ export default function Sort(props)
 //const [sortedProductSource, setSortedProductSource] = React.useState(props.source);
 //is it sorted or not?
 //let sortedProductSource = props.source;
-
-   /*Source: https://www.codedaily.io/tutorials/Create-a-Dropdown-in-React-that-Closes-When-the-Body-is-Clicked */
    
 let container = React.createRef();
 const [open, setOpen] = React.useState(false);
@@ -16,24 +15,9 @@ const [open, setOpen] = React.useState(false);
         setOpen(prevState=> !prevState)
   }; 
 
-
-function handleClickOutside(event){
-    if (
-      container.current &&
-      !container.current.contains(event.target)
-    ) {
-        setOpen(false);
-    }
-  };
-
-/*Hide dropdown when clicked outside of it*/
-React.useEffect(() => {
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [open]);
+  
+   /*Source: https://www.codedaily.io/tutorials/Create-a-Dropdown-in-React-that-Closes-When-the-Body-is-Clicked */
+  useClickOutside(container, open, setOpen);
 
   function compareAsc(a, b) {
   return a.price - b.price;
@@ -61,7 +45,7 @@ function sortDescending()
 //how would it sort anything?
 function sortNew()
 {
-  console.log(props.products)//.map(item => item.meta.createdAt))
+  //console.log(props.products)//.map(item => item.meta.createdAt))
   props.setAllProducts(props.allProducts.slice().sort(compareByDate));
   
   setOpen(false);

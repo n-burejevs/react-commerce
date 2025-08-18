@@ -7,6 +7,8 @@ export const UserProvider = ({ children }) => {
     const [user, setUser] = useState({name: '', lastname: '', email: ''});
     const [loggedIn, setLoggedIn] = useState(false);
 
+//? hmr invalidate /src/components/context/user.jsx Could not Fast Refresh ("UserContext" export is incompatible)
+
 //extract cookie value by name
 //https://www.w3schools.com/js/js_cookies.asp
  function getCookie(cname) {

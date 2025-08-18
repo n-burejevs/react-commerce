@@ -13,7 +13,7 @@ import { UserContext } from '../components/context/user'
 /* This page needs styling*/
 export default function SingleProduct(){
        
-    const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, cartCount, CountItems, setcartCount } = useContext(CartContext);
+    const { addToCart, cartCount } = useContext(CartContext);
     
     const { addTowishlist, wishListCount, setWishListCount } = useContext(WishlistContext);
     
