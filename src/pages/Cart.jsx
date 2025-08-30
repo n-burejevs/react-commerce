@@ -74,9 +74,9 @@ export default function Cart(){
   </div>
   {
     cartItems.length > 0 ? (
-      <div >
+      <div className="cart-wishlist-total-section">
     <h1 >Total: ${getCartTotal()}</h1>
-    <button
+    <button className="clear-cart-btn"
       onClick={() => {
         clearCart()
       }}

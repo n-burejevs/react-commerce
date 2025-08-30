@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import '../App.css'
 import '../styles/Sldieshow.css'
+import '../styles/CartStyles.css'
 import Sidemenu from '../components/Sidemenu';
 import Slideshow from "../components/Slideshow";
 import { useContext } from 'react';
@@ -58,11 +59,10 @@ export default function SingleProduct(){
         <div >Items in stock: {singleProduct.stock}</div>
         <div className="single-prod-brandname">Brand: {singleProduct.brand}</div>
         <div className="single-prod-button-container">
-          <button  onClick={()=>addToCart(singleProduct)}>Add to cart</button>
-            <button onClick={()=>addTowishlist(singleProduct)}>Add to wishlist</button>
+          <button className="single-prod-to-cart" onClick={()=>addToCart(singleProduct)}>Add to cart</button>
+            <button className="single-prod-to-wishlist" onClick={()=>addTowishlist(singleProduct)}>Add to wishlist</button>
         </div>
       </div>
-
 </div>
         
         {/*console.log(props.cartItems)*/}

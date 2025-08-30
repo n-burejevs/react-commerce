@@ -41,12 +41,36 @@ function sortDescending()
   
   setOpen(false);
 }
+//https://coureywong.medium.com/how-to-shuffle-an-array-of-items-in-javascript-39b9efe4b567
+//randomise items
+/*
+function shuffle(){
+  let array = props.AllProducts;
+  console.log(props.allProducts);
+  let i = props.allProducts.length, j, temp;
+
+  while(--i>0)
+  {
+    j= Math.floor(Math.random() * (i +1 ));
+
+    temp = array[j];
+    array[j] = array[i];
+    array[i] = temp;
+  }
+
+  return array;
+}*/
+
 //the source data for the products has the same date for each item in the array???
 //how would it sort anything?
+//this no longer sorts by date, randomises now
 function sortNew()
 {
   //console.log(props.products)//.map(item => item.meta.createdAt))
   props.setAllProducts(props.allProducts.slice().sort(compareByDate));
+
+  //smh TypeError: can't access property 122, array is undefined
+  //props.setAllProducts(shuffle());
   
   setOpen(false);
 }
@@ -61,8 +85,6 @@ function sortPopular()
   setOpen(false);
 }*/
 
-//what do you do if React does not want to re-render because sorted doesnt mean changed?
-//okay, here is what i do:
   //change products list after sort, show the items sorted
    React.useEffect(() => {
     props.setProducts(props.allProducts.slice(0,20))

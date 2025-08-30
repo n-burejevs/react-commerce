@@ -5,14 +5,14 @@ export const UserContext = createContext()
 export const UserProvider = ({ children }) => {
 
     const [user, setUser] = useState({name: '', lastname: '', email: ''});
-    const [loggedIn, setLoggedIn] = useState(false);
+    //const [loggedIn, setLoggedIn] = useState(false);
 
 //? hmr invalidate /src/components/context/user.jsx Could not Fast Refresh ("UserContext" export is incompatible)
 
 //extract cookie value by name
 //https://www.w3schools.com/js/js_cookies.asp
- function getCookie(cname) {
-  let name = cname + "=";
+ function getCookie() {
+  let name = 'token' + "=";
   let decodedCookie = decodeURIComponent(document.cookie);
   let ca = decodedCookie.split(';');
   for(let i = 0; i <ca.length; i++) {
@@ -30,7 +30,7 @@ export const UserProvider = ({ children }) => {
 //send token code to check if what user is logged in/if logged in
 //token is not protected and is unsafe...
  async function checkAuthToken() {
-  let cookieToken = getCookie('token');
+  let cookieToken = getCookie();
   if(cookieToken !== ""){
   
      const res = await fetch('http://localhost/react-commerce/check_login.php', {
@@ -58,9 +58,10 @@ export const UserProvider = ({ children }) => {
     //?? why have a ternary here? maybe have a setUser without it?
      if(loggedUser) {
         setUser(loggedUser ? {name: loggedUser.name, lastname: loggedUser.lastname, email: loggedUser.email} : null)
-        setLoggedIn(true);
+        //setLoggedIn(true);
+        
     }
-    else {setLoggedIn(false);}
+    /*else {setLoggedIn(false); console.log("now false")}*/
     }
     fetchUserInfo()
     .catch(console.error);
@@ -76,7 +77,8 @@ export const UserProvider = ({ children }) => {
       value={{
         user, 
         setUser,
-        loggedIn,
+        /*loggedIn,*/
+        getCookie,
         checkAuthToken,
       }}
     >

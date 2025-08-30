@@ -23,7 +23,8 @@ import { WishlistProvider } from './components/context/wishlist.jsx'
 import { UserProvider } from './components/context/user.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  //not running it in strictMode, because double rerender messes up account.jsx,
+  //  where it checks for if user logged in
  <CartProvider>
   <WishlistProvider>
     <UserProvider>
@@ -48,5 +49,5 @@ createRoot(document.getElementById('root')).render(
   </UserProvider>
   </WishlistProvider>
   </CartProvider>
-  </StrictMode>
+  
 )

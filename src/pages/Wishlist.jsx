@@ -78,7 +78,7 @@ export default function Wishlist(){
   </div>
   {
     wishlistItems.length > 0 ? (
-      <div >
+      <div className="cart-wishlist-total-section">
     <h1 >Total: ${getWishListTotal()}</h1>
     <button className="clear-wishlist-btn"
       onClick={() => {

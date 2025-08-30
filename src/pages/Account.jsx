@@ -7,23 +7,34 @@ import { WishlistContext } from '../components/context/wishlist';
 import { UserContext } from '../components/context/user'
 import { useNavigate } from "react-router";
 
-
 export default function Account(){
 
   const { cartCount } = useContext(CartContext);
 
   const {wishListCount, setWishListCount} = useContext(WishlistContext);
 
-  const { user, setUser} = useContext(UserContext);
+  const { user, setUser, getCookie} = useContext(UserContext);
   
   let navigate = useNavigate();
+//use token as a method to identify the user
+  const userToken = getCookie();
+  //console.log(userToken);
 
-  //user is not logged in
   React.useEffect(() =>{
-   if (user == null || user.name == "") navigate('/login', { replace: true })
+   
+//user is logged in
+   //if (/*user == null || user.name == ""*/)
+  if (userToken !== "")
+  {
+   //welcome user
+  }
+  else {
+     console.log("should be redirected")
+     navigate('/login', { replace: true })
+  }
+   
   },[])
 
-  
 
 return (
   <>
@@ -43,7 +54,7 @@ return (
             </h1>
           </div>
 
-              {console.log(user)}
+              {/*console.log(user)*/}
     </div>
 
 

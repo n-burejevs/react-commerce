@@ -9,7 +9,9 @@
 
 .item-container{
     display: grid;
-    grid-template-columns: 200px 1fr 1fr 1fr;
+    /*this makes the div too wide*/
+    /*grid-template-columns: 200px 1fr 1fr 1fr;*/
+    grid-template-columns: 200px 1fr 1fr 150px;
 }
 
 .cart-item-img{
@@ -46,11 +48,16 @@
     text-decoration: none;
     color: black;
 }
+.cart-wishlist-total-section{
+    padding-bottom: 20px;
+}
 
 @media (width >= 48em) {
     .cart-list-container{
-        margin-left: 10px;
+        margin-left: 45px; 
         margin-top: 21px;
+        width: 100%;
+        margin-right: 180px;
     }
     .add-remove-container, .cart-item-total{
         display: flex;
@@ -85,6 +92,10 @@
     }
     .cart-plsu-minus-btn, .wishlist-to-cart-btn{
         cursor: pointer;
+    }
+    /*bandaid fix to put sidemenu in cart on one level as other pages*/
+    .cart-page-container .sidemenu{
+        margin-top: 26px;
     }
  
 }
@@ -244,7 +255,8 @@
     transform: scale(1.05) translateY(.100rem);
   }
 /*style like a button*/
-  .go-to-cart-link{
+  .go-to-cart-link, .single-prod-to-cart, .single-prod-to-wishlist, 
+  .clear-wishlist-btn, .clear-cart-btn{
     padding: 8px 14px;
     background-color: #3576BC;
     color: white;
@@ -254,7 +266,8 @@
 	cursor: pointer;
 	transition: opacity 0.5s;
   }
-.go-to-cart-link:hover{
+.go-to-cart-link:hover, .single-prod-to-cart:hover, 
+.single-prod-to-wishlist:hover,  .clear-wishlist-btn:hover, .clear-cart-btn:hover{
     opacity: 0.5;
  }
  /* pressed effect?

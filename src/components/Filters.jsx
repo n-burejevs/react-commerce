@@ -16,7 +16,7 @@ export default function Filters(props)
         setOpen(prevState=> !prevState)
     }; 
 
-useClickOutside(container, open, setOpen);
+  useClickOutside(container, open, setOpen);
 
     //https://stackoverflow.com/questions/69195359/how-to-work-with-multiple-checkboxes-in-react-and-collect-the-checked-checkboxes
 
@@ -37,14 +37,6 @@ useClickOutside(container, open, setOpen);
     }
 
   };
-  /*
-    const handleCheckboxChange = brand => {
-    setCheckedCheckboxes(prev =>
-      prev.includes(brand)
-        ? prev.filter(b => b !== brand)
-        : [...prev, brand]
-    );
-  };*/
 
   //setting state is async...
   //display products, which correspond to selected brands
@@ -80,6 +72,20 @@ const brands = useMemo(() => {
     
     return Array.from(seen).sort();
   }, [props.allProducts]);  
+
+  
+  
+  const [priceMin, setPriceMin] = React.useState(Math.max(...props.allProducts.map(item => item.price)));
+  const [priceMax, setPriceMax] = React.useState(Math.min(...props.allProducts.map(item => item.price)));
+/*
+React.useEffect(() => {
+  let max = Math.max(...props.allProducts.map(item => item.price));
+  let min = Math.min(...props.allProducts.map(item => item.price));
+
+  
+
+    },[props.allProducts]);*/
+
 
         return(
           <>
@@ -172,7 +178,11 @@ const brands = useMemo(() => {
                       
                        <div className="filter-category-title">Price</div>
                       <form className="price-form">
-                        <MultiRangeSlider/>
+                         <div >
+           {/* <MultiRangeSlider 
+            min={priceMin} max={priceMax} onChange={({ min, max }) => {setPriceMin(min); setPriceMax(max);}}
+              />*/}
+                         </div>
 
                       </form>
                    

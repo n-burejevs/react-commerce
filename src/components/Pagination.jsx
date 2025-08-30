@@ -12,11 +12,8 @@ function Pagination(props)
   
 function changeLink()
 {
-    //var skipAmount=  pageNumber * 20 - 10;
-    //props.setSource(`https://dummyjson.com/products?limit=20&skip=${skipAmount}`);
-
     //take and display 20 items from the whole list 
-    props.setProducts(props.allProducts.slice(20*pageNumber-20,20*pageNumber))
+    props.setProducts(props.allProducts.slice((20*pageNumber)-20,20*pageNumber))
 }
 
   React.useEffect(() => {

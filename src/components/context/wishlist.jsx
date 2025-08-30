@@ -1,4 +1,6 @@
 import { createContext, useState, useEffect } from 'react'
+import {saveWishlistToDB} from '../databaseSync'
+import { useCallback } from 'react';
 
 export const WishlistContext = createContext();
 
@@ -63,6 +65,8 @@ function addTowishlist(item)
   useEffect(() => {
     localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
     setWishListCount(CountWishedItems(wishlistItems));
+
+    handleWishlisttUpdate();
   }, [wishlistItems]);
 
   useEffect(() => {
@@ -71,6 +75,11 @@ function addTowishlist(item)
       setWishlistItems(JSON.parse(wishlistItems));
     }
   }, []);
+
+    const handleWishlisttUpdate = useCallback( () => {
+      saveWishlistToDB(wishlistItems);
+      console.log("sending wishlist to db");
+    }, [wishlistItems]);
 
   return (
     <WishlistContext.Provider
@@ -83,6 +92,7 @@ function addTowishlist(item)
         wishListCount,
         setWishListCount,
         CountWishedItems,
+        setWishlistItems,
       }}
     >
       {children}

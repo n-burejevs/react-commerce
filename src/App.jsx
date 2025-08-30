@@ -30,8 +30,10 @@ import { UserContext } from './components/context/user'
 //  together with UseEffects. moved to separate files and using context now
 // + //check if logged in in navbars account management div, greet user and have and option to logout, go to account settings
 // + //user state is in context
+// + ///have logged in users cart saved in database -> after loggin the cart/wish lists get sync-ed up
 
 //TO DO:
+
 //useNavigate for redirects?
 //User account page
 //price slider(MultiRangeSlider) in Filters! (get price values from props. find min max, but how to filter by price then?)
@@ -42,12 +44,10 @@ import { UserContext } from './components/context/user'
 //add categories(more)
 //add discount & deals page (just add some -% off some random items)
 //To DO; https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
-//have logged in users cart saved in database
+
 
 //BUGS:
-//-2/ losing item from filters...
-//-1/ checking all item in filters only displays one page
-//0/ now items in the filters quickly move everytime page reloads
+//0/ only one brand at the time is filtered
 //1/ open mini cart menu in the navbar, add an item (press + button)
 //and click somewhere outside of cart menu. the menu should close by itself, but it does not
 //does sth happen with ref={} after the MiniCart re-renders?
@@ -59,6 +59,7 @@ import { UserContext } from './components/context/user'
 // Could not Fast Refresh ("UserContext" export is incompatible).
 //  Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
 //9/ filtering by brand "other" doesnt show anything
+//10/ what happens if all items are deleted from cart? will it have an empty "array" in db records?
 
 //Other:
 //filters were not submited by checking checkboxes, thats why there is no data passed to handeler functions,
@@ -87,16 +88,8 @@ function App() {
     };
   }, []);
 
-  //products to show at once, picking 20 out of allProducts state in Pagination component(hope it works)
+  //products to show at once, picking 20 out of allProducts state in Pagination component
  const [products, setProducts] = React.useState([]);
-
-      /*React.useEffect(() =>{
-      //'https://dummyjson.com/products?skip=10'
-        fetch(productSource)
-        .then(res => res.json())
-        .then(data => setProducts(data.products))
-
-        },[productSource])*/
 
 //all products to get the filters working, and pagination
             const [allProducts, setAllProducts] = React.useState([]);

@@ -98,7 +98,7 @@ export default function Sidemenu()
                         <li><Link to={`/category/womens-shoes`} className="sidemenu-link" >Womens Shoes</Link></li>
                         <li><Link to={`/category/tops`} className="sidemenu-link" >Tops</Link></li>
                         
-                        <div className="sub-category-item">  
+                       {/* <div className="sub-category-item">  
                      Shoes
                     <div className="sub-hidden-part">
                       <ul>
@@ -107,7 +107,7 @@ export default function Sidemenu()
                       </ul>
                       </div>
                       
-                      </div>
+                      </div>*/}
                        
                  
                       </ul>
@@ -205,7 +205,7 @@ export default function Sidemenu()
                         <li><Link to={`/category/womens-shoes`} className="sidemenu-link" >Womens Shoes</Link></li>
                         <li><Link to={`/category/tops`} className="sidemenu-link" >Tops</Link></li>
                         
-                        <div className="sub-category-item">  
+                        {/*<div className="sub-category-item">  
                      Shoes
                     <div className="sub-hidden-part">
                       <ul>
@@ -214,7 +214,7 @@ export default function Sidemenu()
                       </ul>
                       </div>
                       
-                      </div>
+                      </div>*/}
                        
                  
                       </ul>
