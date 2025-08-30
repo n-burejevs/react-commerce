@@ -33,7 +33,7 @@ import { UserContext } from './components/context/user'
 // + ///have logged in users cart saved in database -> after loggin the cart/wish lists get sync-ed up
 
 //TO DO:
-
+//REDIRRECT USER after he logged in!
 //useNavigate for redirects?
 //User account page
 //price slider(MultiRangeSlider) in Filters! (get price values from props. find min max, but how to filter by price then?)
