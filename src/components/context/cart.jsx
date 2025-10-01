@@ -57,7 +57,7 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
     setcartCount(CountItems(cartItems));
-    console.log("cart",cartItems);
+    //console.log("cart",cartItems);
     //run update on change, if logged in
  //problem: on login, the cart state gets updated with data from db
  //updating state will trigger the saving to db
@@ -66,14 +66,14 @@ export const CartProvider = ({ children }) => {
   saveCartToDB(cartItems);console.log("sending cart to db");
 }, 3000);*/
 //other option is to have a useCallback?
-//let me test how the login component is adding all items now
-    //handleCartUpdate()
+
+    handleCartUpdate()
 
   }, [cartItems]);
 
   const handleCartUpdate = useCallback( () => {
     saveCartToDB(cartItems);
-    console.log("sending cart to db");
+   // console.log("sending cart to db");
   }, [cartItems]);
 
   useEffect(() => {
@@ -82,11 +82,6 @@ export const CartProvider = ({ children }) => {
       setCartItems(JSON.parse(cartItems));
     }
   }, []);
-//trying out useMemo, whats the use for this const?
-   /* const cartMemo = useMemo(  
-          
-    [cartItems]
-  );*/
 
   return (
     <CartContext.Provider

@@ -78,7 +78,7 @@ function addTowishlist(item)
 
     const handleWishlisttUpdate = useCallback( () => {
       saveWishlistToDB(wishlistItems);
-      console.log("sending wishlist to db");
+      //console.log("sending wishlist to db");
     }, [wishlistItems]);
 
   return (

@@ -7,6 +7,7 @@ import search_icon from '../assets/search.png';
 import wishlist_icon from '../assets/wishlist.png';
 import user_account_icon from '../assets/user-account.png';
 import MiniCart from '../components/MiniCart'
+import useClickOutside from "../hooks/useClickOutside";
 //import { checkAuthToken } from "../functions";
 //import useContext from
 //import UserContext from "./UserContext";
@@ -81,57 +82,9 @@ const [searchResults, setsearchResults] = React.useState([]);
        }
     },[searchFor])
 
-function handleClickOutside(event){
-      if (
-        container.current &&
-        !container.current.contains(event.target)
-      ) {
-          setIsNavMenuOpen(false);
-      }
-
-    }
-    function handleClickOutsideCart(event){    
-          if (
-            miniCartView.current &&
-            !miniCartView.current.contains(event.target)
-          ) {
-              SetIsCartMenuOpen(false);
-              //console.log("clicked outside of mini-cart")
-          }
-        }
-        function handleClickOutsideAccountMenu(event){    
-          if (
-            accountMenuContainer.current &&
-            !accountMenuContainer.current.contains(event.target)
-          ) {
-              SetIsAccountMenuOpen(false);
-          }
-        }
-
-  /*Hide dropdown when clicked outside of it*/
-  React.useEffect(() => {
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-          document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, [isNavMenuOpen]);
-
-      /*Hide mini cart menu when clicked outside of it*/
-  React.useEffect(() => {
-
-    document.addEventListener("mousedown", handleClickOutsideCart);
-    return () => {
-        document.removeEventListener("mousedown", handleClickOutsideCart);
-    };
-  }, [isCartMenuOpen]);
-
-  React.useEffect(() => {
-
-    document.addEventListener("mousedown", handleClickOutsideAccountMenu);
-    return () => {
-        document.removeEventListener("mousedown", handleClickOutsideAccountMenu);
-    };
-  }, [isAccountMenuOpen]);
+      useClickOutside(container, isNavMenuOpen, setIsNavMenuOpen);
+        useClickOutside(miniCartView,isCartMenuOpen, SetIsCartMenuOpen);
+          useClickOutside(accountMenuContainer, isAccountMenuOpen, SetIsAccountMenuOpen);
 
     return(
   
