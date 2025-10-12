@@ -1,8 +1,10 @@
 import React, {useMemo} from "react";
 import "../styles/FilterStyles.css";
-import MultiRangeSlider from "./MultiRangeSlider";
+//import MultiRangeSlider from "./MultiRangeSlider";
+import '../styles/RangeSliderStyles.css'
 import useClickOutside from "../hooks/useClickOutside";
 
+//range slider is not only for desktop?
 export default function Filters(props)
 {
      //Source: https://www.codedaily.io/tutorials/Create-a-Dropdown-in-React-that-Closes-When-the-Body-is-Clicked
@@ -47,10 +49,21 @@ export default function Filters(props)
      for(let i=0; i<checkedCheckboxes.length; i++)
      {
       //check if items have no brand?
-        temp = temp.concat(props.allProducts.filter((item) => item.brand === checkedCheckboxes[i]))
-
+      //this one makes a "Other" brand selectable, but on 3rd page or so,
+      //items with actual brand appear in the list
+        temp = temp.concat(props.allProducts.filter((item) => checkedCheckboxes[i] == "Other" ?
+         item.brand == null : item.brand === checkedCheckboxes[i]
+          /*{ 
+            item.brand === checkedCheckboxes[i]
+            if (checkedCheckboxes[i] == "Other")
+            {
+              item.brand == null
+            }
+          }*/))
+          
      }
-      props.setAllProducts(temp);
+     //props.setAllProducts(temp); 
+      props.setProducts(temp); 
       
     },[checkedCheckboxes]);
 
@@ -74,17 +87,59 @@ const brands = useMemo(() => {
   }, [props.allProducts]);  
 
   
-  
-  const [priceMin, setPriceMin] = React.useState(Math.max(...props.allProducts.map(item => item.price)));
-  const [priceMax, setPriceMax] = React.useState(Math.min(...props.allProducts.map(item => item.price)));
-/*
+  //user will move these
+  const [priceMin, setPriceMin] = React.useState(Math.min(...props.allProducts.map(item => item.price)));
+  const [priceMax, setPriceMax] = React.useState(Math.max(...props.allProducts.map(item => item.price)));
+
+  //min max for range
+  const [min, setMin] = React.useState(/*Math.min(...props.allProducts.map(item => item.price))*/0);
+  const [max, setMax] = React.useState(/*Math.max(...props.allProducts.map(item => item.price))*/0);
+
 React.useEffect(() => {
-  let max = Math.max(...props.allProducts.map(item => item.price));
-  let min = Math.min(...props.allProducts.map(item => item.price));
+  //range values
+  setMin(Math.min(...props.allProducts.map(item => item.price)))
+    setMax(Math.max(...props.allProducts.map(item => item.price)))
+    //just the initial values
+       setPriceMin(Math.min(...props.allProducts.map(item => item.price)))
+         setPriceMax(Math.max(...props.allProducts.map(item => item.price)))
 
-  
+    },[props.allProducts]);
 
-    },[props.allProducts]);*/
+    React.useEffect(() => {
+
+  // filter by selected range
+      //let category = props.products[0].category
+      //this?
+    /*  if(typeof category !== 'undefined') {
+        props.setProducts(props.allProducts.filter( item => item.price >= priceMin && item.price <= priceMax && item.category == category))
+      }*/
+      //or this? or if category is not undefined -> then check for category else just use price filter
+    props.setProducts(props.allProducts.filter( item => item.price >= priceMin && item.price <= priceMax/* && item.category == props.products[0].category*/))
+
+    },[priceMin, priceMax]);
+
+    const updateRange = (eventTarget) =>
+    {
+      const range = document.querySelector(".range-selected");
+      //console.log(eventTarget.id)
+      if (eventTarget.id == "min-range")
+      {
+          setPriceMin(eventTarget.value)
+      }
+      else if (eventTarget.id == "max-range")
+      {
+          setPriceMax(eventTarget.value)
+      }
+     //range.style.left = (priceMin / max) * 100 + "%";
+     // range.style.right = 100 - (priceMax / max) * 100 + "%";
+        fillColor()
+    }
+function fillColor() {
+  const range = document.querySelector(".range-selected");
+  let percent1 = (priceMin / max) * 100;
+  let percent2 = (priceMax / max) * 100;
+  range.style.background = `linear-gradient(to right, #dadae5 ${percent1}% , #3264fe ${percent1}% , #3264fe ${percent2}%, #dadae5 ${percent2}%)`;
+}
 
 
         return(
@@ -128,6 +183,26 @@ React.useEffect(() => {
                       <div className="inline-container">
                      <input type="checkbox" name="colors"  value="Blue"></input> <label>Blue</label>
                      </div>
+                      </form>
+
+                                             <div className="filter-category-title">Price</div>
+                      <form className="price-form">
+                      <div className="range">
+                      <div className="range-slider">
+                    <span className="range-selected"></span>
+                     </div>
+                         <div className="range-input">
+
+                    <input type="range" id="min-range" className="min" min={min} max={max} 
+                              value={priceMin} onInput={e => updateRange(e.target) }/>
+                    <input type="range" id="max-range" className="max" min={min} max={max} 
+                              value={priceMax} onInput={e => updateRange(e.target)}/>
+                  <div className="range-price"> 
+                    <label htmlFor="test-range">{priceMin}</label> - <label htmlFor="test-range">{priceMax}</label>
+                     </div>
+
+                         </div>
+                     </div> 
                       </form>
            
                 </div>}
@@ -178,17 +253,27 @@ React.useEffect(() => {
                       
                        <div className="filter-category-title">Price</div>
                       <form className="price-form">
-                         <div >
-           {/* <MultiRangeSlider 
-            min={priceMin} max={priceMax} onChange={({ min, max }) => {setPriceMin(min); setPriceMax(max);}}
-              />*/}
-                         </div>
+                      <div className="range">
+                      <div className="range-slider">
+                    <span className="range-selected"></span>
+                     </div>
+                         <div className="range-input">
 
+                    <input type="range" id="min-range" className="min" min={min} max={max} 
+                              value={priceMin} onInput={e => updateRange(e.target) }/>
+                    <input type="range" id="max-range" className="max" min={min} max={max} 
+                              value={priceMax} onInput={e => updateRange(e.target)}/>
+                  <div className="range-price"> 
+                    <label htmlFor="test-range">{priceMin}</label> - <label htmlFor="test-range">{priceMax}</label>
+                     </div>
+
+                         </div>
+                     </div> 
                       </form>
                    
                         </div>
                   </div> 
-        } {/*console.log(checkedCheckboxes)*/}
+        }
           </>
          
         )

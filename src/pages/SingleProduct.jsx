@@ -46,17 +46,16 @@ export default function SingleProduct(){
      
         <div >
          <div className="single-prod-title"><h3 >{singleProduct.title}</h3></div>
-        {singleProduct.images ? /*singleProduct.images.map(img=><img key={nanoid()} className="single-prod-img" src={img}></img>) :
-         "Error loading images"*/
+        {singleProduct.images ? 
          <Slideshow images = {singleProduct.images}/> : "Error loading images"
         }
-         {/*<Slideshow images = {singleProduct.images} />*/}
         </div>
       <div className="product-data">
 
         <div className="single-prod-desc">{singleProduct.description}</div>
         <div className="single-prod-price" >Price: {singleProduct.price}</div>
         <div >Items in stock: {singleProduct.stock}</div>
+        <div >Delivery: {singleProduct.shippingInformation}</div>
         <div className="single-prod-brandname">Brand: {singleProduct.brand}</div>
         <div className="single-prod-button-container">
           <button className="single-prod-to-cart" onClick={()=>addToCart(singleProduct)}>Add to cart</button>

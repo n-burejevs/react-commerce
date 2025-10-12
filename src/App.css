@@ -99,15 +99,15 @@
 }
 /* Links inside the dropdown */
 .sidemenu a{
-  color: black;
+  /*color: black;*/
  /* padding: 10px 16px;*/
   text-decoration: none;
   display: block;
 }
 
 /* Change color of dropdown links on hover */
-.sidemenu a:hover, .filter-pane a:hover
-{background-color: #ddd;}
+/*.sidemenu a:hover, .filter-pane a:hover
+{background-color: #ddd;}*/
 
 /* Show the dropdown menu (use JS to add this class to the .sidemenu container when the user clicks on the dropdown button) */
 /*.show {display:block;}*/
@@ -645,10 +645,7 @@
   width: 50px;
 }
 
-.single-prod-img{
-  max-width: 500px;
-  width: 100%;
-}
+
 
 .single-prod-view{
   background-color: white;

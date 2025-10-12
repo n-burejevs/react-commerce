@@ -20,10 +20,10 @@ ul, .sub-category-item{
     margin-top: 0px;
     margin-bottom: 0px;
 }
-/*
-.sub-category-item{
 
-}*/
+.hidden-part ul li:last-child{
+    margin-bottom: 0px;
+}
 
 
 .hidden-part{

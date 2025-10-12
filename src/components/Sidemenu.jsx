@@ -1,5 +1,4 @@
 import React from "react";
-import { nanoid } from "nanoid";
 import { Link } from "react-router-dom";
 import '../styles/SidemenuStyles.css'
 import useClickOutside from "../hooks/useClickOutside";
@@ -52,7 +51,7 @@ export default function Sidemenu()
 
     function printSidemenuLinks()
     {
-        return categoryList.map( item => <a key={nanoid()}>{item} </a>)
+        return categoryList.map( (item, index )=> <a key={index}>{item} </a>)
     }          
 
 

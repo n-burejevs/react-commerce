@@ -3,6 +3,16 @@
   .gallery-container{
     padding-left: 20px;
   }
+    .next-btn, .prev-btn
+  {
+     width: 25px;
+  }
+}
+@media (width < 48em) {
+  .next-btn, .prev-btn
+  {
+     width: 35px;
+  }
 }
 
 
@@ -11,27 +21,34 @@
   width: 100%;
   display: flex;
   justify-content: center;
+    max-width: 500px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  position: relative;
 }
 
 .prod-img{
   width: 100%;
   max-width: 440px;
 }
+/*
 .movable-block{
   max-width: 500px;
   align-items: center;
   display: flex;
   justify-content: center;
   position: relative;
-}
+}*/
+
 .next-btn, .prev-btn{
   position: absolute;
   top: 50%;
   border: none;
-  width: 25px;
   background-color: rgba(0, 0, 0, 0);
   cursor: pointer;
-  /*z-index: 20;*/
+  z-index: 20;
+ 
 }
 .prev-btn{
   
@@ -62,4 +79,9 @@
 }
 .active, .dot:hover {
   background-color: #717171;
+}
+
+.single-prod-img{
+  max-width: 500px;
+  width: 100%;
 }

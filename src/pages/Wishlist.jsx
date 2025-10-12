@@ -2,7 +2,6 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import '../styles/Cartstyles.css'
 import Sidemenu from "../components/Sidemenu";
-import { nanoid } from "nanoid";
 import '../App.css';
 import { Link  } from 'react-router-dom';
 import cart from '../assets/cart.png';
@@ -33,8 +32,8 @@ export default function Wishlist(){
          <div className="cart-list-container">
          <h1 >Wishlist</h1>
   <div>
-    {wishlistItems.map((item) => (
-      <div  key={nanoid()}>
+    {wishlistItems.map((item, index) => (
+      <div  key={index}>
          <p className="cart-item-title">   <Link to={`/viewproduct/${item.id}`}> {item.title}</Link></p>
         <div className="item-container">
         <Link to={`/viewproduct/${item.id}`}>

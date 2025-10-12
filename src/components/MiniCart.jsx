@@ -1,6 +1,5 @@
 import React from "react";
 import '../styles/Cartstyles.css'
-import { nanoid } from "nanoid";
 import { Link  } from 'react-router-dom';
 import '../App.css';
 
@@ -28,8 +27,8 @@ export default function MiniCart(props){
           <button className="close-mini-cart-btn" onClick={closeCartMenu}>X</button>
          { <h1 >Cart</h1>}
   
-    {cartItems.map((item) => (
-      <div  key={nanoid()}>
+    {cartItems.map((item, index) => (
+      <div  key={index}>
          <p className="mini-cart-item-title"> <Link to={`/viewproduct/${item.id}`} className="product-link" > {item.title } </Link></p>
         <div className="mini-cart-item-container">
           

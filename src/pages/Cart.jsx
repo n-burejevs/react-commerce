@@ -2,7 +2,6 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import '../styles/Cartstyles.css'
 import Sidemenu from "../components/Sidemenu";
-import { nanoid } from "nanoid";
 import '../App.css';
 import { Link  } from 'react-router-dom';
 import { useContext } from 'react';
@@ -37,8 +36,8 @@ export default function Cart(){
          <div className="cart-list-container">
          <h1 >Cart</h1>
   <div>
-    {cartItems.map((item) => (
-      <div  key={nanoid()}>
+    {cartItems.map((item, index) => (
+      <div  key={index}>
          <p className="cart-item-title">   <Link to={`/viewproduct/${item.id}`}> {item.title}</Link></p>
         <div className="item-container">
         <Link to={`/viewproduct/${item.id}`}>

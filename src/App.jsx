@@ -47,7 +47,6 @@ import { UserContext } from './components/context/user'
 
 
 //BUGS:
-//0/ only one brand at the time is filtered
 //1/ open mini cart menu in the navbar, add an item (press + button)
 //and click somewhere outside of cart menu. the menu should close by itself, but it does not
 //does sth happen with ref={} after the MiniCart re-renders?
@@ -58,8 +57,7 @@ import { UserContext } from './components/context/user'
 // [vite] (client) hmr invalidate /src/components/context/user.jsx 
 // Could not Fast Refresh ("UserContext" export is incompatible).
 //  Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
-//9/ filtering by brand "other" doesnt show anything
-//10/ what happens if all items are deleted from cart? will it have an empty "array" in db records?
+//9/ what happens if all items are deleted from cart? will it have an empty "array" in db records?
 
 //Other:
 //filters were not submited by checking checkboxes, thats why there is no data passed to handeler functions,
