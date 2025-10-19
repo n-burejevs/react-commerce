@@ -47,7 +47,7 @@
   border: none;
   background-color: rgba(0, 0, 0, 0);
   cursor: pointer;
-  z-index: 20;
+  /*z-index: 20;*/
  
 }
 .prev-btn{

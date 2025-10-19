@@ -122,7 +122,10 @@
   /*display: flex;*/
   flex-direction: column;
   /*align-items: center;*/
-  margin-top: 24px;
+ 
+}
+.single-product-and-review-container{
+   margin-top: 24px;
 }
 .product-data{
   display: flex;
@@ -147,7 +150,10 @@
 .search-prod-title, .search-prod-price{
   font-size: 12px;
 }
-
+/*what about desktop version?*/
+.single-prod-title h3{
+  margin-top: 0px;
+}
 }
 
 
@@ -212,9 +218,11 @@
   display: none;
 }
 
-.main-content, .contact-page, .single-product-view, .about-page{
+.main-content, .contact-page, .single-product-and-review-container, .about-page{
   margin-left: 15px;
   margin-top: 40px;
+}
+.main-content, .contact-page, .single-product-and-review-container, .about-page{
   padding-top: 30px;
 }
 
@@ -669,13 +677,16 @@
   z-index: 2;
 
 }
+.single-product-and-review-container{
+  background-color: white;
+  border-radius: 10px;
+}
 
 .single-product-view{
-  background-color: white;
   width: 100%;
   height: max-content;
   border: none;
-  border-radius: 10px;
+  
   display: flex;
   justify-content:center;
 
@@ -724,4 +735,63 @@
 }
 .contact-page, .about-page{
   color: black;
+}
+
+.single-product-and-review-container{
+  color: black;
+}
+.product-reviews{
+  width: 100%;
+  display: inline;
+  align-items: center;
+  margin-left: 10%;
+  
+}
+.name-and-date{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  column-gap: 10px;
+  margin-bottom: 20px;
+}
+.review{
+  margin-bottom: 20px;
+  /*source: https://codepen.io/MarkBoots/pen/qEdxozX*/
+  --grad: red, blue;
+  padding: 2.5rem;
+  background-image: linear-gradient(to bottom left, #e0e4e5, #f2f6f9);
+  border-radius: 2rem;
+  gap: 1.5rem;
+  margin-left: 5px;
+  margin-right: 5px;
+  box-shadow: 
+    inset -2px 2px hsl(0 0 100% / 1),
+    -20px 20px 40px hsl(0 0 0 / .25) ;
+ 
+}
+.rating-and-comment{
+  background-color: #dbdcdd;
+  border-style: inset;
+  padding: 10px;
+ 
+}
+.star-container{
+  display: flex;
+}
+#star-five{
+  margin-left: 0;
+  margin-right: 0;
+
+}
+
+.reviewer-name, .rating{
+  font-weight: bold;
+}
+
+.rating{
+  margin-bottom: 10px;
+}
+
+.reviews-the-title{
+  text-align: center;
 }

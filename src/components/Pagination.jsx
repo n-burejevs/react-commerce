@@ -47,6 +47,22 @@ function changeLink()
         {
             links.push(<a href="#" key={i} onClick={()=>setNumber(i)} id={activePage === i ? "on-this-page": "not-on-this-page"}>{i}</a>)
         }
+        
+      
+        let firstLinks = links.slice(activePage > 0 ? activePage-1 : activePage, activePage < pageAmount ? activePage+1 : activePage);
+        let lastLinks = [];  
+        if (activePage + 3 >= pageAmount)
+        {
+            firstLinks = links.slice(-4);
+        }
+        else
+        {
+            lastLinks = links.slice(pageAmount -2 , pageAmount);
+            firstLinks.push(<a key={'...'} id="not-on-this-page">...</a>)
+        }
+
+        links = firstLinks.concat(lastLinks)
+
         return links;
         
     }
