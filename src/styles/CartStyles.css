@@ -247,12 +247,15 @@
     width: 30px;
     cursor: pointer;
     transition: all 200ms ease-out;
+    background-color: #d4d4d4;
+    color: black;
+    padding-top: 2px;
+    padding-bottom: 2px;
   }
   .close-mini-cart-btn:hover{
     opacity: 0.6;
     box-shadow: 0 0 0 1px rgba(62, 116, 168, 0.2);
-    background-color: #3576BC;
-    transform: scale(1.05) translateY(.100rem);
+    transform: scale(1.05);
   }
 /*style like a button*/
   .go-to-cart-link, .single-prod-to-cart, .single-prod-to-wishlist, 

@@ -6,6 +6,9 @@ import { useContext } from 'react';
 import { CartContext } from '../components/context/cart';
 import { WishlistContext } from '../components/context/wishlist';
 import { UserContext } from '../components/context/user'
+//import {useNavigate} from 'react-router-dom'
+import { SpinnerCircular } from 'spinners-react';
+
 
 export default function Login() {
 
@@ -20,47 +23,68 @@ export default function Login() {
 
     const { user, setUser, checkAuthToken} = useContext(UserContext);
 
-    // const [user, setUser] = React.useState({name: '', lastname: '', email: ''});
+    const [loading, setLoading] = React.useState(false);
      
     const handleSubmitEvent = (e) => {
       e.preventDefault();
      
       if (userEmail !== "" && userPassw !== "") {
         
-        //console.log(userEmail, userPassw);
-        sendData();
+        sendData()
+        //window.location.replace("/");        
       }
       else alert("please provide a valid input");
     };
 
-      async function sendData() {
-
+async function sendData() {
+  //set off an animation - loading spinner
+  //the async sending/merging cart is so slow i've put an animation there
+  //i cant make it faster or make it wait before redirect
+   setLoading(true);
+ try {
 //send formdata to php page to validate
+
   const res = await fetch('http://localhost/react-commerce/login.php', {
       method: 'POST',
       body: JSON.stringify({email: userEmail, password: userPassw})
     });
 
     const result = await res.json();
+    console.log("tessting")
     setResponse({status: result.status, message: result.message});
-
       //send user to homepage after login?
       if(result.status === 'success')
       { 
           //cookie for a week
            setCookie('token', result.token, 7)
           
-           //update, load cart if user connected from an other device
+           //update, load cart if user connected from an other device/account
           //or localstorage was cleared
-           syncCartWithDatabase(result.token)/*.then( 
+        //  syncCartWithDatabase(result.token).then(
             //does not work? wait until sync is completed, then redirect
-            () => window.location.replace("/") );;*/
-           //redirect
-           
-           //window.location.replace("/");
+           // (() => window.location.replace("/")))
+
+          syncCartWithDatabase(result.token)
+
+          //This is not the best solution...
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+          //leave as is, but add some animation instead??
+           // navigate("/"); does not work!
+    window.location.replace("/");
       }
-    //console.log(response);
+      else
+        {
+          if(result.status === 'error') setResponse({status: "error", message: "Error, cant login..."});
+          setResponse({status: "error", message: "Network error, cant login..."}) 
+        } 
+
+} catch {
+      setResponse({status: "error", message: "Unknown error, cant login..."}) 
+     }
+     setLoading(false);
   }
+
 //https://www.w3schools.com/js/js_cookies.asp
   function setCookie(cname, cvalue, exdays) {
   const d = new Date();
@@ -251,7 +275,7 @@ const userCookie = useMemo(() => {
   // if there are items in localstorage/state or saved in the db, merge them
 
   async function syncCartWithDatabase(userToken){
-    
+
   const res = await fetch('http://localhost/react-commerce/sync_carts.php', {
       method: 'POST',
       body: JSON.stringify({user_token: userToken})
@@ -263,10 +287,11 @@ const userCookie = useMemo(() => {
     if (savedData.message === 0)
     {
       //database is empty, then upload item to db
-       console.log("only save")
+       console.log("only save");
        let cart = prepareItemsForDB(cartItems);
       let wished = prepareItemsForDB(wishlistItems);
-        saveItemstoDB(cart, wished, userToken);
+
+      saveItemstoDB(cart, wished, userToken);
        
     }
    else {
@@ -284,7 +309,6 @@ const userCookie = useMemo(() => {
     
       saveItemstoDB(cart, wished, userToken);
    }
-   
   }
 
   return (
@@ -327,7 +351,12 @@ const userCookie = useMemo(() => {
         {/*response === "error" ? "Login attempt failed" : ""*//*console.log(response)*/}
         {response.status == "error" && response.message}
      </div>
-    <button className="btn-submit">Submit</button>
+
+  {/** align this spinner!!!!!!!!!!! */}
+     {loading ?<div className="spinner-container"><SpinnerCircular enabled={loading} size={50} thickness={100} 
+              speed={100} color="rgba(70, 57, 172, 1)" secondaryColor="rgba(172, 57, 57, 0)" /></div> :
+                           <button className="btn-submit">Submit</button>}
+
     {/*response.status == "success" && JSON.stringify(response)*/}
     
   </form>

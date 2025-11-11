@@ -31,19 +31,19 @@ import { UserContext } from './components/context/user'
 // + //check if logged in in navbars account management div, greet user and have and option to logout, go to account settings
 // + //user state is in context
 // + ///have logged in users cart saved in database -> after loggin the cart/wish lists get sync-ed up
+// + //price slider(MultiRangeSlider) in Filters! (get price values from props. find min max, but how to filter by price then?)
+// + //add https://www.npmjs.com/package/react-spinners for the loading after login
 
 //TO DO:
-//REDIRRECT USER after he logged in!
 //useNavigate for redirects?
 //User account page
-//price slider(MultiRangeSlider) in Filters! (get price values from props. find min max, but how to filter by price then?)
 //code clean up(commented out), remove unused props?
 //user password restore (PHP password_verify() forgot password example) https://www.phpmentoring.org/blog/php-password-verify-function#:~:text=The%20Password_Verify()%20function%20is,true%2C%20otherwise%20it%20returns%20false.
 //finish category hover menu styling and get links from https://dummyjson.com/docs/products#products-category
-//links for pages in pagination.jsx need to be a state, so i can update it, based on number of products(after filtered out)
 //add categories(more)
 //add discount & deals page (just add some -% off some random items)
 //To DO; https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
+// useTransition for search?
 
 
 //BUGS:
@@ -52,7 +52,7 @@ import { UserContext } from './components/context/user'
 //does sth happen with ref={} after the MiniCart re-renders?
 //3/arrow buttons in single product dont work on mobile, but swipping left/right does
 //5/error happens when undefined category is selected from navigation in Sidemenu and when there are products in the cart(localstorage)
-//6/Filter component gets rendered 3(5???) times? 
+//6/Filter component gets rendered 3(5???) times? because of parent states ?
 //8/ context/user error/bug
 // [vite] (client) hmr invalidate /src/components/context/user.jsx 
 // Could not Fast Refresh ("UserContext" export is incompatible).

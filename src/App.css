@@ -795,3 +795,6 @@
 .reviews-the-title{
   text-align: center;
 }
+.main-content{
+  min-height: 320px;
+}
