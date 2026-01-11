@@ -50,7 +50,7 @@ async function sendData() {
     });
 
     const result = await res.json();
-    console.log("tessting")
+
     setResponse({status: result.status, message: result.message});
       //send user to homepage after login?
       if(result.status === 'success')

@@ -35,6 +35,8 @@ import { UserContext } from './components/context/user'
 // + //add https://www.npmjs.com/package/react-spinners for the loading after login
 
 //TO DO:
+//need some useEffects to change price filter values when the category name changes!!!
+//need a way to undo/cancel filters!
 //useNavigate for redirects?
 //User account page
 //code clean up(commented out), remove unused props?
@@ -44,12 +46,14 @@ import { UserContext } from './components/context/user'
 //add discount & deals page (just add some -% off some random items)
 //To DO; https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
 // useTransition for search?
+//save fetched products to localstorage? - dont think so...
+//does Sort component needs prop - product setProduct?
+//does app.jsx - main entry for an app, needs filters and all products displayed?? 
 
 
 //BUGS:
-//1/ open mini cart menu in the navbar, add an item (press + button)
-//and click somewhere outside of cart menu. the menu should close by itself, but it does not
-//does sth happen with ref={} after the MiniCart re-renders?
+//1/ price filter and brand filter does not fully work together, price one uses .filter, so once some items are filtered out,
+//you cant get them back with filters 
 //3/arrow buttons in single product dont work on mobile, but swipping left/right does
 //5/error happens when undefined category is selected from navigation in Sidemenu and when there are products in the cart(localstorage)
 //6/Filter component gets rendered 3(5???) times? because of parent states ?
@@ -67,9 +71,8 @@ function App() {
 
   const {cartCount } = useContext(CartContext);
   const {wishListCount, setWishListCount} = useContext(WishlistContext);
-  const { user, setUser} = useContext(UserContext);
+  const {user, setUser} = useContext(UserContext);
 
-                                                            ///'https://dummyjson.com/products?limit=10&skip=10'
   const [productSource, setProductSource] = React.useState("https://dummyjson.com/products?limit=0&skip=0")
                                                             
   const [width, setWidth] = React.useState(window.innerWidth);
@@ -89,18 +92,30 @@ function App() {
   //products to show at once, picking 20 out of allProducts state in Pagination component
  const [products, setProducts] = React.useState([]);
 
-//all products to get the filters working, and pagination
-            const [allProducts, setAllProducts] = React.useState([]);
+ //get number filtered items
+  //const [filteredItemsCount, setFilteredItemsCount] = React.useState(1);
+
+  //going to use this for filtere.jsx component(rangefilter.jsx), using also for the list of brands
+  const [unfilteredProd, setUnfilteredProd] = React.useState([])
+
+//all products to get the filters working, and pagination and set slice 20 items for products state
+  const [allProducts, setAllProducts] = React.useState([]);
             
-                  React.useEffect(() =>{
-                  //'https://dummyjson.com/products?skip=10'
-                    fetch(productSource)
-                    .then(res => res.json())
-                    .then(data => setAllProducts(data.products))
+          React.useEffect(() =>{
+          //'https://dummyjson.com/products?skip=10'
+            fetch(productSource)
+            .then(res => res.json())
+            .then(data => setAllProducts(data.products))
+            //maybe use a temp variable to set states
+            fetch(productSource)
+            .then(res => res.json())
+            .then(data => setUnfilteredProd(data.products))
+
+
                     },[])
   return (
       <>
-    {/* pass the updated item count to a component, which is displaying it */}
+
     <Navbar cartCount={cartCount} /*setcartCount={setcartCount} */user={user} setUser={setUser} 
     wishListCount={wishListCount} setWishListCount={setWishListCount} />
     <div className='main-content-container'>
@@ -109,7 +124,8 @@ function App() {
     <Sidemenu/>  
       {width < 768 && <Filters products={products} setProducts={setProducts} width={width}
                          allProducts={allProducts} setAllProducts={setAllProducts}
-                        source={productSource} setSource={setProductSource}/>}
+                        source={productSource} setSource={setProductSource}  unfilteredProd={unfilteredProd}
+                         />}
     </div>
 
      <div className="main-content">
@@ -120,14 +136,19 @@ function App() {
                {<Product products={products} setProducts={setProducts}
                
                 />}
-                 <Pagination source={productSource} setSource={setProductSource} /*Need to sent number of all products*/numberOfProd={allProducts.length}
-                  allProducts={allProducts} setAllProducts={setAllProducts}  products={products} setProducts={setProducts}
+                 <Pagination source={productSource} setSource={setProductSource}
+                  /*Need to sent number of all products*/
+                  numberOfProd={allProducts.length}
+                   allProducts={allProducts} setAllProducts={setAllProducts}
+                    products={products} setProducts={setProducts}
+                     /*filteredItemsCount={filteredItemsCount} */
                   />
                  {/*console.log(products)*/}
       </div>
     {width >= 768 && <Filters products={products} setProducts={setProducts} width={width}
                         allProducts={allProducts} setAllProducts={setAllProducts}
-                      source={productSource} setSource={setProductSource}/>}
+                      source={productSource} setSource={setProductSource} unfilteredProd={unfilteredProd}
+                     />}
     
     </div>
       

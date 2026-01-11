@@ -62,7 +62,8 @@ function handleChange(event)
 {
   setSearchFor(event.target.value);
 }
-
+//  To avoid blocking the main UI thread,
+//  use useTransition to handle the filtering process as a non-blocking transition
 const [searchResults, setsearchResults] = React.useState([]);
 
   //too many searches

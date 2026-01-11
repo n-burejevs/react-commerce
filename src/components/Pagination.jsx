@@ -8,8 +8,8 @@ function Pagination(props)
     //this will help to identify and style currently selected page number
     const [activePage, setActivePage] = React.useState(1);
    //dont need to make this a state?
-    const pageAmount = Math.ceil(props.numberOfProd / 20);
-  
+    var pageAmount = Math.ceil(props.numberOfProd / 20)
+  //console.log(pageAmount, "pages", props.numberOfProd, "prods",  props.products, "filtered count:", props.filteredItemsCount);
 function changeLink()
 {
     //take and display 20 items from the whole list 

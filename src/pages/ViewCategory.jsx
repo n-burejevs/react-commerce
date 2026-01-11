@@ -11,6 +11,10 @@ import { CartContext } from '../components/context/cart';
 import { WishlistContext } from '../components/context/wishlist';
 import { UserContext } from '../components/context/user'
 
+
+/*
+need some useEffects to change price filter values when the category name changes!!!
+*/
 export default function ViewCategory()
 {
 
@@ -22,7 +26,7 @@ export default function ViewCategory()
       const [width, setWidth] = React.useState(window.innerWidth);
       React.useEffect(() => {
         const handleResize = () => {
-          //shows navbar links after hamburger is tapped in mobile view
+          
           setWidth(window.innerWidth);
         };
     
@@ -38,23 +42,25 @@ export default function ViewCategory()
 
 const [products, setProducts] = React.useState([]);
 const [source, setSource] = React.useState(`https://dummyjson.com/products/category/${name}`);
+//using this also to make filters work... ugh...
+  const [unfilteredProd, setUnfilteredProd] = React.useState([])
 
-   /* React.useEffect(() =>{
-    //'https://dummyjson.com/products?skip=10'
-    fetch(`https://dummyjson.com/products/category/${name}`)
-    .then(res => res.json())
-    .then(data => setProducts(data.products))
-  },[name])*/
 
 //all products to get the filters working
 const [allProducts, setAllProducts] = React.useState([]);
                     
   React.useEffect(() =>{
     setSource(`https://dummyjson.com/products/category/${name}`);
-
+//the url string just makes browsing through categories normal
+//when using state items from prev category are shown
   fetch(`https://dummyjson.com/products/category/${name}`)
   .then(res => res.json())
   .then(data => setAllProducts(data.products))
+
+    fetch(`https://dummyjson.com/products/category/${name}`)
+    .then(res => res.json())
+    .then(data => setUnfilteredProd(data.products))
+
   },[name])
 
       //get product brands to the filter component?
@@ -80,7 +86,8 @@ return(
     <Sidemenu/>  
       {width < 768 && <Filters products={products} setProducts={setProducts} width={width}
                           allProducts={allProducts} setAllProducts={setAllProducts}
-                          source={source} setSource={setSource}/>}
+                          source={source} setSource={setSource} unfilteredProd={unfilteredProd}
+                          />}
     </div>
 
      <div className="main-content">
@@ -99,7 +106,9 @@ return(
       </div>
     {width >= 768 && <Filters products={products} setProducts={setProducts} width={width}
                       allProducts={allProducts} setAllProducts={setAllProducts}
-                      source={source} setSource={setSource}/>}
+                      source={source} setSource={setSource} unfilteredProd={unfilteredProd}
+                      />
+                      }
     
     </div>
         </>
