@@ -1,3 +1,10 @@
+.filter-category-title{
+    background-color: rgb(68, 68, 179);
+}
+.filter-pane{
+    color: black;
+}
+
 @media (width >= 48em) {
 .brand-form, .color-form{
     display: flex;
@@ -43,7 +50,7 @@
     margin-bottom: 5px;
 }
 .filter-pane{
-    color: black;
+    /*color: black;*/
     margin-right: 10px;
   }
 .filter-pane{
@@ -62,9 +69,9 @@
     }
     
 
-    #filter-dropdown{
+    /*#filter-dropdown{
         background-color: gray
-    }
+    }*/
     .filter-category-title{
         width: 100%;
         font-weight: 700;
@@ -76,7 +83,7 @@
         border-top: 1px solid #e1e1e1;
         padding-top: 10px;
         padding-bottom: 10px;
-        background-color: rgb(84, 84, 84);
+        /*background-color: rgb(84, 84, 84);*/
         letter-spacing: 1px;
     }
     .filter-filters{
@@ -86,11 +93,20 @@
         margin-top: 0px;*/
         display: none;
     }
-    .inline-container{
-        margin-bottom: 5px;
-    }
+
     .filter-pane{
      width: 155px;
+    }
+
+    .inline-container{
+        margin-bottom: 5px;
+        display: flex;
+    }
+ /*   .inline-container label{ 
+       
+    }*/
+    .inline-container input{
+        margin-right: 5px;
     }
   
     }
