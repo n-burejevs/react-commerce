@@ -35,6 +35,8 @@ import { UserContext } from './components/context/user'
 // + //add https://www.npmjs.com/package/react-spinners for the loading after login
 
 //TO DO:
+//cart wishlist db sync might have a problem with js/php logic 
+//style the cancel filter button or remove it....
 //need some useEffects to change price filter values when the category name changes!!!
 //need a way to undo/cancel filters!
 //useNavigate for redirects?

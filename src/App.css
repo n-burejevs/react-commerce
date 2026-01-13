@@ -457,7 +457,11 @@
     border-bottom-right-radius: 0px;
     font-size: 17px;
     /*margin-right: -1px;*/
-    
+  }
+
+  .searchbox:focus
+  {
+    box-shadow: 0 0 10px 1500px rgba(0, 0, 0, 0.234);
   }
   .searchbox-container{
     position: relative;

@@ -3,16 +3,18 @@ import React from "react";
 function PriceRangeFilter(props)
 {
 
-    const updateRange = (eventTarget) =>
+    const updateRange = (target) =>
     {
-      
-      if (eventTarget.id == "min-range")
+       const id = target.id;
+        const value = Number(target.value);
+
+      if (id == "min-range")
       {
-          props.setPriceMin(eventTarget.value)
+          props.setPriceMin(Math.min(value, props.priceMax))
       }
-      else if (eventTarget.id == "max-range")
+      else if (id == "max-range")
       {
-          props.setPriceMax(eventTarget.value)
+          props.setPriceMax(Math.max(value, props.priceMin))
       }
      //range.style.left = (priceMin / max) * 100 + "%";
      // range.style.right = 100 - (priceMax / max) * 100 + "%";
@@ -24,6 +26,15 @@ function fillColor() {
   let percent2 = (priceMax / max) * 100;
   range.style.background = `linear-gradient(to right, #dadae5 ${percent1}% , #3264fe ${percent1}% , #3264fe ${percent2}%, #dadae5 ${percent2}%)`;
 }
+    // update the slider fill color whenever slider numbers or bounds change
+    React.useEffect(() => {
+      const range = document.querySelector(".range-selected");
+      if (!range) return;
+      const total = (props.max - props.min) || 1; // avoid div/0
+      const percent1 = ((props.priceMin - props.min) / total) * 100;
+      const percent2 = ((props.priceMax - props.min) / total) * 100;
+      range.style.background = `linear-gradient(to right, #dadae5 ${percent1}% , #3264fe ${percent1}% , #3264fe ${percent2}%, #dadae5 ${percent2}%)`;
+    }, [props.priceMin, props.priceMax, props.min, props.max]);
 /*
 React.useEffect(() => {
   //range values
