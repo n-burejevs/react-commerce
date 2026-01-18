@@ -15,7 +15,7 @@ import useClickOutside from "../hooks/useClickOutside";
 //Found a good way to do search
 //https://medium.com/@ignatovich.dm/enhancing-form-handling-in-react-19-a-look-at-action-useformstate-and-useformstatus-a5ee68d6bf93
 
-export default function Navbar(props){
+function Navbar(props){
 
    function logout(){
     props.setUser(null);
@@ -207,3 +207,4 @@ const [searchResults, setsearchResults] = React.useState([]);
         </div>
     )
 }
+export default React.memo(Navbar)
