@@ -38,9 +38,9 @@ export default function Slideshow(props){
         const handleSwipe = React.useCallback(({ deltaX, deltaY }) => {
             if (Math.abs(deltaX) > Math.abs(deltaY)) {
                 if (deltaX > 0) {
-                    showNext()
-                } else {
                     showPrev()
+                } else {
+                    showNext()
                 }//vertical swipes
             } /*else {
                 if (deltaY > 0) {

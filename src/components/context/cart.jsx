@@ -1,7 +1,8 @@
 import { createContext, useState, useEffect } from 'react'
-///import {saveCartToDB} from '.../hooks/databaseSync.js'
+//import { databaseSyncContext } from './databaseSync';
 import {saveCartToDB} from '../databaseSync'
 import { useCallback } from 'react';
+//import { useContext } from 'react'
 
 export const CartContext = createContext()
 
@@ -61,10 +62,6 @@ export const CartProvider = ({ children }) => {
     //run update on change, if logged in
  //problem: on login, the cart state gets updated with data from db
  //updating state will trigger the saving to db
-  //what if i delay this function? 
-/*  setTimeout(() => {
-  saveCartToDB(cartItems);console.log("sending cart to db");
-}, 3000);*/
 //other option is to have a useCallback?
 
     handleCartUpdate()

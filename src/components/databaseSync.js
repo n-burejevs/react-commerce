@@ -47,7 +47,7 @@
 
 
 
-    function prepareItemsForDB(items)
+    export function prepareItemsForDB(items)
   {
     var itemIDforDB = [];
 

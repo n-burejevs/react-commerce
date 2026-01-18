@@ -5,7 +5,7 @@ import useClickOutside from "../hooks/useClickOutside";
 import PriceRangeFilter from "./PriceRangeFilter";
 
 
-export default function Filters(props)
+function Filters(props)
 {
      //Source: https://www.codedaily.io/tutorials/Create-a-Dropdown-in-React-that-Closes-When-the-Body-is-Clicked
      
@@ -193,6 +193,7 @@ React.useEffect(() => {
 
       // keep min/max synced whenever the original backup list changes (or allProducts as fallback)
   React.useEffect(() => {
+    
     const base = getList();
 
     //console.log(base);
@@ -258,7 +259,7 @@ React.useEffect(() => {
 
     // console.log("Filters applied:", { checkedCheckboxes, clampedPriceMin, clampedPriceMax, finalCount: finalList.length })
   // priceMin/priceMax intentionally in deps so effect triggers when slider changes
-  }, [checkedCheckboxes, priceMin, priceMax, props.unfilteredProd]);
+  }, [checkedCheckboxes, priceMin, priceMax/*, props.unfilteredProd*/]);
 
 
         return(
@@ -304,12 +305,12 @@ React.useEffect(() => {
                       </form>
 
                                              <div className="filter-category-title">Price</div>
-                    {     <PriceRangeFilter min={min} max={max} setMax={setMax} setMin={setMin} 
+                    {                 <PriceRangeFilter min={min} max={max} setMax={setMax} setMin={setMin} 
                                              priceMax={priceMax} priceMin={priceMin}
                                              setPriceMax={setPriceMax} setPriceMin={setPriceMin}
-                                             allProducts={props.allProducts} 
+                                             /*allProducts={props.allProducts} 
                                              setAllProducts={props.setAllProducts}
-                                             unfilteredProd={props.unfilteredProd} />
+                                              unfilteredProd={props.unfilteredProd}*//>
 }
            
                 </div>}
@@ -377,3 +378,4 @@ React.useEffect(() => {
          
         )
 }
+export default React.memo(Filters)

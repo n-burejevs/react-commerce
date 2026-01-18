@@ -36,9 +36,6 @@ import { UserContext } from './components/context/user'
 
 //TO DO:
 //cart wishlist db sync might have a problem with js/php logic 
-//style the cancel filter button or remove it....
-//need some useEffects to change price filter values when the category name changes!!!
-//need a way to undo/cancel filters!
 //useNavigate for redirects?
 //User account page
 //code clean up(commented out), remove unused props?
@@ -48,26 +45,20 @@ import { UserContext } from './components/context/user'
 //add discount & deals page (just add some -% off some random items)
 //To DO; https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
 // useTransition for search?
-//save fetched products to localstorage? - dont think so...
 //does Sort component needs prop - product setProduct?
 //does app.jsx - main entry for an app, needs filters and all products displayed?? 
 
 
 //BUGS:
-//1/ price filter and brand filter does not fully work together, price one uses .filter, so once some items are filtered out,
-//you cant get them back with filters 
+
 //3/arrow buttons in single product dont work on mobile, but swipping left/right does
 //5/error happens when undefined category is selected from navigation in Sidemenu and when there are products in the cart(localstorage)
-//6/Filter component gets rendered 3(5???) times? because of parent states ?
+
 //8/ context/user error/bug
 // [vite] (client) hmr invalidate /src/components/context/user.jsx 
 // Could not Fast Refresh ("UserContext" export is incompatible).
 //  Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
-//9/ what happens if all items are deleted from cart? will it have an empty "array" in db records?
 
-//Other:
-//filters were not submited by checking checkboxes, thats why there is no data passed to handeler functions,
-// but there is a way to dispatch an event and submit
 
 function App() {
 
@@ -107,13 +98,7 @@ function App() {
           //'https://dummyjson.com/products?skip=10'
             fetch(productSource)
             .then(res => res.json())
-            .then(data => setAllProducts(data.products))
-            //maybe use a temp variable to set states
-            fetch(productSource)
-            .then(res => res.json())
-            .then(data => setUnfilteredProd(data.products))
-
-
+            .then(data => {setAllProducts(data.products);  setUnfilteredProd(data.products)})
                     },[])
   return (
       <>
@@ -124,9 +109,9 @@ function App() {
 
     <div className='sidemenu-filterpane-mobile'> 
     <Sidemenu/>  
-      {width < 768 && <Filters products={products} setProducts={setProducts} width={width}
+      {width < 768 && <Filters /*products={products} setProducts={setProducts}*/ width={width}
                          allProducts={allProducts} setAllProducts={setAllProducts}
-                        source={productSource} setSource={setProductSource}  unfilteredProd={unfilteredProd}
+                         unfilteredProd={unfilteredProd}
                          />}
     </div>
 
@@ -138,7 +123,7 @@ function App() {
                {<Product products={products} setProducts={setProducts}
                
                 />}
-                 <Pagination source={productSource} setSource={setProductSource}
+                 <Pagination /*source={productSource} setSource={setProductSource}*/
                   /*Need to sent number of all products*/
                   numberOfProd={allProducts.length}
                    allProducts={allProducts} setAllProducts={setAllProducts}
@@ -147,9 +132,9 @@ function App() {
                   />
                  {/*console.log(products)*/}
       </div>
-    {width >= 768 && <Filters products={products} setProducts={setProducts} width={width}
+    {width >= 768 && <Filters /*products={products}*/ /*setProducts={setProducts}*/ width={width}
                         allProducts={allProducts} setAllProducts={setAllProducts}
-                      source={productSource} setSource={setProductSource} unfilteredProd={unfilteredProd}
+                        unfilteredProd={unfilteredProd}
                      />}
     
     </div>

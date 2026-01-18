@@ -34,6 +34,7 @@ export default function Navbar(props){
 let container = React.createRef();
 let miniCartView = React.createRef();
 let accountMenuContainer = React.createRef();
+let searchContainer = React.createRef();
 
 const [isNavMenuOpen, setIsNavMenuOpen] = React.useState(false);
 const [isCartMenuOpen, SetIsCartMenuOpen] = React.useState(false);
@@ -86,6 +87,7 @@ const [searchResults, setsearchResults] = React.useState([]);
       useClickOutside(container, isNavMenuOpen, setIsNavMenuOpen);
         useClickOutside(miniCartView,isCartMenuOpen, SetIsCartMenuOpen);
           useClickOutside(accountMenuContainer, isAccountMenuOpen, SetIsAccountMenuOpen);
+          useClickOutside(searchContainer, searchResultsVisible, setSearchResultsVisible);
 
     return(
   
@@ -111,7 +113,7 @@ const [searchResults, setsearchResults] = React.useState([]);
             {/*<Link to='/categories' className="anchor">Categories</Link>*/}
            </div>
 
-           <div className="searchbox-container">
+           <div className="searchbox-container" ref={searchContainer}>
            
            <input className="searchbox" type="text" placeholder="Search.." onChange={handleChange}/> 
            <div className="search-button-container">

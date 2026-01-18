@@ -8,8 +8,11 @@ import { WishlistContext } from '../components/context/wishlist';
 import { UserContext } from '../components/context/user'
 //import {useNavigate} from 'react-router-dom'
 import { SpinnerCircular } from 'spinners-react';
+import {prepareItemsForDB} from '../components/databaseSync';
 
 
+//importing functions form databaseSync.js may be less bad?
+//item count not updating after login?
 export default function Login() {
 
   const { cartCount, cartItems, setCartItems, addToCart } = useContext(CartContext);
@@ -60,18 +63,25 @@ async function sendData() {
           
            //update, load cart if user connected from an other device/account
           //or localstorage was cleared
-        //  syncCartWithDatabase(result.token).then(
+          //syncCartWithDatabase(result.token).then(
             //does not work? wait until sync is completed, then redirect
            // (() => window.location.replace("/")))
 
-          syncCartWithDatabase(result.token)
+           
+        syncCartWithDatabase(result.token).then(res => 
+             saveItemstoDB(res.cart, res.wished, result.token)
+        ) ;
+        
+        
 
           //This is not the best solution...
     await new Promise(resolve => setTimeout(resolve, 2000));
     
           //leave as is, but add some animation instead??
            // navigate("/"); does not work!
-    window.location.replace("/");
+           window.location.replace("/");
+          
+          
       }
       else
         {
@@ -120,7 +130,7 @@ async function sendData() {
 
 
   //remove unnecessary data, because it wont insert the whole object of an item
-  function prepareItemsForDB(items)
+  /*function prepareItemsForDB(items)
   {
     var itemIDforDB = [];
 
@@ -130,7 +140,7 @@ async function sendData() {
     }
 
     return itemIDforDB;
-  }
+  }*/
 
 /*
 const userCookie = useMemo(() => {
@@ -141,6 +151,7 @@ const userCookie = useMemo(() => {
 //needs to be prepareItemsForDB first
   async function saveItemstoDB(cartitems, wishlist, userToken)
   {
+    console.log(cartitems, wishlist,)
       ///console.log(user);
   const res = await fetch('http://localhost/react-commerce/save_carts.php', {
       method: 'POST',
@@ -151,6 +162,8 @@ const userCookie = useMemo(() => {
     const results =  await res.json();
 
     console.log(results);
+    if (results.status === "Success") return true;
+    else return false; //do i need false returned?
    
   } 
   //items in db are saved only by id and quantity
@@ -189,6 +202,7 @@ const userCookie = useMemo(() => {
     
    return completeProducts;
   }
+  //mergeSavedCartItems([{"id":16,"quantity":2},{"id":79,"quantity":1},{"id":78,"quantity":1}])
   //combine items from db with items in localstorage/state
   function mergeSavedCartItems(recievedItems){
       let cartItemstoAddAtOnce= [];
@@ -196,19 +210,24 @@ const userCookie = useMemo(() => {
   for(let i=0; i<recievedItems.length; i++)
   {
       let difference = cartItems.find((element) => element.id == recievedItems[i].id);
-
       if(difference){
          //update item with quantity?
         console.log("includes:", recievedItems[i])
        
           //using this temp array, instead of set function
           //  to make sure i update cart state only once and not every iteration
-           diffInCart = cartItems.map((cartItem) =>
+         /*  diffInCart = cartItems.map((cartItem) =>
           cartItem.id === difference.id
           //keeping the biggest quantity?
             ? { ...cartItem, quantity: recievedItems[i].quantity >= cartItem.quantity ? recievedItems[i].quantity : cartItem.quantity }
             : cartItem
-        )
+        )*/
+        diffInCart = [...cartItems];
+        //lets add an other for loop, because the ternary above does not work smh...
+        for(let j=0; j<cartItems.length; j++)
+        {
+          if(diffInCart[j].id ===  recievedItems[i].id && diffInCart[j].quantity < recievedItems[i].quantity) diffInCart[j].quantity = recievedItems[i].quantity;
+        }
        }
        else{
          console.log("adding to cart: ",recievedItems[i].id);
@@ -283,15 +302,17 @@ const userCookie = useMemo(() => {
 
     const savedData = await res.json();
 
+     let cart = [];
+      let wished = [];
     //returns 0 if there are no db records, no items saved
     if (savedData.message === 0)
     {
       //database is empty, then upload item to db
        console.log("only save");
-       let cart = prepareItemsForDB(cartItems);
-      let wished = prepareItemsForDB(wishlistItems);
+       /*let*/ cart = prepareItemsForDB(cartItems);
+      /*let*/ wished = prepareItemsForDB(wishlistItems);
 
-      saveItemstoDB(cart, wished, userToken);
+     // saveItemstoDB(cart, wished, userToken).then(result => {console.log(result); return result});
        
     }
    else {
@@ -304,11 +325,12 @@ const userCookie = useMemo(() => {
       mergeSavedCartItems(JSON.parse(savedData.message.cart_items));
           mergeSavedWishedItems( JSON.parse(savedData.message.wished_items));
           
-      let cart = prepareItemsForDB(cartItems);
-      let wished = prepareItemsForDB(wishlistItems);
+      /*let*/ cart = prepareItemsForDB(cartItems);
+      /*let*/ wished = prepareItemsForDB(wishlistItems);
     
-      saveItemstoDB(cart, wished, userToken);
+     // saveItemstoDB(cart, wished, userToken).then(result => {console.log(result); return result});;
    }
+   return {cart: cart, wished: wished};
   }
 
   return (
@@ -352,7 +374,6 @@ const userCookie = useMemo(() => {
         {response.status == "error" && response.message}
      </div>
 
-  {/** align this spinner!!!!!!!!!!! */}
      {loading ?<div className="spinner-container"><SpinnerCircular enabled={loading} size={50} thickness={100} 
               speed={100} color="rgba(70, 57, 172, 1)" secondaryColor="rgba(172, 57, 57, 0)" /></div> :
                            <button className="btn-submit">Submit</button>}
