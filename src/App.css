@@ -265,6 +265,9 @@
   padding-right: 20px;
 }
 
+.search-result-popout{
+  width: 100%;
+}
 }
 
 /*big screen styles above^*/
@@ -615,7 +618,8 @@
 .search-result-popout{
   
   color: black;
-  width: 100%;
+  /*width is really small on 330px wide mobile screens*/
+  /*width: 100%;*/
   height: 170px;
   overflow-y: scroll;
   /*Hide scrollbar*/

@@ -32,14 +32,6 @@
   width: 100%;
   max-width: 440px;
 }
-/*
-.movable-block{
-  max-width: 500px;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  position: relative;
-}*/
 
 .next-btn, .prev-btn{
   position: absolute;
@@ -47,8 +39,6 @@
   border: none;
   background-color: rgba(0, 0, 0, 0);
   cursor: pointer;
-  /*z-index: 20;*/
- 
 }
 .prev-btn{
   
@@ -62,6 +52,15 @@
 .arrow-btn{
   width: 100%;
 }
+  .next-btn:active, .prev-btn:active
+  {
+    /* This removes the blue highlight on mobile */
+  -webkit-tap-highlight-color: transparent;
+  /*scale: 0.90;*/
+  transform: scale(0.90); /* Shrinks slightly when tapped */
+  opacity: 0.7;           /* Fades slightly */
+  transition: transform 0.1s;
+  }
 /* The dots/bullets/indicators */
 .dot {
   cursor: pointer;

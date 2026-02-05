@@ -56,16 +56,16 @@ export default function Slideshow(props){
              
   <div className="gallery-container">
       
-
-     {/* <div className="movable-block" >*/}
-      <MobileSwiper onSwipe={handleSwipe}>
-      { <button className="next-btn" onClick={showNext}>
+             { <button className="next-btn" onClick={showNext}>
         <img className="arrow-btn" src={arrow} alt="Next"></img>
         </button>}
 
       { <button className="prev-btn" onClick={showPrev}>
         <img className="arrow-btn" src={arrowReverse} alt="Previous"></img>
         </button>}
+     {/* <div className="movable-block" >*/}
+      <MobileSwiper onSwipe={handleSwipe}>
+ 
             {newImageArray/*[imageSeqNum]*/}
             </MobileSwiper>
               

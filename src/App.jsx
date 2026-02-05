@@ -33,6 +33,7 @@ import { UserContext } from './components/context/user'
 // + ///have logged in users cart saved in database -> after loggin the cart/wish lists get sync-ed up
 // + //price slider(MultiRangeSlider) in Filters! (get price values from props. find min max, but how to filter by price then?)
 // + //add https://www.npmjs.com/package/react-spinners for the loading after login
+// + //arrow buttons in single product dont work on mobile, but swipping left/right does
 
 //TO DO:
 //cart wishlist db sync might have a problem with js/php logic 
@@ -51,7 +52,7 @@ import { UserContext } from './components/context/user'
 
 //BUGS:
 
-//3/arrow buttons in single product dont work on mobile, but swipping left/right does
+
 //5/error happens when undefined category is selected from navigation in Sidemenu and when there are products in the cart(localstorage)
 
 //8/ context/user error/bug
@@ -104,7 +105,7 @@ function App() {
       <>
 
     <Navbar cartCount={cartCount} /*setcartCount={setcartCount} */user={user} setUser={setUser} 
-    wishListCount={wishListCount} setWishListCount={setWishListCount} />
+    wishListCount={wishListCount} /*setWishListCount={setWishListCount} *//>
     <div className='main-content-container'>
 
     <div className='sidemenu-filterpane-mobile'> 
@@ -114,11 +115,14 @@ function App() {
                          unfilteredProd={unfilteredProd}
                          />}
     </div>
+       
+           <div className="main-content">
+              { /* <div className="align-sort-container">*/}
+                     { <Sort /*source={productSource} setSource={setProductSource}*/
+                 /*products={products}*/ setProducts={setProducts}
+                allProducts={allProducts} setAllProducts={setAllProducts}/>}
+              {/*</div>*/ }
 
-     <div className="main-content">
-                <Sort source={productSource} setSource={setProductSource}
-                 products={products} setProducts={setProducts}
-                allProducts={allProducts} setAllProducts={setAllProducts}/>
                 {/*Pass the state to update item count, when the added to cart*/}
                {<Product products={products} setProducts={setProducts}
                
@@ -131,6 +135,7 @@ function App() {
                      /*filteredItemsCount={filteredItemsCount} */
                   />
                  {/*console.log(products)*/}
+                   
       </div>
     {width >= 768 && <Filters /*products={products}*/ /*setProducts={setProducts}*/ width={width}
                         allProducts={allProducts} setAllProducts={setAllProducts}
