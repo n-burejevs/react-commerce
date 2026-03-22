@@ -13,13 +13,15 @@
 .error-message{
     color: red;
     text-align: center;
-    padding-top: 5px;
+    margin-bottom: 10px;
 }
 
 .login-form, .form-container{
     display: flex;
     flex-direction: column;
-    /*margin-bottom: 30px;*/
+}
+.form-container{
+margin-bottom: 30px;
 }
 .input-fields, .signup-form{
     display: grid;

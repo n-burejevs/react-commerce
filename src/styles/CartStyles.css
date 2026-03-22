@@ -5,6 +5,7 @@
     border: none;
     border-radius: 10px;
     padding-left: 10px;
+    padding-right: 10px;
 }
 
 .item-container{
@@ -51,10 +52,13 @@
 .cart-wishlist-total-section{
     padding-bottom: 20px;
 }
+.cart-wishlist-total-section h1{
+   text-align: right;
+}
 
 @media (width >= 48em) {
     .cart-list-container{
-        margin-left: 45px; 
+        margin-left: 5px; 
         margin-top: 21px;
         width: 100%;
         margin-right: 180px;
@@ -97,7 +101,9 @@
     .cart-page-container .sidemenu{
         margin-top: 26px;
     }
- 
+    .cart-wishlist-total-section h1{
+        margin-right: 40px;
+    }
 }
 
 @media (width < 48em) {
@@ -151,6 +157,11 @@
        margin-bottom: 0px;
        margin-left: 20px;
     }
+
+    .cart-button-container{
+    flex-direction: row;
+    justify-content: space-between;
+ }
 
 }
 
@@ -259,7 +270,7 @@
   }
 /*style like a button*/
   .go-to-cart-link, .single-prod-to-cart, .single-prod-to-wishlist, 
-  .clear-wishlist-btn, .clear-cart-btn{
+  .clear-wishlist-btn, .clear-cart-btn, .place-order-btn{
     padding: 8px 14px;
     background-color: #3576BC;
     color: white;
@@ -270,11 +281,16 @@
 	transition: opacity 0.5s;
   }
 .go-to-cart-link:hover, .single-prod-to-cart:hover, 
-.single-prod-to-wishlist:hover,  .clear-wishlist-btn:hover, .clear-cart-btn:hover{
+.single-prod-to-wishlist:hover,  .clear-wishlist-btn:hover, 
+.clear-cart-btn:hover, .place-order-btn:hover{
     opacity: 0.5;
  }
  /* pressed effect?
 .go-to-cart-link:active {
  
 }*/
- 
+ .cart-button-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+ }

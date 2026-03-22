@@ -31,7 +31,7 @@ export default function SignUp()
     });
 
     const result = await res.json();
-    setResponse(result.message);
+    setResponse(result);
     //console.log(response);
   }
 
@@ -83,7 +83,7 @@ function handleChange(e) {
 
          </p>
          </div>
-
+  console.log(response);
       
 
     return (
@@ -116,14 +116,14 @@ function handleChange(e) {
                   <br/>
                   <label htmlFor="password">Password:</label>
                   <input id="password" type="password" onChange={handleChange} name="password" ></input>
-                  <br/>                 
+                  <br/>                   
                   <div className="error-message">
                     {printErrors}
                     {response.status === "success" ? "Registration complete, you can login now": ""}
-                    {response.status === "error" ? "Registration failed, please retry": ""}
-
+                    {response.status === "error" ? "Registration failed, please retry" : ""}
+                    {/*response ? response.message : ""*/}
                   </div>
-                  
+
                   <button>Sign up</button>
 
                 </form>

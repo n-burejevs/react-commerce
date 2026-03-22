@@ -9,13 +9,15 @@ import { UserContext } from '../components/context/user'
 //import {useNavigate} from 'react-router-dom'
 import { SpinnerCircular } from 'spinners-react';
 import {prepareItemsForDB} from '../components/databaseSync';
+import { useNavigate } from "react-router";
 
 
 //importing functions form databaseSync.js may be less bad?
-//item count not updating after login?
+
+//need to cancel the request or ignore the response! if user moves away from the page before promises resolve
 export default function Login() {
 
-  const { cartCount, cartItems, setCartItems, addToCart } = useContext(CartContext);
+  const { cartCount, cartItems, setCartItems, /*addToCart*/ } = useContext(CartContext);
 
   const { wishListCount, setWishListCount, wishlistItems, setWishlistItems, addTowishlist } = useContext(WishlistContext);
   
@@ -27,6 +29,8 @@ export default function Login() {
     const { user, setUser, checkAuthToken} = useContext(UserContext);
 
     const [loading, setLoading] = React.useState(false);
+
+    let navigate = useNavigate();
      
     const handleSubmitEvent = (e) => {
       e.preventDefault();
@@ -68,25 +72,26 @@ async function sendData() {
            // (() => window.location.replace("/")))
 
            
-        syncCartWithDatabase(result.token).then(res => 
-             saveItemstoDB(res.cart, res.wished, result.token)
-        ) ;
-        
-        
+        syncCartWithDatabase(result.token)
+        /*.then(res => saveItemstoDB(res.cart, res.wished, result.token)
+             .then(res => { res && window.location.replace("/")})
+        ) ;*/
+     
 
           //This is not the best solution...
-    await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 2000));
     
           //leave as is, but add some animation instead??
            // navigate("/"); does not work!
-           window.location.replace("/");
+         window.location.replace("/");
+         //navigate("/", { replace: true })
           
           
       }
       else
         {
           if(result.status === 'error') setResponse({status: "error", message: "Error, cant login..."});
-          setResponse({status: "error", message: "Network error, cant login..."}) 
+          setResponse({status: "error", message: result.message}) 
         } 
 
 } catch {
@@ -119,6 +124,7 @@ async function sendData() {
  if(loggedUser) {
     //user already is logged in
     window.location.replace("/");
+    //navigate("/", { replace: true })
   
   }}
   fetchUserInfo()
@@ -128,26 +134,6 @@ async function sendData() {
   }, []);
   
 
-
-  //remove unnecessary data, because it wont insert the whole object of an item
-  /*function prepareItemsForDB(items)
-  {
-    var itemIDforDB = [];
-
-    for(let i=0; i<items.length; i++)
-    {
-      itemIDforDB.push({id: items[i].id, quantity: items[i].quantity})
-    }
-
-    return itemIDforDB;
-  }*/
-
-/*
-const userCookie = useMemo(() => {
-    
-    return getCookie();
-  }, [user]);  
-*/
 //needs to be prepareItemsForDB first
   async function saveItemstoDB(cartitems, wishlist, userToken)
   {
@@ -162,7 +148,7 @@ const userCookie = useMemo(() => {
     const results =  await res.json();
 
     console.log(results);
-    if (results.status === "Success") return true;
+    if (results.status == "Success") return true;
     else return false; //do i need false returned?
    
   } 
@@ -202,8 +188,9 @@ const userCookie = useMemo(() => {
     
    return completeProducts;
   }
-  //mergeSavedCartItems([{"id":16,"quantity":2},{"id":79,"quantity":1},{"id":78,"quantity":1}])
-  //combine items from db with items in localstorage/state
+
+
+ //combine items from db with items in localstorage/state
   function mergeSavedCartItems(recievedItems){
       let cartItemstoAddAtOnce= [];
       let diffInCart = [];
@@ -253,7 +240,7 @@ const userCookie = useMemo(() => {
   }
 
     //combine items from db with items in localstorage/state
-  function mergeSavedWishedItems(recievedItems){
+  async function mergeSavedWishedItems(recievedItems){
        let wishedItemstoAddAtOnce= [];
        let diffInWishlist = [];
   for(let i=0; i<recievedItems.length; i++)
@@ -265,12 +252,18 @@ const userCookie = useMemo(() => {
          //update item with quantity?
         console.log("includes:", recievedItems[i])
        
-       diffInWishlist = wishlistItems.map((wishedItem) =>
+       /*diffInWishlist = wishlistItems.map((wishedItem) =>
           wishedItem.id === difference.id
           //keeping the biggest quantity?
             ? { ...wishedItem, quantity: recievedItems[i].quantity >= wishedItem.quantity ? recievedItems[i].quantity : wishedItem.quantity }
             : wishedItem
-        )
+        )*/
+            diffInWishlist = [...wishlistItems];
+        //lets add an other for loop, because the ternary above does not work smh...
+        for(let j=0; j<wishlistItems.length; j++)
+        {
+          if(diffInWishlist[j].id ===  recievedItems[i].id && diffInWishlist[j].quantity < recievedItems[i].quantity) diffInWishlist[j].quantity = recievedItems[i].quantity;
+        }
       
        }
        else{
@@ -311,15 +304,16 @@ const userCookie = useMemo(() => {
        console.log("only save");
        /*let*/ cart = prepareItemsForDB(cartItems);
       /*let*/ wished = prepareItemsForDB(wishlistItems);
-
-     // saveItemstoDB(cart, wished, userToken).then(result => {console.log(result); return result});
+      //this was commented out! Why???
+      //saveItemstoDB(cartItems, wishlistItems, userToken).then(result => {console.log(result); return result});
        
     }
    else {
     //merge with the items in the cart and wishlist
        console.log("recieve, combine and update with the new list")
 
-      console.log("cart from db",savedData.message.cart_items, "wishlist from db",savedData.message.wished_items);
+      console.log("cart from db",savedData.message.cart_items); 
+        console.log("wishlist from db",savedData.message.wished_items);
 
       //call for each type separately
       mergeSavedCartItems(JSON.parse(savedData.message.cart_items));
@@ -330,7 +324,9 @@ const userCookie = useMemo(() => {
     
      // saveItemstoDB(cart, wished, userToken).then(result => {console.log(result); return result});;
    }
-   return {cart: cart, wished: wished};
+   if (cartItems.length == 0 || wishlistItems.length == 0) console.log("cart or wish empty")
+   saveItemstoDB(cart, wished, userToken).then(result => {console.log(result); /*return result*/});;
+   //return {cart: cart, wished: wished};
   }
 
   return (

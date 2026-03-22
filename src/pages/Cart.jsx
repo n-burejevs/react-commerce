@@ -75,6 +75,7 @@ export default function Cart(){
     cartItems.length > 0 ? (
       <div className="cart-wishlist-total-section">
     <h1 >Total: ${getCartTotal()}</h1>
+    <div className="cart-button-container">
     <button className="clear-cart-btn"
       onClick={() => {
         clearCart()
@@ -82,6 +83,9 @@ export default function Cart(){
     >
       Clear cart
     </button>
+
+    <Link to={`/checkout`}> <button className="place-order-btn"> Checkout </button> </Link> 
+    </div>
   </div>
     ) : (
       <h1 className="text-lg font-bold">Your cart now is empty</h1>

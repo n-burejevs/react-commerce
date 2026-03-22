@@ -17,10 +17,12 @@ import Login from './pages/Login.jsx';
 import ViewCategory from './pages/ViewCategory.jsx';
 import Account from './pages/Account.jsx';
 import Wishlist from './pages/Wishlist.jsx';
-//import Test from './pages/Test.jsx';
+import Test from './pages/Test.jsx';
 import { CartProvider } from './components/context/cart.jsx'
 import { WishlistProvider } from './components/context/wishlist.jsx'
 import { UserProvider } from './components/context/user.jsx'
+import Orders from './pages/Orders.jsx';
+import Checkout from './pages/Checkout.jsx';
 
 createRoot(document.getElementById('root')).render(
   //not running it in strictMode, because double rerender messes up account.jsx,
@@ -42,7 +44,9 @@ createRoot(document.getElementById('root')).render(
      <Route path="viewproduct/:id" element={<SingleProduct/>} />
      <Route path="category/:name" element={<ViewCategory/>} />
      <Route path="wishlist" element={<Wishlist/>} />
-     {/*<Route path="test" element={<Test/>} />*/}
+     <Route path="orders" element={<Orders/>} />
+     <Route path="checkout" element={<Checkout/>} />
+     {<Route path="test" element={<Test/>} />}
      <Route path="*" element={<App to="/" replace />} />
    </Routes>
   </BrowserRouter>
