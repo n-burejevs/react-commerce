@@ -100,6 +100,7 @@ const [searchResults, setsearchResults] = React.useState([]);
             <Link to='/contact' className="anchor" >Contacts</Link>
             <Link to='/about' className="anchor" >About</Link>  
             <Link to='/deals' className="anchor">Deals & Discounts</Link>
+            <Link to='/orders' className="anchor">Orders</Link>
             {/*<Link to='/categories' className="anchor">Categories</Link>*/}
            </div>)}
           </div>
@@ -110,6 +111,7 @@ const [searchResults, setsearchResults] = React.useState([]);
             <Link to='/contact' className="anchor" >Contacts</Link>
             <Link to='/about' className="anchor" >About</Link>
             <Link to='/deals' className="anchor">Deals & Discounts</Link>
+            <Link to='/orders' className="anchor">Orders</Link>
             {/*<Link to='/categories' className="anchor">Categories</Link>*/}
            </div>
 
@@ -183,11 +185,12 @@ const [searchResults, setsearchResults] = React.useState([]);
 
           {props.user && <div className="username">{props.user.name}</div>}
 
-          <div className="wishlist-container">
-             <Link to='/wishlist' > <img className="wishlist-icon" src={wishlist_icon} alt="wishlist-icon"></img></Link>
+          <Link to='/wishlist' ><div className="wishlist-container">
+              <img className="wishlist-icon" src={wishlist_icon} alt="wishlist-icon"></img>
                {props.wishListCount ? <span className="cart-item-count">{props.wishListCount}</span> : ""}
           </div>
-
+          </Link>
+          
           {/** this div is just for the ref  */}
            <div  ref={miniCartView}> 
            <div className="cart" onClick={ToggleCart}>

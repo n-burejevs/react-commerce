@@ -12,9 +12,6 @@ import { WishlistContext } from '../components/context/wishlist';
 import { UserContext } from '../components/context/user'
 
 
-/*
-need some useEffects to change price filter values when the category name changes!!!
-*/
 export default function ViewCategory()
 {
 
@@ -55,58 +52,42 @@ const [allProducts, setAllProducts] = React.useState([]);
 //when using state items from prev category are shown
   fetch(`https://dummyjson.com/products/category/${name}`)
   .then(res => res.json())
-  .then(data => setAllProducts(data.products))
-
-    fetch(`https://dummyjson.com/products/category/${name}`)
-    .then(res => res.json())
-    .then(data => setUnfilteredProd(data.products))
+  .then(data => {setAllProducts(data.products);
+                 setUnfilteredProd(data.products)})
 
   },[name])
 
-      //get product brands to the filter component?
-      /*  const [brands, setBrands] = React.useState([])
-      React.useEffect(() =>{
-      //'https://dummyjson.com/products?skip=10'
-        fetch(`https://dummyjson.com/products/category/${name}`)
-        .then(res => res.json())
-        .then(data => setBrands(data.products))
-        },[name])*/
-
-   //const [pageNumber, SetPageNumber] = React.useState(1);
 
 return(
         <>
         <Navbar cartCount={cartCount} user={user} setUser={setUser}
-        wishListCount={wishListCount} setWishListCount={setWishListCount}
+        wishListCount={wishListCount} /*setWishListCount={setWishListCount}*/
          />
 
         <div className='main-content-container'>
 
     <div className='sidemenu-filterpane-mobile'> 
     <Sidemenu/>  
-      {width < 768 && <Filters products={products} setProducts={setProducts} width={width}
-                          allProducts={allProducts} setAllProducts={setAllProducts}
-                          source={source} setSource={setSource} unfilteredProd={unfilteredProd}
+      {width < 768 && <Filters width={width} allProducts={allProducts} setAllProducts={setAllProducts}
+                          unfilteredProd={unfilteredProd}
                           />}
     </div>
 
      <div className="main-content">
 
-                {<Sort source={source} setSource={setSource}
-                      products={products} setProducts={setProducts}
-                      allProducts={allProducts} setAllProducts={setAllProducts} />}
+                {<Sort setProducts={setProducts} allProducts={allProducts} setAllProducts={setAllProducts} />}
                 {/*Pass the state to update item count, when added to cart*/}
                 <Product products={products} setProducts={setProducts}
                   allProducts={allProducts} setAllProducts={setAllProducts}
                   />
 
-                 {<Pagination source={source} setSource={setSource} numberOfProd={allProducts.length }
-                              allProducts={allProducts} setAllProducts={setAllProducts}  products={products} setProducts={setProducts}
+                 {<Pagination numberOfProd={allProducts.length }
+                              allProducts={allProducts} setAllProducts={setAllProducts}
+                              products={products} setProducts={setProducts}
                   />}
       </div>
-    {width >= 768 && <Filters products={products} setProducts={setProducts} width={width}
-                      allProducts={allProducts} setAllProducts={setAllProducts}
-                      source={source} setSource={setSource} unfilteredProd={unfilteredProd}
+    {width >= 768 && <Filters width={width} allProducts={allProducts} setAllProducts={setAllProducts}
+                      unfilteredProd={unfilteredProd}
                       />
                       }
     
