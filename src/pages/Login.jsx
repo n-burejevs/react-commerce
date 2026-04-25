@@ -17,9 +17,9 @@ import { useNavigate } from "react-router";
 //need to cancel the request or ignore the response! if user moves away from the page before promises resolve
 export default function Login() {
 
-  const { cartCount, cartItems, setCartItems, /*addToCart*/ } = useContext(CartContext);
+  const { cartCount, cartItems, setCartItems } = useContext(CartContext);
 
-  const { wishListCount, setWishListCount, wishlistItems, setWishlistItems, addTowishlist } = useContext(WishlistContext);
+  const { wishListCount, setWishListCount, wishlistItems, setWishlistItems } = useContext(WishlistContext);
   
     const [userEmail, setUserEmail] = React.useState("");
     const [userPassw, setUserPassw] = React.useState("");
@@ -191,12 +191,12 @@ async function sendData() {
 
 
  //combine items from db with items in localstorage/state
-  function mergeSavedCartItems(recievedItems){
+  function mergeSavedCartItems(recievedItems, setState, items){
       let cartItemstoAddAtOnce= [];
       let diffInCart = [];
   for(let i=0; i<recievedItems.length; i++)
   {
-      let difference = cartItems.find((element) => element.id == recievedItems[i].id);
+      let difference = items.find((element) => element.id == recievedItems[i].id);
       if(difference){
          //update item with quantity?
         console.log("includes:", recievedItems[i])
@@ -209,9 +209,9 @@ async function sendData() {
             ? { ...cartItem, quantity: recievedItems[i].quantity >= cartItem.quantity ? recievedItems[i].quantity : cartItem.quantity }
             : cartItem
         )*/
-        diffInCart = [...cartItems];
+        diffInCart = [...items];
         //lets add an other for loop, because the ternary above does not work smh...
-        for(let j=0; j<cartItems.length; j++)
+        for(let j=0; j<items.length; j++)
         {
           if(diffInCart[j].id ===  recievedItems[i].id && diffInCart[j].quantity < recievedItems[i].quantity) diffInCart[j].quantity = recievedItems[i].quantity;
         }
@@ -230,15 +230,15 @@ async function sendData() {
          // async functions always return a promise. you must await
           // them in async functions, or use .then to get and use the value
           findItemByID(cartItemstoAddAtOnce).then(
-            result => setCartItems(cartItems.concat(result)));
+            result => setState(cartItems.concat(result)));
        }
 
        if(diffInCart.length > 0)
        {
-         setCartItems(diffInCart);
+         setState(diffInCart);
        }
   }
-
+/*
     //combine items from db with items in localstorage/state
   async function mergeSavedWishedItems(recievedItems){
        let wishedItemstoAddAtOnce= [];
@@ -252,12 +252,12 @@ async function sendData() {
          //update item with quantity?
         console.log("includes:", recievedItems[i])
        
-       /*diffInWishlist = wishlistItems.map((wishedItem) =>
-          wishedItem.id === difference.id
-          //keeping the biggest quantity?
-            ? { ...wishedItem, quantity: recievedItems[i].quantity >= wishedItem.quantity ? recievedItems[i].quantity : wishedItem.quantity }
-            : wishedItem
-        )*/
+       //diffInWishlist = wishlistItems.map((wishedItem) =>
+        //  wishedItem.id === difference.id
+        //  //keeping the biggest quantity?
+        //    ? { ...wishedItem, quantity: recievedItems[i].quantity >= wishedItem.quantity ? recievedItems[i].quantity : wishedItem.quantity }
+       //     : wishedItem
+       // )
             diffInWishlist = [...wishlistItems];
         //lets add an other for loop, because the ternary above does not work smh...
         for(let j=0; j<wishlistItems.length; j++)
@@ -281,7 +281,7 @@ async function sendData() {
        {
          setWishlistItems(diffInWishlist);
        }
-  }
+  }*/
 
   /*check if user has saved items in cart / wishlist */
   // if there are items in localstorage/state or saved in the db, merge them
@@ -316,8 +316,9 @@ async function sendData() {
         console.log("wishlist from db",savedData.message.wished_items);
 
       //call for each type separately
-      mergeSavedCartItems(JSON.parse(savedData.message.cart_items));
-          mergeSavedWishedItems( JSON.parse(savedData.message.wished_items));
+      mergeSavedCartItems(JSON.parse(savedData.message.cart_items), setCartItems, cartItems);
+        mergeSavedCartItems(JSON.parse(savedData.message.wished_items), setWishlistItems, wishlistItems);
+          //mergeSavedWishedItems( JSON.parse(savedData.message.wished_items));
           
       /*let*/ cart = prepareItemsForDB(cartItems);
       /*let*/ wished = prepareItemsForDB(wishlistItems);

@@ -3,7 +3,6 @@ import React from "react";
 export default function OrderDetails(props)
 {
       const [detailsOpen, setDetailsOpen] = React.useState(false);
-
     return(
         <>
 
@@ -34,6 +33,7 @@ export default function OrderDetails(props)
                 ))}
             </ol>
         </div>
+        <div><strong>Total: </strong>{props.order.total}$</div>
         </>
             }
         </>
