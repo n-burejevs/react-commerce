@@ -58,7 +58,7 @@ function changeLink()
         else
         {
             lastLinks = links.slice(pageAmount -2 , pageAmount);
-            firstLinks.push(<a key={'...'} id="not-on-this-page">...</a>)
+            firstLinks.push(<a key={'...'} >...</a>)
         }
 
         links = firstLinks.concat(lastLinks)

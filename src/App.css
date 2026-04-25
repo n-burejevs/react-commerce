@@ -220,7 +220,7 @@
 
 .main-content, .contact-page, .single-product-and-review-container, .about-page, .checkout-page{
   /*margin-left: 15px;*/
-  margin-top: 40px;
+  margin-top: 44px;
 }
 .main-content, .contact-page, .single-product-and-review-container, .about-page .checkout-page{
   padding-top: 30px;
@@ -614,6 +614,7 @@
   border: none;
   border-radius: 10px;
   margin-right: 50px;
+  color: black; /*?????????????????*/
 }
 /*the div that shows up when user is searching*/
 .search-result-popout{

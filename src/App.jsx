@@ -39,6 +39,7 @@ import { UserContext } from './components/context/user'
 //cart wishlist db sync might have a problem with js/php logic 
 //useNavigate for redirects?
 //User account page
+//user order history and status?
 //code clean up(commented out), remove unused props?
 //user password restore (PHP password_verify() forgot password example) https://www.phpmentoring.org/blog/php-password-verify-function#:~:text=The%20Password_Verify()%20function%20is,true%2C%20otherwise%20it%20returns%20false.
 //finish category hover menu styling and get links from https://dummyjson.com/docs/products#products-category
