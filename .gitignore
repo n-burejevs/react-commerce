@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+*databaseSync.jsx
+src\pages\Test.jsx

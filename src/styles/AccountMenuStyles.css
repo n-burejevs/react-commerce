@@ -1,6 +1,6 @@
 .account-menu-item{
     padding: 10px 5px;
-    background-color: #3576BC;;
+    background-color: rgb(68, 68, 179);
 }
 .user-information{
     display: inline-block;
@@ -28,8 +28,6 @@
 }
 
 .account-menu-container{
-    
-    flex-direction: column;
     margin-top: 45px;
     row-gap: 10px;
     margin-right: 5px;

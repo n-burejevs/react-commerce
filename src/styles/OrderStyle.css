@@ -20,6 +20,11 @@
 .order-main-part{
     margin-bottom: 20px;
 }
+
+#address{
+    resize:vertical;
+}
+
 @media (width < 48em) {
 
     #oder-list h1{
@@ -32,6 +37,11 @@
     flex-direction: column;
     flex-wrap: wrap;
     gap: 10px;
+   }
+   .checkout-page{
+    margin-top: 24px;
+    padding-left: 10px;
+    padding-right: 10px;
    }
 
 }

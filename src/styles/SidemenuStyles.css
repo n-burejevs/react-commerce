@@ -51,6 +51,10 @@ ul, .sub-category-item{
     width: 100px;
   
 }
+.navigation, .account-menu-container{
+    margin-left: 10px;
+}
+
 .navigation{
     z-index: 10;
     position: relative;
