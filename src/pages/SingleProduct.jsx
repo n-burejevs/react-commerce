@@ -56,9 +56,9 @@ export default function SingleProduct(){
         
         <div >
          <div className="single-prod-title"><h3 >{singleProduct.title}</h3></div>
-        {singleProduct.images ? 
-         <Slideshow images = {singleProduct.images}/> : "Error loading images"
-        }
+        {/*singleProduct.images ? 
+         <Slideshow images = {singleProduct.images}/> : "Error loading images" */ }
+         <Slideshow images = {singleProduct.images}/>
         </div>
         <div className="product-data">
 

@@ -7,6 +7,13 @@
   {
      width: 25px;
   }
+  .single-prod-img{
+    /*stackovfl*/
+    width: 100%; /* or max-width: 100%; */
+    height: auto;
+    /*me*/
+    /*min-width: 480px;*/
+  }
 }
 @media (width < 48em) {
   .next-btn, .prev-btn
@@ -20,18 +27,17 @@
   background-color: white;
   width: 100%;
   display: flex;
-  justify-content: center;
-    max-width: 500px;
+  
   align-items: center;
-  display: flex;
   justify-content: center;
   position: relative;
+  /*keep the image centered between 515 - 767px*/
+  margin-left: auto;
+  margin-right: auto;
+  /*copilot*/
+  /*\\ aspect-ratio: 1;*/
 }
 
-.prod-img{
-  width: 100%;
-  max-width: 440px;
-}
 
 .next-btn, .prev-btn{
   position: absolute;
@@ -39,6 +45,8 @@
   border: none;
   background-color: rgba(0, 0, 0, 0);
   cursor: pointer;
+  /*copilot*/
+  z-index: 10
 }
 .prev-btn{
   
@@ -83,4 +91,10 @@
 .single-prod-img{
   max-width: 500px;
   width: 100%;
+  aspect-ratio: 1/1;
+  /*copilot*/
+  
+  /*looks bad at 941 width*/
+  /*height: 500px;*/
+  object-fit: contain
 }

@@ -17,9 +17,21 @@ export default function Slideshow(props){
     const [imageSeqNum, setImageSeqNum] = React.useState(0);
  /// is it better to have a ternary like that inside style?
  //and have whole array of img returened?
-       const newImageArray = props.images.map((img, index)=><img key={index} alt="product-image" 
+       const newImageArray = props.images?.map((img, index)=><img key={index} alt="product-image"
                                  className="single-prod-img" style={ imageSeqNum == index ? {display: "block"} :{display: "none"}} src={img}></img>)
-        
+       
+       /*const [newImageArray, setNewImageArray] = React.useState([<img className="single-prod-img" alt="loading images, probably..."></img>]);
+
+            React.useEffect(() => {
+                setNewImageArray(props.images?.map((img, index)=><img key={index} 
+                        alt="product-image" loading="lazy"
+                        className="single-prod-img"
+                        style={ imageSeqNum == index ? {display: "block"} :{display: "none"}}
+                        src={img}></img>)
+)
+            },[props]);*/
+    
+
         function showNext()
         {
            //console.log("next")
@@ -65,14 +77,14 @@ export default function Slideshow(props){
         </button>}
      {/* <div className="movable-block" >*/}
       <MobileSwiper onSwipe={handleSwipe}>
- 
-            {newImageArray/*[imageSeqNum]*/}
+        
+            {newImageArray ? newImageArray : <img className="single-prod-img" alt="loading images, probably..."></img> } { /*[imageSeqNum]*/}
             </MobileSwiper>
               
      {/* </div>*/}
      
         </div>
-        <Dots amount={newImageArray.length} position={imageSeqNum} selectImageWithDot={selectImageWithDot}/>
+       {newImageArray && <Dots amount={newImageArray.length} position={imageSeqNum} selectImageWithDot={selectImageWithDot}/> }
         </div>
          
     )

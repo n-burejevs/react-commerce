@@ -1,0 +1,19 @@
+@media (width >= 48em)
+{
+    .mobile-view-search{
+        display: none;
+    }
+    .desktop-view-search{
+         display: block;
+    }
+}
+
+@media (width < 48em)
+{
+    .mobile-view-search{
+        display: block;
+    }
+    .desktop-view-search{
+        display: none;
+    }
+}

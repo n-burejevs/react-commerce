@@ -30,7 +30,7 @@ export default function Product(props)
           
             <div className="product-price">${product.price}</div>     
             <div>
-            <button className="product-button" onClick={()=>addToCart(product)}>add to cart</button>
+            <button className="product-button" onClick={()=>addToCart(product)}>Buy</button>
             
             <img className="wishlist-button-img" src={wishlist_icon} onClick={()=>addTowishlist(product)}></img>
             </div>    

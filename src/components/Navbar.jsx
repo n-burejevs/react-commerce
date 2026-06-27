@@ -79,10 +79,15 @@ const [searchResults, setsearchResults] = React.useState([]);
     
     }//clean search results and close the search result box
     else if(searchFor.length === 0) { 
-      setSearchResultsVisible(false);
-      setsearchResults([]);
+        cancelSearch()
        }
     },[searchFor])
+
+    function cancelSearch()
+    {
+      setSearchResultsVisible(false);
+      setsearchResults([]);
+    }
 
       useClickOutside(container, isNavMenuOpen, setIsNavMenuOpen);
         useClickOutside(miniCartView,isCartMenuOpen, SetIsCartMenuOpen);
@@ -119,7 +124,9 @@ const [searchResults, setsearchResults] = React.useState([]);
            
            <input className="searchbox" type="text" placeholder="Search.." onChange={handleChange}/> 
            <div className="search-button-container">
-           <button className="search-button"><img className="search-icon" src={search_icon}></img> </button>
+            <Link to={`/search/${searchFor}`}>
+              <button className="search-button"><img className="search-icon" src={search_icon} onClick={cancelSearch}></img> </button>
+            </Link>
            </div>
           
           {searchResultsVisible ? < SearchResults results={searchResults}/> : ""}

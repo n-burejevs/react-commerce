@@ -104,6 +104,10 @@
     .cart-wishlist-total-section h1{
         margin-right: 40px;
     }
+
+    .mini-cart-menu{
+        width: 360px;
+    }
 }
 
 @media (width < 48em) {
@@ -162,7 +166,16 @@
     flex-direction: row;
     justify-content: space-between;
  }
+     .mini-cart-menu{
+        width: 320px;
+    }
 
+}
+@media (width <= 22em) {
+    .mini-cart-menu{
+        width: 100%;
+        min-width: 285px;
+    }
 }
 
 .add-to-cart-from-wishlist-img{
@@ -179,9 +192,9 @@
 .mini-cart-menu{
     position: relative;
     /*margin-top: 390px;*/
-    width: 340px;
+   /* width: 340px;*/
      background-color: #f1f1f1;
-    min-width: 160px;
+    /*min-width: 160px;*/
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 10;
     max-height: 350px;
