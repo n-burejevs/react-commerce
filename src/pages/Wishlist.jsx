@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import '../styles/Cartstyles.css'
+import '../styles/CartStyles.css'
 import Sidemenu from "../components/Sidemenu";
 import '../App.css';
 import { Link  } from 'react-router-dom';
