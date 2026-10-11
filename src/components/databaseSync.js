@@ -6,7 +6,8 @@
       let cartShotened = prepareItemsForDB(cartitems);
 
      try{ 
-  const res = await fetch('http://localhost/react-commerce/sync_only_cart.php', {
+  //const res = await fetch('http://localhost/react-commerce/sync_only_cart.php', {
+    const res = await fetch('/api/react-commerce/sync_only_cart.php', {
     
     method: 'POST',
       body: JSON.stringify({cart_items: cartShotened, user_token: userToken})
@@ -30,7 +31,8 @@
             let wishListShotened = prepareItemsForDB(wishlist);
 
      try{ 
-  const res = await fetch('http://localhost/react-commerce/sync_only_wishlist.php', {
+  //const res = await fetch('http://localhost/react-commerce/sync_only_wishlist.php', {
+    const res = await fetch('/api/react-commerce/sync_only_wishlist.php', {
     
     method: 'POST',
       body: JSON.stringify({wish_list: wishListShotened, user_token: userToken})

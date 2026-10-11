@@ -33,7 +33,8 @@ export const UserProvider = ({ children }) => {
   let cookieToken = getCookie();
   if(cookieToken !== ""){
   
-     const res = await fetch('http://localhost/react-commerce/check_login.php', {
+     //const res = await fetch('http://localhost/react-commerce/check_login.php', {
+     const res = await fetch('/api/react-commerce/check_login.php', {
       method: 'POST',
       body: JSON.stringify({token: cookieToken})
     });

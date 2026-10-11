@@ -34,8 +34,12 @@ import { UserContext } from './components/context/user'
 // + //price slider(MultiRangeSlider) in Filters! (get price values from props. find min max, but how to filter by price then?)
 // + //add https://www.npmjs.com/package/react-spinners for the loading after login
 // + //arrow buttons in single product dont work on mobile, but swipping left/right does
+// + //dockerfile added
+// + //nginx.conf added for a proxy server
+// + //all fetch, except dummyjson, changed from localhost to /api/
 
 //TO DO:
+//sidemenu needs rework... -> CategoryMenu.jsx is a replacement in progress!
 //cart wishlist db sync might have a problem with js/php logic 
 //useNavigate for redirects?
 //User account page
@@ -53,6 +57,8 @@ import { UserContext } from './components/context/user'
 
 //BUGS:
 
+/*using x button in search input to close the search box and clean the input field, 
+AND using existing cancelSearch func resets the current prod. state*/
 
 //5/error happens when undefined category is selected from navigation in Sidemenu and when there are products in the cart(localstorage)
 
@@ -110,11 +116,13 @@ function App() {
     <div className='main-content-container'>
 
     <div className='sidemenu-filterpane-mobile'> 
-    <Sidemenu/>  
-      {width < 768 && <Filters /*products={products} setProducts={setProducts}*/ width={width}
+    <Sidemenu/> 
+    
+    {width < 768 && <Filters /*products={products} setProducts={setProducts}*/ width={width}
                          allProducts={allProducts} setAllProducts={setAllProducts}
                          unfilteredProd={unfilteredProd}
                          />}
+      
     </div>
        
            <div className="main-content">
@@ -138,10 +146,10 @@ function App() {
                  {/*console.log(products)*/}
                    
       </div>
-    {width >= 768 && <Filters /*products={products}*/ /*setProducts={setProducts}*/ width={width}
-                        allProducts={allProducts} setAllProducts={setAllProducts}
-                        unfilteredProd={unfilteredProd}
-                     />}
+        {width >= 768 && <Filters /*products={products}*/ /*setProducts={setProducts}*/ width={width}
+        allProducts={allProducts} setAllProducts={setAllProducts}
+        unfilteredProd={unfilteredProd}
+      />}
     
     </div>
       

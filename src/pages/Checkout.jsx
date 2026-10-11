@@ -49,7 +49,8 @@ export default function Checkout()
            let items = prepareItemsForDB(cartItems);
         
              try{
-          const res = await fetch('http://localhost/react-commerce/orders.php', {
+          //const res = await fetch('http://localhost/react-commerce/orders.php', {
+            const res = await fetch('/api/react-commerce/orders.php', {
               method: 'POST',
               body: JSON.stringify({order_items: items, user_email: user.email, order_email: formData.email,
                                     fullname: formData.fullName, adress: formData.address, city: formData.city,

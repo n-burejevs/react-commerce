@@ -6,7 +6,6 @@ import { useContext } from 'react';
 import { CartContext } from '../components/context/cart';
 import { WishlistContext } from '../components/context/wishlist';
 import { UserContext } from '../components/context/user'
-//import {useNavigate} from 'react-router-dom'
 import { SpinnerCircular } from 'spinners-react';
 import {prepareItemsForDB} from '../components/databaseSync';
 import { useNavigate } from "react-router";
@@ -37,8 +36,7 @@ export default function Login() {
      
       if (userEmail !== "" && userPassw !== "") {
         
-        sendData()
-        //window.location.replace("/");        
+        sendData();
       }
       else alert("please provide a valid input");
     };
@@ -51,7 +49,8 @@ async function sendData() {
  try {
 //send formdata to php page to validate
 
-  const res = await fetch('http://localhost/react-commerce/login.php', {
+  //const res = await fetch('http://localhost/react-commerce/login.php', {
+    const res = await fetch('/api/react-commerce/login.php', {
       method: 'POST',
       body: JSON.stringify({email: userEmail, password: userPassw})
     });
@@ -64,7 +63,9 @@ async function sendData() {
       { 
           //cookie for a week
            setCookie('token', result.token, 7)
-          
+           //after login the username did not show up in the Navbar, for some reason
+           //setting user like this fixes the problem
+          setUser({name: result.message.name, lastname: result.message.lastname, email: result.message.email})
            //update, load cart if user connected from an other device/account
           //or localstorage was cleared
           //syncCartWithDatabase(result.token).then(
@@ -79,13 +80,8 @@ async function sendData() {
      
 
           //This is not the best solution...
-        await new Promise(resolve => setTimeout(resolve, 2000));
-    
-          //leave as is, but add some animation instead??
-           // navigate("/"); does not work!
-         window.location.replace("/");
-         //navigate("/", { replace: true })
-          
+        await new Promise(resolve => setTimeout(resolve, 1500));
+          navigate('/', { replace: true }) 
           
       }
       else
@@ -130,7 +126,7 @@ async function sendData() {
   fetchUserInfo()
   .catch(console.error);
   
-
+//add user here? what does it mean if the user change?
   }, []);
   
 
@@ -139,7 +135,8 @@ async function sendData() {
   {
     console.log(cartitems, wishlist,)
       ///console.log(user);
-  const res = await fetch('http://localhost/react-commerce/save_carts.php', {
+    //const res = await fetch('http://localhost/react-commerce/save_carts.php', {
+    const res = await fetch('/api/react-commerce/save_carts.php', {
       method: 'POST',
       body: JSON.stringify({cart_items: cartitems, wish_list: wishlist, user_token: userToken})
       
@@ -288,7 +285,8 @@ async function sendData() {
 
   async function syncCartWithDatabase(userToken){
 
-  const res = await fetch('http://localhost/react-commerce/sync_carts.php', {
+  //const res = await fetch('http://localhost/react-commerce/sync_carts.php', {
+    const res = await fetch('/api/react-commerce/sync_carts.php', {
       method: 'POST',
       body: JSON.stringify({user_token: userToken})
     });

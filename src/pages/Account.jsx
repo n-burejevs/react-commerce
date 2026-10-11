@@ -11,7 +11,8 @@ import AccountMenu from "../components/AccountMenu";
 export default function Account(){
 
       ///add a server url to handle the stuff
-  const url = "http://localhost/react-commerce/user.php";
+  //const url = "http://localhost/react-commerce/user.php";
+  const url = "/api/react-commerce/user.php";
 
   const { cartCount } = useContext(CartContext);
 
@@ -34,7 +35,7 @@ export default function Account(){
    
 //user is logged in
    //if (/*user == null || user.name == ""*/)
-  if (userToken !== "")
+  if (userToken !== "" && user.name !== "")
   {
    //welcome user
    console.log(user);
@@ -138,8 +139,6 @@ return (
       </select>
               <label htmlFor="value">Custom attribute:</label>
              <input name="value" value={userValues.value} required onChange={handleChange} />
-
- 
 
             <button type="submit">Send</button>
 

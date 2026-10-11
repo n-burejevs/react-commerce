@@ -14,7 +14,8 @@ export default function Orders()
 
     async function requestOrders() {
         try{
-          const res = await fetch('http://localhost/react-commerce/orders.php', {
+          //const res = await fetch('http://localhost/react-commerce/orders.php', {
+            const res = await fetch('/api/react-commerce/orders.php', {
               method: 'GET'
 
             });

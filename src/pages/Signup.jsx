@@ -25,7 +25,8 @@ export default function SignUp()
   async function sendData() {
 
 //send formdata to php page to validate, then upload to db and register a user
-  const res = await fetch('http://localhost/react-commerce/index.php', {
+  //const res = await fetch('http://localhost/react-commerce/index.php', {
+    const res = await fetch('/api/react-commerce/index.php', {
       method: 'POST',
       body: JSON.stringify(userData)
     });
